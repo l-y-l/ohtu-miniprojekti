@@ -17,12 +17,15 @@ apply plugin: 'checkstyle'
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    testCompile 'io.cucumber:cucumber-java:4.2.0'
+    testCompile 'io.cucumber:cucumber-junit:4.2.0'
 }
 
 jar {
@@ -33,6 +36,12 @@ jar {
 
 run {
     standardInput = System.in
+}
+
+// if we want feature tests to display when running test
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
 }
 
 
