@@ -13,3 +13,4 @@ Ohjelmistotuotantokurssin miniprojekti
   - testeillä 80% rivikattavuus
   - testit menevät läpi
 - Joku muu katsonut koodin (pull request)
+- Dokumentoitu kattavasti (javadoc +  mahdolliset kaaviot)
