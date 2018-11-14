@@ -5,12 +5,21 @@
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds/
  */
 
+ plugins {
+   id 'com.github.johnrengelman.shadow' version '2.0.1'
+ }
+
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'checkstyle'
+
+
 
 repositories {
     jcenter()
 }
+
+
 
 dependencies {
     testCompile 'junit:junit:4.12'
@@ -25,5 +34,7 @@ jar {
 run {
     standardInput = System.in
 }
+
+
 
 mainClassName = 'Main'
