@@ -1,22 +1,26 @@
 package app;
 
+
+import app.ui.TextUI;
 import java.util.Scanner; 
 
 public class App {
-    private final Scanner scanner; 
+    private TextUI ui; 
     
-    public App(Scanner scanner){
-        this.scanner = scanner; 
+    public App(TextUI ui){
+        this.ui = ui;  
     }
     
     public void run(){
-        System.out.println("Welcome!");
-        System.out.println("Add a new bookmark:");
+        ui.printWelcomeMessage();  
+        ui.askForBookmark();
+        System.out.println("Your bookmark has been read! (but not stored)");
     }
     
     
   public static void main(String[] args){
-      App app  = new App(new Scanner(System.in)); 
+      TextUI ui = new TextUI(new Scanner(System.in)); 
+      App app  = new App(ui); 
       app.run(); 
   }
 }

@@ -39,15 +39,6 @@ run {
     standardInput = System.in
 }
 
-// if we want feature tests to display when running test
-test {
-    testLogging.showStandardStreams = true
-    systemProperties System.getProperties()
-}
-
-
-
-
 
 mainClassName = 'app.App'
 jacocoTestReport {
