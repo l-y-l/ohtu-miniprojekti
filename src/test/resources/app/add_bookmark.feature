@@ -1,0 +1,1 @@
+Feature: Adding a bookmark with valid information is possible

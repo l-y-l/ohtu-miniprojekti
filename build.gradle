@@ -31,7 +31,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'Main'
+        attributes 'Main-Class': 'app.App'
     }
 }
 
@@ -49,7 +49,7 @@ test {
 
 
 
-mainClassName = 'Main'
+mainClassName = 'app.App'
 jacocoTestReport {
     reports {
         xml.enabled true
