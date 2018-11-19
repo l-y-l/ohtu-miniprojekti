@@ -31,7 +31,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'Main'
+        attributes 'Main-Class': 'app.App'
     }
 }
 
@@ -39,17 +39,8 @@ run {
     standardInput = System.in
 }
 
-// if we want feature tests to display when running test
-test {
-    testLogging.showStandardStreams = true
-    systemProperties System.getProperties()
-}
 
-
-
-
-
-mainClassName = 'Main'
+mainClassName = 'app.App'
 jacocoTestReport {
     reports {
         xml.enabled true
