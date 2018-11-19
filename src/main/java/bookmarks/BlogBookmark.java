@@ -11,19 +11,14 @@ import java.util.ArrayList;
  *
  * @author jussiste
  */
-public class BlogBookmark implements BookmarkInterface{
-    private String author;
-    private String title;
-    private String url;
-    private ArrayList<String> releatedCourses;
-    private ArrayList<String> tags;
+public class BlogBookmark extends AbstractBookmark{
 
     public BlogBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> releatedCourses) {
-        this.author=author;
-        this.title = title;
-        this.tags=tags;
-        this.url = url;
-        this.releatedCourses = releatedCourses;
+        super.author=author;
+        super.title = title;
+        super.tags=tags;
+        super.url = url;
+        super.releatedCourses = releatedCourses;
     }
     public String releatedCourses(){
         String str="";

@@ -11,20 +11,15 @@ import java.util.ArrayList;
  *
  * @author jussiste
  */
-public class PodcastBookmark implements BookmarkInterface{
-    private String author;
-    private String title;
-    // tulee ehkä tehdä erillinen tag luokka
-    private String description;
-    private ArrayList<String> tags;
-    private ArrayList<String> releatedCourses;
+public class PodcastBookmark extends AbstractBookmark{
+
 
     public PodcastBookmark(String author, String title, String description, ArrayList<String> tags, ArrayList<String> releatedCourses) {
-        this.author = author;
-        this.title = title;
-        this.description = description;
-        this.tags = tags;
-        this.releatedCourses = releatedCourses;
+        super.author = author;
+        super.title = title;
+        super.description = description;
+        super.tags = tags;
+        super.releatedCourses = releatedCourses;
     }
     
     public String tags(){

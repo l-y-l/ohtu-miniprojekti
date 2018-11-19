@@ -2,6 +2,7 @@ package app;
 
 
 import app.ui.TextUI;
+import bookmarks.PodcastBookmark;
 import java.util.Scanner;
 import java.util.List; 
 import java.util.ArrayList; 
@@ -17,7 +18,8 @@ public class App {
     
     public void run(){
         ui.printWelcomeMessage();  
-        String bookmark = ui.askForBookmark();
+        String bookmark = ui.askForBookmark();        
+        
         System.out.println("Your bookmark has been read! (and will be stored)");
         memory.add(bookmark); 
     }

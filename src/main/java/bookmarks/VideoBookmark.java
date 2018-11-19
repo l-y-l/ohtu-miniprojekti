@@ -11,16 +11,11 @@ import java.util.ArrayList;
  *
  * @author jussiste
  */
-public class VideoBookmark implements BookmarkInterface{
-    private String title;
-    private String url;
-    private ArrayList<String> releatedCourses;
-    private ArrayList<String> tags;
-    private String comment;
+public class VideoBookmark extends AbstractBookmark{
 
     public VideoBookmark(String title, String url, ArrayList<String> releatedCourses, ArrayList<String> tags, String comment) {
-        this.title = title;
-        this.url = url;
+        super.title = title;
+        super.url = url;
         this.releatedCourses = releatedCourses;
         this.tags = tags;
         this.comment = comment;
