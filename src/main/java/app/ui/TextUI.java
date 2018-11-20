@@ -16,16 +16,16 @@ public class TextUI {
     public TextUI(Scanner scanner) {
         this.scanner = scanner;
     }
-    
-    public void printWelcomeMessage(){
-        System.out.println("Welcome");
+
+    public Scanner getScanner() {
+        return scanner;
     }
 
     public AbstractBookmark askForBookmark() {
         System.out.println("Add a new bookmark.");
         System.out.println("Give type (B = Book) (BG = Blog) (P = Podcast) (V = Video): ");
         String type = scanner.nextLine();
-        
+
         if (type.equals("B")) {
             BookBookmark bookmark = askForBookBookmarkInfo();
             return bookmark;
@@ -47,15 +47,20 @@ public class TextUI {
     private BookBookmark askForBookBookmarkInfo() {
         String author = askForAuthor();
         String title = askForTitle();
-        
+
         System.out.println("ISBN: ");
         String isbn = scanner.nextLine();
-        
+
         ArrayList<String> tagList = askForTags();
         ArrayList<String> prerequisiteList = askForPrerequisites();
-        ArrayList<String>  relatedCourseList = askForRelatedCourses();
-   
-        return new BookBookmark(author, title, isbn, tagList, prerequisiteList, relatedCourseList);
+        ArrayList<String> relatedCourseList = askForRelatedCourses();
+        System.out.println("Description: ");
+        String description = scanner.nextLine();
+
+        System.out.println("Comment: ");
+        String comment = scanner.nextLine();
+
+        return new BookBookmark(author, title, isbn, tagList, prerequisiteList, relatedCourseList, description, comment);
     }
 
     private BlogBookmark askForBlogBookmarkInfo() {
@@ -66,20 +71,25 @@ public class TextUI {
         ArrayList<String> tagList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
 
-        return new BlogBookmark(author, title, url, tagList, relatedCourseList);
+        System.out.println("Description: ");
+        String description = scanner.nextLine();
+
+        System.out.println("Comment: ");
+        String comment = scanner.nextLine();
+        return new BlogBookmark(author, title, url, tagList, relatedCourseList, description, comment);
     }
 
     private PodcastBookmark askForPodcastBookmarkInfo() {
         String author = askForAuthor();
         String title = askForTitle();
 
-        System.out.println("Description: ");
-        String description = scanner.nextLine();
-
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
-
-        return new PodcastBookmark(author, title, description, tagsList, relatedCourseList);
+        System.out.println("Description: ");
+        String description = scanner.nextLine();
+        System.out.println("Comment: ");
+        String comment = scanner.nextLine();
+        return new PodcastBookmark(author, title, tagsList, relatedCourseList, description, comment);
     }
 
     private VideoBookmark askForVideoBookmarkInfo() {
@@ -88,11 +98,12 @@ public class TextUI {
 
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
-
+        System.out.println("Description: ");
+        String description = scanner.nextLine();
         System.out.println("Comment: ");
         String comment = scanner.nextLine();
 
-        return new VideoBookmark(title, url, relatedCourseList, tagsList, comment);
+        return new VideoBookmark(title, url, relatedCourseList, tagsList, description, comment);
     }
 
     private String askForAuthor() {
@@ -119,7 +130,7 @@ public class TextUI {
     private ArrayList<String> askForPrerequisites() {
         System.out.println("Prerequisite courses (separated by \",\"): ");
         String prerequisiteCourses = scanner.nextLine();
-        return new ArrayList<>(Arrays.asList(prerequisiteCourses.split(","))); 
+        return new ArrayList<>(Arrays.asList(prerequisiteCourses.split(",")));
     }
 
     private ArrayList<String> askForRelatedCourses() {

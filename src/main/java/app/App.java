@@ -18,12 +18,22 @@ public class App {
     }
     
     public void run(){
-        ui.printWelcomeMessage();  
-        AbstractBookmark bookmark = ui.askForBookmark();        
-        
-        System.out.println("Your bookmark has been read! (and will be stored)");
-        memory.add(bookmark); 
-        
+        System.out.println("Welcome!");
+        System.out.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
+        String command=ui.getScanner().nextLine();
+            switch(command){
+                case("new"):
+                    AbstractBookmark bookmark=ui.askForBookmark();
+                    memory.add(bookmark);
+                    System.out.println("Your bookmark has been read! (and will be stored)");
+                case("list"):
+                    for(AbstractBookmark bmark: this.memory){
+                        System.out.println(bmark);
+                    }
+                case("exit"):
+                    System.out.println("Goodbye!");
+                    System.exit(0);
+            }                
     }
      
   public static void main(String[] args){

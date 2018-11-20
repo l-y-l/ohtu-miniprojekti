@@ -8,48 +8,52 @@ package bookmarks;
 import java.util.ArrayList;
 
 /**
+ * Class that is used to store bookmarks of books.
  *
  * @author jussiste
  */
-public class BookBookmark extends AbstractBookmark{
+public class BookBookmark extends AbstractBookmark {
 
     private String ISBN;
 
-    public BookBookmark(String author, String title, String ISBN, ArrayList<String> tags, ArrayList<String> prerequisiteCourses, ArrayList<String> releatedCourses) {
+    public BookBookmark(String author, String title, String ISBN, ArrayList<String> tags, ArrayList<String> prerequisiteCourses, ArrayList<String> releatedCourses, String description, String comment) {
         super.author = author;
         super.title = title;
         this.ISBN = ISBN;
         super.tags = tags;
         super.prerequisiteCourses = prerequisiteCourses;
         super.releatedCourses = releatedCourses;
+        super.description = description;
+        super.comment = comment;
     }
-    public String tags(){
-        String str="";
-        for(String s: this.tags){
-            str+=s + ", ";
+
+    public String tags() {
+        String str = "";
+        for (String s : this.tags) {
+            str += s + ", ";
         }
-        return str.substring(0, str.length()-2);
+        return str.substring(0, str.length() - 2);
     }
-    public String preqCourses(){
-        String str="";
-        for(String s: this.prerequisiteCourses){
-            str+=s + ", ";
+
+    public String preqCourses() {
+        String str = "";
+        for (String s : this.prerequisiteCourses) {
+            str += s + ", ";
         }
-        return str.substring(0, str.length()-2);
+        return str.substring(0, str.length() - 2);
     }
-    public String releatedCourses(){
-        String str="";
-        for(String s: this.releatedCourses){
-            str+=s + ", ";
+
+    public String releatedCourses() {
+        String str = "";
+        for (String s : this.releatedCourses) {
+            str += s + ", ";
         }
-        return str.substring(0, str.length()-2);
+        return str.substring(0, str.length() - 2);
     }
+
     @Override
     public String toString() {
-        return "Kirjoittaja: "+ author +"\n Otsikko: " + title+ "\n Tyyppi: Kirja"+"\n ISBN: "+ISBN+"\n Tagit: " +tags()+"\n Esitietokurssit: "+preqCourses()+"\n Samankaltaisia kursseja: "+ releatedCourses();
+        return "Kirjoittaja: " + author + "\n Otsikko: " + title + "\n Tyyppi: Kirja" + "\n ISBN: " + ISBN + "\n Tagit: " + tags() + "\n Esitietokurssit: " + preqCourses() + "\n Samankaltaisia kursseja: " + releatedCourses() + "\n Kuvaus: " + description + "\n Kommentti: " + comment;
     }
-    
-    
-    
-    
+
 }
