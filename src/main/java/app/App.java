@@ -1,35 +1,37 @@
 package app;
 
 
+import app.io.ConsoleIO;
+import app.io.IO;
 import app.ui.TextUI;
 import bookmarks.AbstractBookmark;
 import bookmarks.PodcastBookmark;
-import java.util.Scanner;
 import java.util.List; 
 import java.util.ArrayList; 
 
 public class App {
-    private final TextUI ui; 
+    private final TextUI ui;
+    private IO io;
     private List<AbstractBookmark> memory; 
     
-    public App(TextUI ui, List<AbstractBookmark> memory){
+    public App(TextUI ui, List<AbstractBookmark> memory, IO io){
         this.ui = ui;  
         this.memory = memory; 
+        this.io = io;
     }
     
     public void run(){
         ui.printWelcomeMessage();  
         AbstractBookmark bookmark = ui.askForBookmark();        
-        
-        System.out.println("Your bookmark has been read! (and will be stored)");
-        memory.add(bookmark); 
+        if(bookmark != null) memory.add(bookmark);
         
     }
      
   public static void main(String[] args){
-      TextUI ui = new TextUI(new Scanner(System.in)); 
+      IO io = new ConsoleIO();
+      TextUI ui = new TextUI(io); 
       List<AbstractBookmark> memory = new ArrayList(); 
-      App app  = new App(ui, memory); 
+      App app  = new App(ui, memory, io); 
       app.run(); 
   }
 }
