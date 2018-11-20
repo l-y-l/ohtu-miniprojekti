@@ -2,6 +2,9 @@ package app.ui;
 
 import bookmarks.AbstractBookmark;
 import bookmarks.BookBookmark;
+import bookmarks.BlogBookmark;
+import bookmarks.PodcastBookmark;
+import bookmarks.VideoBookmark;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -20,11 +23,20 @@ public class TextUI {
 
     public AbstractBookmark askForBookmark() {
         System.out.println("Add a new bookmark.");
-        System.out.println("Give type (B = Book): ");
+        System.out.println("Give type (B = Book) (BG = Blog) (P = Podcast) (V = Video): ");
         String type = scanner.nextLine();
         
         if (type.equals("B")) {
             BookBookmark bookmark = askForBookBookmarkInfo();
+            return bookmark;
+        } else if (type.equals("BG")) {
+            BlogBookmark bookmark = askForBlogBookmarkInfo();
+            return bookmark;
+        } else if (type.equals("P")) {
+            PodcastBookmark bookmark = askForPodcastBookmarkInfo();
+            return bookmark;
+        } else if (type.equals("V")) {
+            VideoBookmark bookmark = askForVideoBookmarkInfo();
             return bookmark;
         } else {
             System.out.println("Invalid choice");
@@ -46,6 +58,43 @@ public class TextUI {
         return new BookBookmark(author, title, isbn, tagList, prerequisiteList, relatedCourseList);
     }
 
+    private BlogBookmark askForBlogBookmarkInfo() {
+        String author = askForAuthor();
+        String title = askForTitle();
+        String url = askForUrl();
+
+        ArrayList<String> tagList = askForTags();
+        ArrayList<String> relatedCourseList = askForRelatedCourses();
+
+        return new BlogBookmark(author, title, url, tagList, relatedCourseList);
+    }
+
+    private PodcastBookmark askForPodcastBookmarkInfo() {
+        String author = askForAuthor();
+        String title = askForTitle();
+
+        System.out.println("Description: ");
+        String description = scanner.nextLine();
+
+        ArrayList<String> tagsList = askForTags();
+        ArrayList<String> relatedCourseList = askForRelatedCourses();
+
+        return new PodcastBookmark(author, title, description, tagsList, relatedCourseList);
+    }
+
+    private VideoBookmark askForVideoBookmarkInfo() {
+        String title = askForTitle();
+        String url = askForUrl();
+
+        ArrayList<String> tagsList = askForTags();
+        ArrayList<String> relatedCourseList = askForRelatedCourses();
+
+        System.out.println("Comment: ");
+        String comment = scanner.nextLine();
+
+        return new VideoBookmark(title, url, relatedCourseList, tagsList, comment);
+    }
+
     private String askForAuthor() {
         System.out.println("Author: ");
         return scanner.nextLine();
@@ -53,6 +102,11 @@ public class TextUI {
 
     private String askForTitle() {
         System.out.println("Title: ");
+        return scanner.nextLine();
+    }
+
+    private String askForUrl() {
+        System.out.println("Url: ");
         return scanner.nextLine();
     }
 
