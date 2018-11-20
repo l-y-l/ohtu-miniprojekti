@@ -27,14 +27,14 @@ public class PodcastBookmark extends AbstractBookmark{
         for(String s: this.tags){
             str+=s + ", ";
         }
-        return str;
+        return str.substring(0, str.length()-2);
     }
     public String releatedCourses(){
         String str="";
         for(String s: this.releatedCourses){
             str+=s + ", ";
         }
-        return str;
+        return str.substring(0, str.length()-2);
     }
     @Override
     public String toString() {
