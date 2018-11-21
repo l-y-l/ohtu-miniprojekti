@@ -13,7 +13,7 @@ import javax.persistence.*;
  * @author jussiste
  */
 
-@MappedSuperclass
+@Entity
 public abstract class AbstractBookmark {
     @Id
     @Column(name="id")
@@ -103,4 +103,38 @@ public abstract class AbstractBookmark {
         this.prerequisiteCourses = prerequisiteCourses;
     }
     
+
+    public String releatedCourses(){
+        if (this.releatedCourses.isEmpty()){
+            return "";
+        }
+        String str="";
+        for(String s: this.releatedCourses){
+            str+=s + ", ";
+        }
+        return str.substring(0, str.length()-2);
+    }
+
+    public String tags(){
+        if (this.tags.isEmpty()){
+            return "";
+        }
+        String str="";
+        for(String s: this.tags){
+            str+=s + ", ";
+        }
+        return str.substring(0, str.length()-2);
+    }
+
+    public String preqCourses() {
+        if (this.prerequisiteCourses.isEmpty()){
+            return "";
+        }
+        String str = "";
+        for (String s : this.prerequisiteCourses) {
+            str += s + ", ";
+        }
+        return str.substring(0, str.length() - 2);
+    }
+
 }

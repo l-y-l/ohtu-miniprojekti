@@ -12,7 +12,16 @@ import javax.persistence.*;
  * Class that is used to store bookmarks of podcasts.
  * @author jussiste
  */
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class PodcastBookmark extends AbstractBookmark {
+
+    public PodcastBookmark(){
+        tags = new ArrayList<String>();
+        releatedCourses = new ArrayList<String>();
+        prerequisiteCourses = new ArrayList<String>();
+    }
 
     public PodcastBookmark(String author, String title, ArrayList<String> tags, ArrayList<String> releatedCourses, String description, String comment) {
         super.author = author;
@@ -23,21 +32,6 @@ public class PodcastBookmark extends AbstractBookmark {
         super.comment = comment;
     }
 
-    public String tags() {
-        String str = "";
-        for (String s : this.tags) {
-            str += s + ", ";
-        }
-        return str.substring(0, str.length() - 2);
-    }
-
-    public String releatedCourses() {
-        String str = "";
-        for (String s : this.releatedCourses) {
-            str += s + ", ";
-        }
-        return str.substring(0, str.length() - 2);
-    }
 
     @Override
     public String toString() {

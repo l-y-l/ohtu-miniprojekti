@@ -14,6 +14,7 @@ import javax.persistence.*;
  */
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BlogBookmark extends AbstractBookmark{
     public BlogBookmark(){
         tags = new ArrayList<String>();
@@ -29,26 +30,6 @@ public class BlogBookmark extends AbstractBookmark{
         super.description=description;
         super.comment=comment;
         super.releatedCourses = releatedCourses;
-    }
-    public String releatedCourses(){
-        if (this.releatedCourses.isEmpty()){
-            return "";
-        }
-        String str="";
-        for(String s: this.releatedCourses){
-            str+=s + ", ";
-        }
-        return str.substring(0, str.length()-2);
-    }
-    public String tags(){
-        if (this.tags.isEmpty()){
-            return "";
-        }
-        String str="";
-        for(String s: this.tags){
-            str+=s + ", ";
-        }
-        return str.substring(0, str.length()-2);
     }
     @Override
     public String toString() {

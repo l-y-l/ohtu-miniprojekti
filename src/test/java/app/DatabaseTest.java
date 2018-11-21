@@ -16,10 +16,6 @@ public class DatabaseTest {
 
     @Before
     public void setUp() throws Exception {
-        // For default hibernate logs a lot
-        // Turn it off...
-        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
-
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Exception e) {
@@ -46,8 +42,8 @@ public class DatabaseTest {
     
         session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery( "from BlogBookmark" ).list();
-        for ( BlogBookmark bm: (List<BlogBookmark>) result ) {
+        List result = session.createQuery( "from AbstractBookmark" ).list();
+        for ( AbstractBookmark bm: (List<AbstractBookmark>) result ) {
           System.out.println(bm.toString());
         }
         session.getTransaction().commit();

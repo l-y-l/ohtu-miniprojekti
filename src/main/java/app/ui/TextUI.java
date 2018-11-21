@@ -6,8 +6,7 @@ import bookmarks.BookBookmark;
 import bookmarks.BlogBookmark;
 import bookmarks.PodcastBookmark;
 import bookmarks.VideoBookmark;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class TextUI {
 
@@ -20,6 +19,17 @@ public class TextUI {
 
     public void printWelcomeMessage() {
         io.println("Welcome");
+    }
+    public void printGoodbyeMessage() {
+        io.println("Goodbye");
+    }
+    public void printUnrecognizedOption(String option){
+        io.println("Unrecognized option '"+option+"'");
+    }
+
+    public String getMenuCommand() {
+        io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
+        return io.nextLine();
     }
 
     public AbstractBookmark askForBookmark() {
@@ -59,6 +69,14 @@ public class TextUI {
         return null;
     }
 
+    public void printBookmarkList(List<AbstractBookmark> bookmarks){
+        if (bookmarks.isEmpty()) {
+            io.println("There are currently no bookmarks on memory. Add a new bookmark with command \"new\"");
+        }
+        for(AbstractBookmark bmark: bookmarks){
+            io.println(bmark.toString());
+        }
+    }
 
     private BookBookmark askForBookBookmarkInfo() {
         String author = askForAuthor();

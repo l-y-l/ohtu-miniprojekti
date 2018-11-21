@@ -8,47 +8,72 @@ import bookmarks.PodcastBookmark;
 import java.util.List; 
 import java.util.ArrayList; 
 import java.util.Scanner;
+import java.util.*;
+import org.apache.log4j.Logger;
+
+import org.hibernate.*;
+import org.hibernate.cfg.*;
 
 public class App {
     private final TextUI ui;
     private IO io;
-    private List<AbstractBookmark> memory; 
-    
+	private SessionFactory sessionFactory;
+
+
     public App(TextUI ui, List<AbstractBookmark> memory, IO io){
-        this.ui = ui;  
-        this.memory = memory; 
+        this.ui = ui;
         this.io = io;
+        sessionFactory = new Configuration().configure().buildSessionFactory();
     }
 
-     
+    public void close(){
+        if (sessionFactory != null){
+            sessionFactory.close();
+        }
+    }
+
+    private List<AbstractBookmark> getBookMarksOnDatabase(){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        List result = session.createQuery( "from AbstractBookmark" ).list();
+
+        session.getTransaction().commit();
+        session.close();
+        return  (List<AbstractBookmark>) result;
+    }
+
+    private void saveBookmarkToDatabase(AbstractBookmark bookmark){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.save(bookmark);
+        
+        session.getTransaction().commit();
+        session.close();
+    }
+
     public void run(){
         ui.printWelcomeMessage(); 
         boolean run = true;
         while (run){
-            io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
-            String command=io.nextLine();
+            String command = ui.getMenuCommand();
             switch(command){
                 case("new"):
                     AbstractBookmark bookmark = ui.askForBookmark();     
-                    if(bookmark != null){
-                        memory.add(bookmark);
-                        io.println("Your bookmark has been read! (and will be stored)");
+                    if(bookmark != null) {
+                        saveBookmarkToDatabase(bookmark);
                     }
                     break;
                 case("list"):
-                    if (this.memory.isEmpty()){
-                        io.println("There are currently no bookmarks on memory. Add a new bookmark with command \"new\"");
-                    }
-                    for(AbstractBookmark bmark: this.memory){
-                        io.println(bmark.toString());
-                    }
+                    ui.printBookmarkList(getBookMarksOnDatabase());
                     break;
                 case("exit"):
-                    io.println("Goodbye!");
+                    ui.printGoodbyeMessage();
                     run = false;
                     break;
                 default:
-                    io.println("Unrecognized option '"+command+"'");
+                    ui.printUnrecognizedOption(command);
                     run = false;
                     break;
             }
@@ -61,5 +86,6 @@ public class App {
         List<AbstractBookmark> memory = new ArrayList(); 
         App app  = new App(ui, memory, io); 
         app.run(); 
+        app.close();
     }
 }

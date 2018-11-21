@@ -13,16 +13,24 @@ import javax.persistence.*;
  *
  * @author jussiste
  */
-public class BookBookmark extends AbstractBookmark {
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class BookBookmark extends AbstractBookmark {
     String ISBN;
     public String getISBN(){
         return ISBN;
     }
-
     public void setISBN(String ISBN){
         this.ISBN=ISBN;
     }
+
+    public BookBookmark(){
+        tags = new ArrayList<String>();
+        releatedCourses = new ArrayList<String>();
+        prerequisiteCourses = new ArrayList<String>();
+    }
+
     public BookBookmark(String author, String title, String ISBN, ArrayList<String> tags, ArrayList<String> prerequisiteCourses, ArrayList<String> releatedCourses, String description, String comment) {
         super.author = author;
         super.title = title;
@@ -32,30 +40,6 @@ public class BookBookmark extends AbstractBookmark {
         super.releatedCourses = releatedCourses;
         super.description = description;
         super.comment = comment;
-    }
-
-    public String tags() {
-        String str = "";
-        for (String s : this.tags) {
-            str += s + ", ";
-        }
-        return str.substring(0, str.length() - 2);
-    }
-
-    public String preqCourses() {
-        String str = "";
-        for (String s : this.prerequisiteCourses) {
-            str += s + ", ";
-        }
-        return str.substring(0, str.length() - 2);
-    }
-
-    public String releatedCourses() {
-        String str = "";
-        for (String s : this.releatedCourses) {
-            str += s + ", ";
-        }
-        return str.substring(0, str.length() - 2);
     }
 
     @Override
