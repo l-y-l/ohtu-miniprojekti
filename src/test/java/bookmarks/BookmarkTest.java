@@ -58,7 +58,7 @@ public class BookmarkTest {
     public void initializeBookmarks() {
         blogB = new BlogBookmark(author, title, url, tags, releatedCourses, description, comment);
         bookB = new BookBookmark(author, title, ISBN, tags, prerequisiteCourses, releatedCourses, description, comment);
-        podcastB = new PodcastBookmark(author, title, url, tags, releatedCourses, description, comment);
+        podcastB = new PodcastBookmark(author, title, tags, releatedCourses, description, comment);
         videoB = new VideoBookmark(title, url, releatedCourses, tags, description, comment);
     }
 
@@ -94,7 +94,6 @@ public class BookmarkTest {
         String relatedStr = releatedCourses.get(0) + ", " + releatedCourses.get(1) + ", " + releatedCourses.get(2);
         String testString =  "Tekijä: "+ author +"\n"
                             +" Otsikko: " + title+ "\n"
-                            +" Url: "+url+ "\n"
                             +" Tyyppi: Podcast"+"\n"
                             +" Tagit: " +tagsStr+"\n"
                             +" Samankaltaisia kursseja: "+ relatedStr+"\n"

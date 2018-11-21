@@ -23,10 +23,9 @@ public class PodcastBookmark extends AbstractBookmark {
         prerequisiteCourses = new ArrayList<String>();
     }
 
-    public PodcastBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> relatedCourses, String description, String comment) {
+    public PodcastBookmark(String author, String title, ArrayList<String> tags, ArrayList<String> relatedCourses, String description, String comment) {
         super.author = author;
         super.title = title;
-        super.url = url;
         super.description = description;
         super.tags = tags;
         super.relatedCourses = relatedCourses;
@@ -38,7 +37,6 @@ public class PodcastBookmark extends AbstractBookmark {
     public String toString() {
         return   "Tekijä: " + author + "\n"
                + " Otsikko: " + title + "\n"
-               + " Url: " + url + "\n"
                + " Tyyppi: Podcast" + "\n"
                + " Tagit: " + tagsStr() + "\n"
                + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
