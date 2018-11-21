@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class TextUI {
 
-    private final Scanner scanner;
+    private Scanner scanner;
 
     public TextUI(Scanner scanner) {
         this.scanner = scanner;

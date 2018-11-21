@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author jussiste
  */
 public class BookBookmark extends AbstractBookmark {
-
+    
     private String ISBN;
 
     public BookBookmark(String author, String title, String ISBN, ArrayList<String> tags, ArrayList<String> prerequisiteCourses, ArrayList<String> releatedCourses, String description, String comment) {
