@@ -1,0 +1,9 @@
+BG
+testAuthor
+testTitle
+testUrl
+testTag
+testReleated
+testDescription
+testComment
+

@@ -1,0 +1,7 @@
+P
+testAuthor
+testTitle
+testTag1,testTag2
+relatedCourse
+testDescription
+testComment
