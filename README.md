@@ -20,6 +20,16 @@ Ohjelmistotuotantokurssin miniprojekti
 
 ## Installation
 
+* What you will need: 
+  * [Java](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) for running the program
+  * [Gradle](https://gradle.org/install/) for building the executable
+
+* Clone / download this repository by clicking on the green 'Clone or download' button in the upper right corner
+* Navigate to the downloaded folder 
+* In the command prompt / shell CLI execute the command `gradle shadowJar`
+* An executable .jar file has been created in build/libs/
+* To run the program, execute `java -jar build/libs/ohtu-miniprojekti-all.jar`
+
 ## User guide
 * In the beginning, user can choose whether to add a new bookmark or to list existing bookmarks
 * Adding a new bookmark
