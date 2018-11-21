@@ -1,6 +1,5 @@
 package app;
 
-
 import app.io.ConsoleIO;
 import app.io.IO;
 import app.ui.TextUI;
@@ -20,20 +19,47 @@ public class App {
         this.memory = memory; 
         this.io = io;
     }
-    
+
+     
     public void run(){
-        ui.printWelcomeMessage();  
-        AbstractBookmark bookmark = ui.askForBookmark();        
-        if(bookmark != null) memory.add(bookmark);
-                  
+        ui.printWelcomeMessage(); 
+        boolean run = true;
+        while (run){
+            io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
+            String command=io.nextLine();
+            switch(command){
+                case("new"):
+                    AbstractBookmark bookmark = ui.askForBookmark();     
+                    if(bookmark != null){
+                        memory.add(bookmark);
+                        io.println("Your bookmark has been read! (and will be stored)");
+                    }
+                    break;
+                case("list"):
+                    if (this.memory.isEmpty()){
+                        io.println("There are currently no bookmarks on memory. Add a new bookmark with command \"new\"");
+                    }
+                    for(AbstractBookmark bmark: this.memory){
+                        io.println(bmark.toString());
+                    }
+                    break;
+                case("exit"):
+                    io.println("Goodbye!");
+                    run = false;
+                    break;
+                default:
+                    io.println("Unrecognized option '"+command+"'");
+                    run = false;
+                    break;
+            }
+        }
     }
-    
-  public static void main(String[] args){
-      ConsoleIO io = new ConsoleIO(); 
-      TextUI ui = new TextUI(io); 
-      List<AbstractBookmark> memory = new ArrayList(); 
-      App app  = new App(ui, memory, io); 
-      app.run(); 
-  }
-    
+        
+    public static void main(String[] args){
+        ConsoleIO io = new ConsoleIO(); 
+        TextUI ui = new TextUI(io); 
+        List<AbstractBookmark> memory = new ArrayList(); 
+        App app  = new App(ui, memory, io); 
+        app.run(); 
+    }
 }

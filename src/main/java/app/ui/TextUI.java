@@ -59,6 +59,7 @@ public class TextUI {
         return null;
     }
 
+
     private BookBookmark askForBookBookmarkInfo() {
         String author = askForAuthor();
         String title = askForTitle();
@@ -69,11 +70,9 @@ public class TextUI {
         ArrayList<String> tagList = askForTags();
         ArrayList<String> prerequisiteList = askForPrerequisites();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
-        System.out.println("Description: ");
-        String description = io.nextLine();
-
-        System.out.println("Comment: ");
-        String comment = io.nextLine();
+        
+        String comment = askForComment();
+        String description = askForDescription();
 
         return new BookBookmark(author, title, isbn, tagList, prerequisiteList, relatedCourseList, description, comment);
 
@@ -87,11 +86,9 @@ public class TextUI {
         ArrayList<String> tagList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
 
-        System.out.println("Description: ");
-        String description = io.nextLine();
+        String comment = askForComment();
+        String description = askForDescription();
 
-        System.out.println("Comment: ");
-        String comment = io.nextLine();
         return new BlogBookmark(author, title, url, tagList, relatedCourseList, description, comment);
     }
 
@@ -101,10 +98,10 @@ public class TextUI {
 
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
-        System.out.println("Description: ");
-        String description = io.nextLine();
-        System.out.println("Comment: ");
-        String comment = io.nextLine();
+
+        String comment = askForComment();
+        String description = askForDescription();
+
         return new PodcastBookmark(author, title, tagsList, relatedCourseList, description, comment);
     }
 
@@ -115,10 +112,8 @@ public class TextUI {
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
 
-        io.println("Comment: ");
-        String comment = io.nextLine();
-        System.out.println("Description: ");
-        String description = io.nextLine();
+        String comment = askForComment();
+        String description = askForDescription();
         
         return new VideoBookmark(title, url, relatedCourseList, tagsList, description, comment);
     }
@@ -155,6 +150,16 @@ public class TextUI {
         io.println("Related courses (separated by \",\"): ");
         String relatedCourses = io.nextLine();
         return new ArrayList<>(Arrays.asList(relatedCourses.split(",")));
+    }
+
+    private String askForComment() {
+        io.println("Comment: ");
+        return io.nextLine();
+    }
+
+    private String askForDescription() {
+        io.println("Description: ");
+        return io.nextLine();
     }
 
 }

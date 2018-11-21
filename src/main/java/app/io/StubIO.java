@@ -18,7 +18,8 @@ public class StubIO implements IO {
     
     @Override
     public void println(String toPrint) {
-       prints.add(toPrint);
+        // System.out.println(">"+toPrint);
+        prints.add(toPrint);
     }
     
     public ArrayList<String> getPrints() {
@@ -28,10 +29,11 @@ public class StubIO implements IO {
     @Override
     public String nextLine() {
         if (i < lines.size()) {
+            // System.out.println("<"+lines.get(i));
             return lines.get(i++);
         }
+        // System.out.println("<");
         return "";
     }
-
     
 }

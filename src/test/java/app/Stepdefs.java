@@ -24,19 +24,24 @@ public class Stepdefs {
         inputLines.add(type);
     }
 
+    @Given("option {string} is selected")
+    public void option_is_selected(String input) throws Throwable {
+        inputLines.add(input);
+    }
+    
     
     @When("input {string} is entered")
     public void input_is_entered(String input) throws Throwable {
-       inputLines.add(input);
+        inputLines.add(input);
     }
     
     @When("app is created")
     public void app_is_created() throws Throwable {
-       io = new StubIO(inputLines); 
-       ui = new TextUI(io);
-       app = new App(ui, memory, io);
-       app.run();
-       
+        inputLines.add("exit");
+        io = new StubIO(inputLines); 
+        ui = new TextUI(io);
+        app = new App(ui, memory, io);
+        app.run();
     }
     
     @Then("system will respond with {string}")
