@@ -8,16 +8,18 @@ package bookmarks;
 import java.util.ArrayList;
 
 /**
- *
+ * Class that is used to store blogbookmarks
  * @author jussiste
  */
 public class BlogBookmark extends AbstractBookmark{
 
-    public BlogBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> releatedCourses) {
+    public BlogBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> releatedCourses,  String description, String comment) {
         super.author=author;
         super.title = title;
         super.tags=tags;
         super.url = url;
+        super.description=description;
+        super.comment=comment;
         super.releatedCourses = releatedCourses;
     }
     public String releatedCourses(){
@@ -25,18 +27,18 @@ public class BlogBookmark extends AbstractBookmark{
         for(String s: this.releatedCourses){
             str+=s + ", ";
         }
-        return str;
+        return str.substring(0, str.length()-2);
     }
     public String tags(){
         String str="";
         for(String s: this.tags){
             str+=s + ", ";
         }
-        return str;
+        return str.substring(0, str.length()-2);
     }
     @Override
     public String toString() {
-        return "Tekijä: "+ author +"\n Otsikko: " + title+ "\n Url: "+url+ "\n Tyyppi: Blogpost"+"\n Tagit: " +tags()+"\n Samankaltaisia kursseja: "+ releatedCourses();
+        return "Tekijä: "+ author +"\n Otsikko: " + title+ "\n Url: "+url+ "\n Tyyppi: Blogpost"+"\n Tagit: " +tags()+"\n Samankaltaisia kursseja: "+ releatedCourses()+ "\n Kuvaus: "+description +"\n Kommentti: "+comment;
     }
     
 

@@ -8,7 +8,7 @@ package bookmarks;
 import java.util.ArrayList;
 
 /**
- *
+ * An abstract class that is used to create bookmarks, each kind of bookmark is created by a separate class that inherits this class. 
  * @author jussiste
  */
 public abstract class AbstractBookmark {
