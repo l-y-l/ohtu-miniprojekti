@@ -24,7 +24,7 @@ public class BookBookmark extends AbstractBookmark {
     public void setISBN(String ISBN){
         this.ISBN=ISBN;
     }
-
+    // Hibernate requires a constructor with no parameters
     public BookBookmark(){
         tags = new ArrayList<String>();
         relatedCourses = new ArrayList<String>();

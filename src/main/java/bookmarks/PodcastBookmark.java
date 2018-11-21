@@ -16,8 +16,8 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class PodcastBookmark extends AbstractBookmark {
-
-    public PodcastBookmark(){
+    // Hibernate requires a constructor with no parameters
+    public PodcastBookmark() {
         tags = new ArrayList<String>();
         relatedCourses = new ArrayList<String>();
         prerequisiteCourses = new ArrayList<String>();
