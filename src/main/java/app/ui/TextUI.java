@@ -89,8 +89,8 @@ public class TextUI {
         ArrayList<String> prerequisiteList = askForPrerequisites();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
         
-        String comment = askForComment();
         String description = askForDescription();
+        String comment = askForComment();
 
         return new BookBookmark(author, title, isbn, tagList, prerequisiteList, relatedCourseList, description, comment);
 
@@ -104,8 +104,8 @@ public class TextUI {
         ArrayList<String> tagList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
 
-        String comment = askForComment();
         String description = askForDescription();
+        String comment = askForComment();
 
         return new BlogBookmark(author, title, url, tagList, relatedCourseList, description, comment);
     }
@@ -117,8 +117,8 @@ public class TextUI {
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
 
-        String comment = askForComment();
         String description = askForDescription();
+        String comment = askForComment();
 
         return new PodcastBookmark(author, title, tagsList, relatedCourseList, description, comment);
     }
@@ -130,8 +130,8 @@ public class TextUI {
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
 
-        String comment = askForComment();
         String description = askForDescription();
+        String comment = askForComment();
         
         return new VideoBookmark(title, url, relatedCourseList, tagsList, description, comment);
     }

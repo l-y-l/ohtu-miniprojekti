@@ -1,32 +1,115 @@
 package app.ui;
 
-import app.io.IO;
-import app.io.StubIO;
-import java.util.ArrayList;
-import java.util.List;
+import app.io.ConsoleIO;
+
+import bookmarks.AbstractBookmark;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Scanner; 
+import org.junit.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+import java.util.Scanner;
 
 public class TextUITest {
-    private IO io;
-    private TextUI ui; 
-    
+    private Scanner scanner;
+    private TextUI ui;
+    private InputStream in;
+
     @Before
     public void setUp() {
-        List<String> inputLines = new ArrayList<>();
-        // Add input to inputlines for testing.
-        
-        io = new StubIO(inputLines);
-        ui = new TextUI(io);
-    }
-    
-    //@Test
-    //public void askForBookMarkReturnsUserInput(){
-    //    assertEquals("The Best Bookmark", ui.askForBookmark());
-    //}
 
-    
+    }
+
+    @Test
+    public void textUIcreatesBookBookmarks() throws FileNotFoundException {
+        File file = null;
+        try {
+            file = new File("src/test/resources/app/bookmark.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        scanner = new Scanner(file);
+
+        ui = new TextUI(new ConsoleIO(scanner));
+        AbstractBookmark bookmark = ui.askForBookmark();
+
+
+        assertEquals(bookmark.getAuthor(), "testAuthor");
+        assertEquals(bookmark.getTitle(), "testTitle");
+        assertEquals(bookmark.getComment(), "testComment");
+    }
+
+    @Test
+    public void textUIcreatesVideoBookmarks() throws FileNotFoundException {
+        File file = null;
+        try {
+            file = new File("src/test/resources/app/videobookmark.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        scanner = new Scanner(file);
+        ui = new TextUI(new ConsoleIO(scanner));
+        AbstractBookmark bookmark = ui.askForBookmark();
+
+        assertEquals(bookmark.getUrl(), "testUrl");
+        assertEquals(bookmark.getTitle(), "testTitle");
+        assertEquals(bookmark.getComment(), "testComment");
+    }
+
+    @Test
+    public void textUIcreatesBlogBookmarks() throws FileNotFoundException {
+        File file = null;
+        try {
+            file = new File("src/test/resources/app/blogbookmark.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        scanner = new Scanner(file);
+        ui = new TextUI(new ConsoleIO(scanner));
+        AbstractBookmark bookmark = ui.askForBookmark();
+
+        assertEquals(bookmark.getUrl(), "testUrl");
+        assertEquals(bookmark.getTitle(), "testTitle");
+        assertEquals(bookmark.getComment(), "testComment");
+    }
+    @Test
+    public void textUIcreatesPodcastBookmarks() throws FileNotFoundException {
+        File file = null;
+        try {
+            file = new File("src/test/resources/app/podcastbookmark.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        scanner = new Scanner(file);
+        ui = new TextUI(new ConsoleIO(scanner));
+        AbstractBookmark bookmark = ui.askForBookmark();
+
+        assertEquals(bookmark.getTitle(), "testTitle");
+        assertEquals(bookmark.getComment(), "testComment");
+    }
+    @Test
+    public void invalidInputCreatesNoBookMark() throws FileNotFoundException{
+        File file = null;
+        try {
+            file = new File("src/test/resources/app/invalid.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        scanner = new Scanner(file);
+        ui = new TextUI(new ConsoleIO(scanner));
+        AbstractBookmark bookmark = ui.askForBookmark();
+        assertNull(bookmark);
+    }
 }

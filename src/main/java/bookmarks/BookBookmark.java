@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BookBookmark extends AbstractBookmark {
-    String ISBN;
+    private String ISBN;
     public String getISBN(){
         return ISBN;
     }

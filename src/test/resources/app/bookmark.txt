@@ -1,0 +1,9 @@
+B
+testAuthor
+testTitle
+1234
+testTag1, testTag2
+testPreqCourse
+testRelCourse
+testDescription
+testComment
