@@ -6,6 +6,7 @@
 package bookmarks;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  * Class that is used to store bookmarks of books.
@@ -14,8 +15,14 @@ import java.util.ArrayList;
  */
 public class BookBookmark extends AbstractBookmark {
 
-    private String ISBN;
+    String ISBN;
+    public String getISBN(){
+        return ISBN;
+    }
 
+    public void setISBN(String ISBN){
+        this.ISBN=ISBN;
+    }
     public BookBookmark(String author, String title, String ISBN, ArrayList<String> tags, ArrayList<String> prerequisiteCourses, ArrayList<String> releatedCourses, String description, String comment) {
         super.author = author;
         super.title = title;

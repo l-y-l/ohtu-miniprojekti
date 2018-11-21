@@ -6,6 +6,7 @@
 package bookmarks;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  * Class that is used to store bookmarks of podcasts.

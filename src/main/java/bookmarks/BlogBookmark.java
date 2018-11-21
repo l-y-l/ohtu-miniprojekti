@@ -6,13 +6,21 @@
 package bookmarks;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  * Class that is used to store blogbookmarks
  * @author jussiste
  */
-public class BlogBookmark extends AbstractBookmark{
 
+@Entity
+public class BlogBookmark extends AbstractBookmark{
+    public BlogBookmark(){
+        tags = new ArrayList<String>();
+        releatedCourses = new ArrayList<String>();
+        prerequisiteCourses = new ArrayList<String>();
+    }
+    
     public BlogBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> releatedCourses,  String description, String comment) {
         super.author=author;
         super.title = title;
@@ -23,6 +31,9 @@ public class BlogBookmark extends AbstractBookmark{
         super.releatedCourses = releatedCourses;
     }
     public String releatedCourses(){
+        if (this.releatedCourses.isEmpty()){
+            return "";
+        }
         String str="";
         for(String s: this.releatedCourses){
             str+=s + ", ";
@@ -30,6 +41,9 @@ public class BlogBookmark extends AbstractBookmark{
         return str.substring(0, str.length()-2);
     }
     public String tags(){
+        if (this.tags.isEmpty()){
+            return "";
+        }
         String str="";
         for(String s: this.tags){
             str+=s + ", ";
@@ -40,6 +54,4 @@ public class BlogBookmark extends AbstractBookmark{
     public String toString() {
         return "Tekijä: "+ author +"\n Otsikko: " + title+ "\n Url: "+url+ "\n Tyyppi: Blogpost"+"\n Tagit: " +tags()+"\n Samankaltaisia kursseja: "+ releatedCourses()+ "\n Kuvaus: "+description +"\n Kommentti: "+comment;
     }
-    
-
 }
