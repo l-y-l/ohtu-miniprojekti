@@ -1,5 +1,7 @@
 package app.ui;
 
+import app.io.ConsoleIO;
+
 import bookmarks.AbstractBookmark;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -16,7 +18,6 @@ import static org.mockito.Mockito.*;
 import java.util.Scanner;
 
 public class TextUITest {
-
     private Scanner scanner;
     private TextUI ui;
     private InputStream in;
@@ -36,8 +37,10 @@ public class TextUITest {
         }
 
         scanner = new Scanner(file);
-        ui = new TextUI(scanner);
+
+        ui = new TextUI(new ConsoleIO(scanner));
         AbstractBookmark bookmark = ui.askForBookmark();
+
 
         assertEquals(bookmark.getAuthor(), "testAuthor");
         assertEquals(bookmark.getTitle(), "testTitle");
@@ -54,7 +57,7 @@ public class TextUITest {
         }
 
         scanner = new Scanner(file);
-        ui = new TextUI(scanner);
+        ui = new TextUI(new ConsoleIO(scanner));
         AbstractBookmark bookmark = ui.askForBookmark();
 
         assertEquals(bookmark.getUrl(), "testUrl");
@@ -72,7 +75,7 @@ public class TextUITest {
         }
 
         scanner = new Scanner(file);
-        ui = new TextUI(scanner);
+        ui = new TextUI(new ConsoleIO(scanner));
         AbstractBookmark bookmark = ui.askForBookmark();
 
         assertEquals(bookmark.getUrl(), "testUrl");
@@ -89,7 +92,7 @@ public class TextUITest {
         }
 
         scanner = new Scanner(file);
-        ui = new TextUI(scanner);
+        ui = new TextUI(new ConsoleIO(scanner));
         AbstractBookmark bookmark = ui.askForBookmark();
 
         assertEquals(bookmark.getTitle(), "testTitle");
@@ -105,7 +108,7 @@ public class TextUITest {
         }
 
         scanner = new Scanner(file);
-        ui = new TextUI(scanner);
+        ui = new TextUI(new ConsoleIO(scanner));
         AbstractBookmark bookmark = ui.askForBookmark();
         assertNull(bookmark);
     }

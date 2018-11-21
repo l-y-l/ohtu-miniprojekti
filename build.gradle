@@ -22,12 +22,15 @@ repositories {
 }
 
 
-
 dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'io.cucumber:cucumber-java:4.2.0'
     testCompile 'io.cucumber:cucumber-junit:4.2.0'
 	testCompile 'org.mockito:mockito-core:2.10.0'
+}
+
+test {
+    testLogging.showStandardStreams = true
 }
 
 jar {
@@ -48,3 +51,4 @@ jacocoTestReport {
         html.enabled true
     }
 }
+
