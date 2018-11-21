@@ -27,6 +27,7 @@ public class TextUI {
         io.println("Give type (B = Book) (BG = Blog) (P = Podcast) (V = Video): ");
         String type = io.nextLine();
         
+
         if (type.equals("B")) {
             BookBookmark bookmark = askForBookBookmarkInfo();
             if(bookmark != null) {
@@ -71,6 +72,7 @@ public class TextUI {
         ArrayList<String>  relatedCourseList = askForRelatedCourses();
         
         return new BookBookmark(author, title, isbn, tagList, prerequisiteList, relatedCourseList);
+
     }
 
     private BlogBookmark askForBlogBookmarkInfo() {
@@ -81,20 +83,29 @@ public class TextUI {
         ArrayList<String> tagList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
 
-        return new BlogBookmark(author, title, url, tagList, relatedCourseList);
+        System.out.println("Description: ");
+        String description = scanner.nextLine();
+
+        System.out.println("Comment: ");
+        String comment = scanner.nextLine();
+        return new BlogBookmark(author, title, url, tagList, relatedCourseList, description, comment);
     }
 
     private PodcastBookmark askForPodcastBookmarkInfo() {
         String author = askForAuthor();
         String title = askForTitle();
 
+
         io.println("Description: ");
         String description = io.nextLine();
 
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
-
-        return new PodcastBookmark(author, title, description, tagsList, relatedCourseList);
+        System.out.println("Description: ");
+        String description = scanner.nextLine();
+        System.out.println("Comment: ");
+        String comment = scanner.nextLine();
+        return new PodcastBookmark(author, title, tagsList, relatedCourseList, description, comment);
     }
 
     private VideoBookmark askForVideoBookmarkInfo() {
@@ -107,7 +118,8 @@ public class TextUI {
         io.println("Comment: ");
         String comment = io.nextLine();
 
-        return new VideoBookmark(title, url, relatedCourseList, tagsList, comment);
+
+        return new VideoBookmark(title, url, relatedCourseList, tagsList, description, comment);
     }
 
     private String askForAuthor() {
@@ -135,6 +147,7 @@ public class TextUI {
         io.println("Prerequisite courses (separated by \",\"): ");
         String prerequisiteCourses = io.nextLine();
         return new ArrayList<>(Arrays.asList(prerequisiteCourses.split(","))); 
+
     }
     
     private ArrayList<String> askForRelatedCourses() {
