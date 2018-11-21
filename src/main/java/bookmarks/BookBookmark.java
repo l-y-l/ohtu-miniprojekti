@@ -27,7 +27,7 @@ public class BookBookmark extends AbstractBookmark {
 
     public BookBookmark(){
         tags = new ArrayList<String>();
-        releatedCourses = new ArrayList<String>();
+        relatedCourses = new ArrayList<String>();
         prerequisiteCourses = new ArrayList<String>();
     }
 
@@ -37,14 +37,22 @@ public class BookBookmark extends AbstractBookmark {
         this.ISBN = ISBN;
         super.tags = tags;
         super.prerequisiteCourses = prerequisiteCourses;
-        super.releatedCourses = releatedCourses;
+        super.relatedCourses = releatedCourses;
         super.description = description;
         super.comment = comment;
     }
 
     @Override
     public String toString() {
-        return "Kirjoittaja: " + author + "\n Otsikko: " + title + "\n Tyyppi: Kirja" + "\n ISBN: " + ISBN + "\n Tagit: " + tags() + "\n Esitietokurssit: " + preqCourses() + "\n Samankaltaisia kursseja: " + releatedCourses() + "\n Kuvaus: " + description + "\n Kommentti: " + comment;
+        return   "Kirjoittaja: " + author + "\n"
+               + " Otsikko: " + title +  "\n"
+               + " Tyyppi: Kirja" +"\n"
+               + " ISBN: " + ISBN + "\n"
+               + " Tagit: "  + tagsStr() + "\n"
+               + " Esitietokurssit: " + preqCoursesStr() + "\n"
+               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
+               + " Kuvaus: " + description + "\n"
+               + " Kommentti: " + comment;
     }
 
 }

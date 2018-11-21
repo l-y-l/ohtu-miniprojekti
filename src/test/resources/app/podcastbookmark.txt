@@ -1,6 +1,7 @@
 P
 testAuthor
 testTitle
+www.test.url
 testTag1,testTag2
 relatedCourse
 testDescription

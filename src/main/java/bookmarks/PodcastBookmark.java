@@ -19,23 +19,31 @@ public class PodcastBookmark extends AbstractBookmark {
 
     public PodcastBookmark(){
         tags = new ArrayList<String>();
-        releatedCourses = new ArrayList<String>();
+        relatedCourses = new ArrayList<String>();
         prerequisiteCourses = new ArrayList<String>();
     }
 
-    public PodcastBookmark(String author, String title, ArrayList<String> tags, ArrayList<String> releatedCourses, String description, String comment) {
+    public PodcastBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> relatedCourses, String description, String comment) {
         super.author = author;
         super.title = title;
+        super.url = url;
         super.description = description;
         super.tags = tags;
-        super.releatedCourses = releatedCourses;
+        super.relatedCourses = relatedCourses;
         super.comment = comment;
     }
 
 
     @Override
     public String toString() {
-        return "Kirjoittaja: " + author + "\n Otsikko: " + title + "\n Tyyppi: Kirja" + "\n Tagit: " + tags() + "\n Samankaltaisia kursseja: " + releatedCourses() + "\n Kuvaus: " + description +"\n Kommentti: " +comment;
+        return   "Tekijä: " + author + "\n"
+               + " Otsikko: " + title + "\n"
+               + " Url: " + url + "\n"
+               + " Tyyppi: Podcast" + "\n"
+               + " Tagit: " + tagsStr() + "\n"
+               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
+               + " Kuvaus: " + description + "\n"
+               + " Kommentti: " + comment;
     }
 
 }

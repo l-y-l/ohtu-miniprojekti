@@ -19,22 +19,18 @@ public abstract class AbstractBookmark {
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     Long id;
-    
+
     String author;
-
     String title;
-
     String comment;
-    
     String url;
-
     String description;
 
     @Transient
     ArrayList<String> tags;
 
     @Transient
-    ArrayList<String> releatedCourses;
+    ArrayList<String> relatedCourses;
 
     @Transient
     ArrayList<String> prerequisiteCourses;
@@ -87,12 +83,12 @@ public abstract class AbstractBookmark {
         this.tags = tags;
     }
 
-    public ArrayList<String> getReleatedCourses() {
-        return releatedCourses;
+    public ArrayList<String> getRelatedCourses() {
+        return relatedCourses;
     }
 
-    public void setReleatedCourses(ArrayList<String> releatedCourses) {
-        this.releatedCourses = releatedCourses;
+    public void setRelatedCourses(ArrayList<String> relatedCourses) {
+        this.relatedCourses = relatedCourses;
     }
 
     public ArrayList<String> getPrerequisiteCourses() {
@@ -104,18 +100,18 @@ public abstract class AbstractBookmark {
     }
     
 
-    public String releatedCourses(){
-        if (this.releatedCourses.isEmpty()){
+    public String relatedCoursesStr(){
+        if (this.relatedCourses.isEmpty()){
             return "";
         }
         String str="";
-        for(String s: this.releatedCourses){
+        for(String s: this.relatedCourses){
             str+=s + ", ";
         }
         return str.substring(0, str.length()-2);
     }
 
-    public String tags(){
+    public String tagsStr(){
         if (this.tags.isEmpty()){
             return "";
         }
@@ -126,7 +122,7 @@ public abstract class AbstractBookmark {
         return str.substring(0, str.length()-2);
     }
 
-    public String preqCourses() {
+    public String preqCoursesStr() {
         if (this.prerequisiteCourses.isEmpty()){
             return "";
         }

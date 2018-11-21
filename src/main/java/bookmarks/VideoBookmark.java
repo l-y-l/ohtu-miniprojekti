@@ -19,14 +19,14 @@ public class VideoBookmark extends AbstractBookmark{
 
     public VideoBookmark(){
         tags = new ArrayList<String>();
-        releatedCourses = new ArrayList<String>();
+        relatedCourses = new ArrayList<String>();
         prerequisiteCourses = new ArrayList<String>();
     }
 
-    public VideoBookmark(String title, String url, ArrayList<String> releatedCourses, ArrayList<String> tags, String description, String comment) {
+    public VideoBookmark(String title, String url, ArrayList<String> relatedCourses, ArrayList<String> tags, String description, String comment) {
         super.title = title;
         super.url = url;
-        super.releatedCourses = releatedCourses;
+        super.relatedCourses = relatedCourses;
         super.tags = tags;
         super.comment = comment;
         super.description=description;
@@ -34,7 +34,13 @@ public class VideoBookmark extends AbstractBookmark{
 
     @Override
     public String toString() {
-        return "Otsikko: " + title+ "\n Url: "+url+ "\n Tyyppi: Video"+"\n Tagit: " +tags()+"\n Samankaltaisia kursseja: "+ releatedCourses() + "\n Kuvaus: "+description + "\n Kommentti: "+comment ;
+        return   "Otsikko: " + title + "\n"
+               + " Url: " + url + "\n"
+               + " Tyyppi: Video" + "\n"
+               + " Tagit: " + tagsStr() + "\n"
+               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
+               + " Kuvaus: " + description + "\n"
+               + " Kommentti: " + comment;
     }
     
 }

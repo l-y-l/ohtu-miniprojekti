@@ -3,8 +3,7 @@ package app;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import bookmarks.AbstractBookmark;
-import bookmarks.BlogBookmark;
+import bookmarks.*;
 
 import java.util.*;
 import java.util.logging.*;
@@ -12,7 +11,7 @@ import org.hibernate.*;
 import org.hibernate.cfg.*;
 
 public class DatabaseTest {
-	private SessionFactory sessionFactory;
+	  private SessionFactory sessionFactory;
 
     @Before
     public void setUp() throws Exception {
@@ -30,12 +29,13 @@ public class DatabaseTest {
     }
   
     @Test
-    public void testTest(){
+    public void blogBookmarksDontCauseCrashing(){
+        // Just tests that this doesn't crash
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        session.save( new BlogBookmark("author", "title", "url", new ArrayList<String>(), new ArrayList<String>(), "description", "comment") );
-        session.save( new BlogBookmark("author2", "title2", "url2", new ArrayList<String>(), new ArrayList<String>(), "description", "comment") );
+        session.save( new BlogBookmark() );
+        session.save( new BlogBookmark() );
 
         session.getTransaction().commit();
         session.close();
@@ -43,9 +43,87 @@ public class DatabaseTest {
         session = sessionFactory.openSession();
         session.beginTransaction();
         List result = session.createQuery( "from AbstractBookmark" ).list();
-        for ( AbstractBookmark bm: (List<AbstractBookmark>) result ) {
-          System.out.println(bm.toString());
-        }
+        session.getTransaction().commit();
+        session.close();
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        result = session.createQuery( "from BlogBookmark" ).list();
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Test
+    public void bookBookmarksDontCauseCrashing(){
+        // Just tests that this doesn't crash
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.save( new BookBookmark() );
+        session.save( new BookBookmark() );
+
+        session.getTransaction().commit();
+        session.close();
+    
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        List result = session.createQuery( "from AbstractBookmark" ).list();
+        session.getTransaction().commit();
+        session.close();
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        result = session.createQuery( "from BookBookmark" ).list();
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Test
+    public void podcastBookmarksDontCauseCrashing(){
+        // Just tests that this doesn't crash
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.save( new PodcastBookmark() );
+        session.save( new PodcastBookmark() );
+
+        session.getTransaction().commit();
+        session.close();
+    
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        List result = session.createQuery( "from AbstractBookmark" ).list();
+        session.getTransaction().commit();
+        session.close();
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        result = session.createQuery( "from PodcastBookmark" ).list();
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Test
+    public void VideoBookmarksDontCauseCrashing(){
+        // Just tests that this doesn't crash
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.save( new VideoBookmark() );
+        session.save( new VideoBookmark() );
+
+        session.getTransaction().commit();
+        session.close();
+    
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        List result = session.createQuery( "from AbstractBookmark" ).list();
+        session.getTransaction().commit();
+        session.close();
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        result = session.createQuery( "from VideoBookmark" ).list();
         session.getTransaction().commit();
         session.close();
     }

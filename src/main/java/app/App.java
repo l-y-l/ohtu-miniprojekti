@@ -8,8 +8,6 @@ import bookmarks.PodcastBookmark;
 import java.util.List; 
 import java.util.ArrayList; 
 import java.util.Scanner;
-import java.util.*;
-import org.apache.log4j.Logger;
 
 import org.hibernate.*;
 import org.hibernate.cfg.*;
@@ -17,7 +15,7 @@ import org.hibernate.cfg.*;
 public class App {
     private final TextUI ui;
     private IO io;
-	private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
 
     public App(TextUI ui, List<AbstractBookmark> memory, IO io){

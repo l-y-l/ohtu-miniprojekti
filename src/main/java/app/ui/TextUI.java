@@ -113,6 +113,7 @@ public class TextUI {
     private PodcastBookmark askForPodcastBookmarkInfo() {
         String author = askForAuthor();
         String title = askForTitle();
+        String url = askForUrl();
 
         ArrayList<String> tagsList = askForTags();
         ArrayList<String> relatedCourseList = askForRelatedCourses();
@@ -120,7 +121,7 @@ public class TextUI {
         String description = askForDescription();
         String comment = askForComment();
 
-        return new PodcastBookmark(author, title, tagsList, relatedCourseList, description, comment);
+        return new PodcastBookmark(author, title, url, tagsList, relatedCourseList, description, comment);
     }
 
     private VideoBookmark askForVideoBookmarkInfo() {
