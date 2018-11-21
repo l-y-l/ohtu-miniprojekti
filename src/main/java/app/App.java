@@ -19,27 +19,37 @@ public class App {
     
     public void run(){
         System.out.println("Welcome!");
-        System.out.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
-        String command=ui.getScanner().nextLine();
+        while (true){
+            System.out.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
+            String command=ui.getScanner().nextLine();
             switch(command){
                 case("new"):
                     AbstractBookmark bookmark=ui.askForBookmark();
                     memory.add(bookmark);
                     System.out.println("Your bookmark has been read! (and will be stored)");
+                    break;
                 case("list"):
+                    if (this.memory.isEmpty()){
+                        System.out.println("There are currently no bookmarks on memory. Add a new bookmark with command \"new\"");
+                    }
                     for(AbstractBookmark bmark: this.memory){
                         System.out.println(bmark);
                     }
+                    break;
                 case("exit"):
                     System.out.println("Goodbye!");
                     System.exit(0);
-            }                
+                    break;
+                default:
+                    System.out.println("Unrecognized option '"+command+"'");
+            }
+        }
     }
      
-  public static void main(String[] args){
-      TextUI ui = new TextUI(new Scanner(System.in)); 
-      List<AbstractBookmark> memory = new ArrayList(); 
-      App app  = new App(ui, memory); 
-      app.run(); 
-  }
+    public static void main(String[] args){
+        TextUI ui = new TextUI(new Scanner(System.in)); 
+        List<AbstractBookmark> memory = new ArrayList(); 
+        App app  = new App(ui, memory); 
+        app.run(); 
+    }
 }
