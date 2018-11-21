@@ -8,6 +8,7 @@ import bookmarks.AbstractBookmark;
 import bookmarks.PodcastBookmark;
 import java.util.List; 
 import java.util.ArrayList; 
+import java.util.Scanner;
 
 public class App {
     private final TextUI ui;
@@ -24,23 +25,15 @@ public class App {
         ui.printWelcomeMessage();  
         AbstractBookmark bookmark = ui.askForBookmark();        
         if(bookmark != null) memory.add(bookmark);
-        
-        System.out.println("Welcome!");
-        System.out.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
-        String command=ui.getScanner().nextLine();
-            switch(command){
-                case("new"):
-                    AbstractBookmark bookmark=ui.askForBookmark();
-                    memory.add(bookmark);
-                    System.out.println("Your bookmark has been read! (and will be stored)");
-                case("list"):
-                    for(AbstractBookmark bmark: this.memory){
-                        System.out.println(bmark);
-                    }
-                case("exit"):
-                    System.out.println("Goodbye!");
-                    System.exit(0);
-            }                
+                  
     }
+    
+  public static void main(String[] args){
+      ConsoleIO io = new ConsoleIO(); 
+      TextUI ui = new TextUI(io); 
+      List<AbstractBookmark> memory = new ArrayList(); 
+      App app  = new App(ui, memory, io); 
+      app.run(); 
+  }
     
 }
