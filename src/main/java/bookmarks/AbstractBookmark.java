@@ -6,19 +6,33 @@
 package bookmarks;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  * An abstract class that is used to create bookmarks, each kind of bookmark is created by a separate class that inherits this class. 
  * @author jussiste
  */
+
+@Entity
 public abstract class AbstractBookmark {
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    Long id;
+
     String author;
     String title;
     String comment;
     String url;
     String description;
+
+    @Transient
     ArrayList<String> tags;
-    ArrayList<String> releatedCourses;
+
+    @Transient
+    ArrayList<String> relatedCourses;
+
+    @Transient
     ArrayList<String> prerequisiteCourses;
 
     public String getAuthor() {
@@ -69,12 +83,12 @@ public abstract class AbstractBookmark {
         this.tags = tags;
     }
 
-    public ArrayList<String> getReleatedCourses() {
-        return releatedCourses;
+    public ArrayList<String> getRelatedCourses() {
+        return relatedCourses;
     }
 
-    public void setReleatedCourses(ArrayList<String> releatedCourses) {
-        this.releatedCourses = releatedCourses;
+    public void setRelatedCourses(ArrayList<String> relatedCourses) {
+        this.relatedCourses = relatedCourses;
     }
 
     public ArrayList<String> getPrerequisiteCourses() {
@@ -83,6 +97,40 @@ public abstract class AbstractBookmark {
 
     public void setPrerequisiteCourses(ArrayList<String> prerequisiteCourses) {
         this.prerequisiteCourses = prerequisiteCourses;
+    }
+    
+
+    public String relatedCoursesStr(){
+        if (this.relatedCourses.isEmpty()){
+            return "";
+        }
+        String str="";
+        for(String s: this.relatedCourses){
+            str+=s + ", ";
+        }
+        return str.substring(0, str.length()-2);
+    }
+
+    public String tagsStr(){
+        if (this.tags.isEmpty()){
+            return "";
+        }
+        String str="";
+        for(String s: this.tags){
+            str+=s + ", ";
+        }
+        return str.substring(0, str.length()-2);
+    }
+
+    public String preqCoursesStr() {
+        if (this.prerequisiteCourses.isEmpty()){
+            return "";
+        }
+        String str = "";
+        for (String s : this.prerequisiteCourses) {
+            str += s + ", ";
+        }
+        return str.substring(0, str.length() - 2);
     }
 
 }

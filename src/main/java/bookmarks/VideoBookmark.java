@@ -6,38 +6,41 @@
 package bookmarks;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  * Class that is used to store bookmarks of videos.
  * @author jussiste
  */
-public class VideoBookmark extends AbstractBookmark{
 
-    public VideoBookmark(String title, String url, ArrayList<String> releatedCourses, ArrayList<String> tags, String description, String comment) {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class VideoBookmark extends AbstractBookmark{
+    // Hibernate requires a constructor with no parameterss
+    public VideoBookmark() {
+        tags = new ArrayList<String>();
+        relatedCourses = new ArrayList<String>();
+        prerequisiteCourses = new ArrayList<String>();
+    }
+
+    public VideoBookmark(String title, String url, ArrayList<String> relatedCourses, ArrayList<String> tags, String description, String comment) {
         super.title = title;
         super.url = url;
-        super.releatedCourses = releatedCourses;
+        super.relatedCourses = relatedCourses;
         super.tags = tags;
         super.comment = comment;
         super.description=description;
     }
-    public String releatedCourses(){
-        String str="";
-        for(String s: this.releatedCourses){
-            str+=s + ", ";
-        }
-        return str.substring(0, str.length()-2);
-    }
-    public String tags(){
-        String str="";
-        for(String s: this.tags){
-            str+=s + ", ";
-        }
-        return str.substring(0, str.length()-2);
-    }
+
     @Override
     public String toString() {
-        return "Otsikko: " + title+ "\n Url: "+url+ "\n Tyyppi: Video"+"\n Tagit: " +tags()+"\n Samankaltaisia kursseja: "+ releatedCourses() + "\n Kuvaus: "+description + "\n Kommentti: "+comment ;
+        return   "Otsikko: " + title + "\n"
+               + " Url: " + url + "\n"
+               + " Tyyppi: Video" + "\n"
+               + " Tagit: " + tagsStr() + "\n"
+               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
+               + " Kuvaus: " + description + "\n"
+               + " Kommentti: " + comment;
     }
     
 }

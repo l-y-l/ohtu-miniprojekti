@@ -6,40 +6,41 @@
 package bookmarks;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
 /**
  * Class that is used to store blogbookmarks
  * @author jussiste
  */
-public class BlogBookmark extends AbstractBookmark{
 
-    public BlogBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> releatedCourses,  String description, String comment) {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class BlogBookmark extends AbstractBookmark{
+    // Hibernate requires a constructor with no parameters
+    public BlogBookmark(){
+        tags = new ArrayList<String>();
+        relatedCourses = new ArrayList<String>();
+        prerequisiteCourses = new ArrayList<String>();
+    }
+    
+    public BlogBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> relatedCourses,  String description, String comment) {
         super.author=author;
         super.title = title;
         super.tags=tags;
         super.url = url;
         super.description=description;
         super.comment=comment;
-        super.releatedCourses = releatedCourses;
-    }
-    public String releatedCourses(){
-        String str="";
-        for(String s: this.releatedCourses){
-            str+=s + ", ";
-        }
-        return str.substring(0, str.length()-2);
-    }
-    public String tags(){
-        String str="";
-        for(String s: this.tags){
-            str+=s + ", ";
-        }
-        return str.substring(0, str.length()-2);
+        super.relatedCourses = relatedCourses;
     }
     @Override
     public String toString() {
-        return "Tekijä: "+ author +"\n Otsikko: " + title+ "\n Url: "+url+ "\n Tyyppi: Blogpost"+"\n Tagit: " +tags()+"\n Samankaltaisia kursseja: "+ releatedCourses()+ "\n Kuvaus: "+description +"\n Kommentti: "+comment;
+        return   "Tekijä: " + author +"\n"
+               + " Otsikko: " + title + "\n"
+               + " Url: " + url + "\n"
+               + " Tyyppi: Blogpost" + "\n"
+               + " Tagit: " + tagsStr() + "\n"
+               + " Samankaltaisia kursseja: " + relatedCoursesStr()+"\n"
+               + " Kuvaus: " + description + "\n"
+               + " Kommentti: " + comment;
     }
-    
-
 }
