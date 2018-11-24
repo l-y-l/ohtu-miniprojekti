@@ -50,6 +50,17 @@ public class App {
         session.getTransaction().commit();
         session.close();
     }
+    
+    
+    private void deleteBookmarkFromDatabase(Long bookmark_id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        
+        session.delete(session.load(AbstractBookmark.class, bookmark_id));
+        
+        session.getTransaction().commit();
+        session.close();
+    }
 
     public void run(){
         ui.printWelcomeMessage(); 
@@ -65,6 +76,9 @@ public class App {
                     break;
                 case("list"):
                     ui.printBookmarkList(getBookMarksOnDatabase());
+                    break;
+                case("delete"):
+                    deleteBookmarkFromDatabase(ui.askForBookmarkToDelete());
                     break;
                 case("exit"):
                     ui.printGoodbyeMessage();

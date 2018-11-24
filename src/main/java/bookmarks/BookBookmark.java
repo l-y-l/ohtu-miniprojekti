@@ -44,7 +44,8 @@ public class BookBookmark extends AbstractBookmark {
 
     @Override
     public String toString() {
-        return   "Kirjoittaja: " + author + "\n"
+        return "ID: " + id + "\n"
+               + " Kirjoittaja: " + author + "\n"
                + " Otsikko: " + title +  "\n"
                + " Tyyppi: Kirja" +"\n"
                + " ISBN: " + ISBN + "\n"

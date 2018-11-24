@@ -34,7 +34,8 @@ public class VideoBookmark extends AbstractBookmark{
 
     @Override
     public String toString() {
-        return   "Otsikko: " + title + "\n"
+        return "ID: " + id + "\n"
+               + " Otsikko: " + title + "\n"
                + " Url: " + url + "\n"
                + " Tyyppi: Video" + "\n"
                + " Tagit: " + tagsStr() + "\n"

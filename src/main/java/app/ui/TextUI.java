@@ -28,7 +28,8 @@ public class TextUI {
     }
 
     public String getMenuCommand() {
-        io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
+        io.println("Type\n * \"new\" to add new bookmark \n * \"list\" to list all bookmarks\n"
+                + " * \"delete\" to delete a bookmark\n * \"exit\" to exit the application");
         return io.nextLine();
     }
 
@@ -178,6 +179,11 @@ public class TextUI {
     private String askForDescription() {
         io.println("Description: ");
         return io.nextLine();
+    }
+
+    public Long askForBookmarkToDelete() {
+        io.println("Give ID of the bookmark you want to delete: ");
+        return Long.parseLong(io.nextLine());
     }
 
 }

@@ -34,7 +34,8 @@ public class BlogBookmark extends AbstractBookmark{
     }
     @Override
     public String toString() {
-        return   "Tekijä: " + author +"\n"
+        return "ID: " + id + "\n"
+               + " Tekijä: " + author +"\n"
                + " Otsikko: " + title + "\n"
                + " Url: " + url + "\n"
                + " Tyyppi: Blogpost" + "\n"

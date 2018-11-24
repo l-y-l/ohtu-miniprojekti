@@ -35,7 +35,8 @@ public class PodcastBookmark extends AbstractBookmark {
 
     @Override
     public String toString() {
-        return   "Tekijä: " + author + "\n"
+        return "ID: " + id + "\n"
+               + " Tekijä: " + author + "\n"
                + " Otsikko: " + title + "\n"
                + " Tyyppi: Podcast" + "\n"
                + " Tagit: " + tagsStr() + "\n"
