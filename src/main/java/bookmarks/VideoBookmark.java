@@ -5,42 +5,39 @@
  */
 package bookmarks;
 
+import app.domain.Course;
+import app.domain.Tag;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 /**
  * Class that is used to store bookmarks of videos.
+ *
  * @author jussiste
  */
-
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class VideoBookmark extends AbstractBookmark{
-    // Hibernate requires a constructor with no parameterss
+public class VideoBookmark extends Bookmark {
+
+
     public VideoBookmark() {
-        tags = new ArrayList<String>();
-        relatedCourses = new ArrayList<String>();
-        prerequisiteCourses = new ArrayList<String>();
+        super();
     }
 
-    public VideoBookmark(String title, String url, ArrayList<String> relatedCourses, ArrayList<String> tags, String description, String comment) {
-        super.title = title;
-        super.url = url;
-        super.relatedCourses = relatedCourses;
-        super.tags = tags;
-        super.comment = comment;
-        super.description=description;
+    public VideoBookmark(String author, String title, String url, List<Tag> tags,
+            List<Course> prerequisiteCourses, List<Course> relatedCourses, String description, String comment) {
+
+        super(author, title, url, tags, prerequisiteCourses, relatedCourses, description, comment);
     }
+
+    
+    
 
     @Override
     public String toString() {
-        return   "Otsikko: " + title + "\n"
-               + " Url: " + url + "\n"
-               + " Tyyppi: Video" + "\n"
-               + " Tagit: " + tagsStr() + "\n"
-               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
-               + " Kuvaus: " + description + "\n"
-               + " Kommentti: " + comment;
+
+        return " Tyyppi: Video\n" + super.toString();
     }
-    
+
 }

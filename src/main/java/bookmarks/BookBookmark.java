@@ -5,7 +5,10 @@
  */
 package bookmarks;
 
+import app.domain.Course;
+import app.domain.Tag;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -16,7 +19,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class BookBookmark extends AbstractBookmark {
+public class BookBookmark extends Bookmark {
     private String ISBN;
     public String getISBN(){
         return ISBN;
@@ -24,35 +27,22 @@ public class BookBookmark extends AbstractBookmark {
     public void setISBN(String ISBN){
         this.ISBN=ISBN;
     }
-    // Hibernate requires a constructor with no parameters
+    
     public BookBookmark(){
-        tags = new ArrayList<String>();
-        relatedCourses = new ArrayList<String>();
-        prerequisiteCourses = new ArrayList<String>();
+        tags = new ArrayList();
+        relatedCourses = new ArrayList();
+        prerequisiteCourses = new ArrayList();
     }
 
-    public BookBookmark(String author, String title, String ISBN, ArrayList<String> tags, ArrayList<String> prerequisiteCourses, ArrayList<String> releatedCourses, String description, String comment) {
-        super.author = author;
-        super.title = title;
+    public BookBookmark(String author, String title, String ISBN, List<Tag> tags, List<Course> prerequisiteCourses, List<Course> relatedCourses, String description, String comment) {
+        super(author, title, "", tags, prerequisiteCourses, relatedCourses, description, comment); 
         this.ISBN = ISBN;
-        super.tags = tags;
-        super.prerequisiteCourses = prerequisiteCourses;
-        super.relatedCourses = releatedCourses;
-        super.description = description;
-        super.comment = comment;
     }
 
     @Override
     public String toString() {
-        return   "Kirjoittaja: " + author + "\n"
-               + " Otsikko: " + title +  "\n"
-               + " Tyyppi: Kirja" +"\n"
-               + " ISBN: " + ISBN + "\n"
-               + " Tagit: "  + tagsStr() + "\n"
-               + " Esitietokurssit: " + preqCoursesStr() + "\n"
-               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
-               + " Kuvaus: " + description + "\n"
-               + " Kommentti: " + comment;
+        String result = " Tyyppi: Kirja\n ISBN: " + this.ISBN + "\n";
+        return result + super.toString(); 
     }
 
 }

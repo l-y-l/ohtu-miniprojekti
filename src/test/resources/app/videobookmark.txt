@@ -1,7 +1,9 @@
 V
 testTitle
+testCreator
 testUrl
-testReleated1, testReleated2
 testTag
+testReleated1, testReleated2
+testPrereq
 testDescription
 testComment

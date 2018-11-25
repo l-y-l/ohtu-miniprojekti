@@ -5,42 +5,38 @@
  */
 package bookmarks;
 
+import app.domain.Course;
+import app.domain.Tag;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 /**
  * Class that is used to store blogbookmarks
+ *
  * @author jussiste
  */
-
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class BlogBookmark extends AbstractBookmark{
-    // Hibernate requires a constructor with no parameters
-    public BlogBookmark(){
-        tags = new ArrayList<String>();
-        relatedCourses = new ArrayList<String>();
-        prerequisiteCourses = new ArrayList<String>();
-    }
+public class BlogBookmark extends Bookmark {
     
-    public BlogBookmark(String author, String title, String url, ArrayList<String> tags, ArrayList<String> relatedCourses,  String description, String comment) {
-        super.author=author;
-        super.title = title;
-        super.tags=tags;
-        super.url = url;
-        super.description=description;
-        super.comment=comment;
-        super.relatedCourses = relatedCourses;
+    
+    public BlogBookmark(){
+        super(); 
     }
+
+    public BlogBookmark(String author, String title, String url, List<Tag> tags,
+            List<Course> prerequisiteCourses, List<Course> relatedCourses, String description, String comment) {
+
+        super(author, title, url,  tags, prerequisiteCourses, relatedCourses, description, comment);
+    }
+
+
+    
+    
+
     @Override
     public String toString() {
-        return   "Tekijä: " + author +"\n"
-               + " Otsikko: " + title + "\n"
-               + " Url: " + url + "\n"
-               + " Tyyppi: Blogpost" + "\n"
-               + " Tagit: " + tagsStr() + "\n"
-               + " Samankaltaisia kursseja: " + relatedCoursesStr()+"\n"
-               + " Kuvaus: " + description + "\n"
-               + " Kommentti: " + comment;
+        return " Tyyppi: Blogpost\n" +  super.toString();
     }
 }

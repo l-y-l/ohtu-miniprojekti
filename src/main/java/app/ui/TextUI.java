@@ -1,7 +1,9 @@
 package app.ui;
 
+import app.domain.Course;
+import app.domain.Tag;
 import app.io.IO;
-import bookmarks.AbstractBookmark;
+import bookmarks.Bookmark;
 import bookmarks.BookBookmark;
 import bookmarks.BlogBookmark;
 import bookmarks.PodcastBookmark;
@@ -11,7 +13,7 @@ import java.util.*;
 public class TextUI {
 
     private final IO io;
-    private String defaultSuccessMessage = "Your bookmark has been read!";
+    private final String defaultSuccessMessage = "Your bookmark has been read!";
 
     public TextUI(IO io) {
         this.io = io;
@@ -20,163 +22,153 @@ public class TextUI {
     public void printWelcomeMessage() {
         io.println("Welcome");
     }
+
     public void printGoodbyeMessage() {
         io.println("Goodbye");
     }
-    public void printUnrecognizedOption(String option){
-        io.println("Unrecognized option '"+option+"'");
+
+    public void printUnrecognizedOption(String option) {
+        io.println("Unrecognized option '" + option + "'");
     }
 
     public String getMenuCommand() {
-        io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
-        return io.nextLine();
+        return askForInput("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
     }
 
-    public AbstractBookmark askForBookmark() {
+    public Bookmark askForBookmark() {
         io.println("Add a new bookmark.");
         io.println("Give type (B = Book) (BG = Blog) (P = Podcast) (V = Video): ");
         String type = io.nextLine();
 
+        Bookmark bookmark = null;
+
         if (type.equals("B")) {
-            BookBookmark bookmark = askForBookBookmarkInfo();
-            if (bookmark != null) {
-                io.println(defaultSuccessMessage);
-                return bookmark;
-            }
+            bookmark = askForBookBookmarkInfo();
         } else if (type.equals("BG")) {
-            BlogBookmark bookmark = askForBlogBookmarkInfo();
-            if (bookmark != null) {
-                io.println(defaultSuccessMessage);
-                return bookmark;
-            }
+            bookmark = askForBlogBookmarkInfo();
         } else if (type.equals("P")) {
-            PodcastBookmark bookmark = askForPodcastBookmarkInfo();
-            if (bookmark != null) {
-                io.println(defaultSuccessMessage);
-                return bookmark;
-            }
+            bookmark = askForPodcastBookmarkInfo();
+
         } else if (type.equals("V")) {
-            VideoBookmark bookmark = askForVideoBookmarkInfo();
-            if (bookmark != null) {
-                io.println(defaultSuccessMessage);
-                return bookmark;
-            }
-        } else {
-            io.println("Invalid choice");
-            return null;
+            bookmark = askForVideoBookmarkInfo();
         }
-        io.println("Error.");
+
+        if (bookmark != null) {
+            io.println(defaultSuccessMessage);
+            return bookmark;
+        }
+
+        io.println("Invalid choice");
         return null;
+
     }
 
-    public void printBookmarkList(List<AbstractBookmark> bookmarks){
+    public void printBookmarkList(List<Bookmark> bookmarks) {
         if (bookmarks.isEmpty()) {
             io.println("There are currently no bookmarks on memory. Add a new bookmark with command \"new\"");
         }
-        for(AbstractBookmark bmark: bookmarks){
+        for (Bookmark bmark : bookmarks) {
             io.println(bmark.toString());
         }
     }
 
-    private BookBookmark askForBookBookmarkInfo() {
-        String author = askForAuthor();
-        String title = askForTitle();
+    private Bookmark askForBookBookmarkInfo() {
+        BookBookmark bm = new BookBookmark();
 
         io.println("ISBN: ");
         String isbn = io.nextLine();
+        bm.setISBN(isbn);
+        askForGeneralBookmarkInfo(bm);
+        return bm;
+    }
 
-        ArrayList<String> tagList = askForTags();
-        ArrayList<String> prerequisiteList = askForPrerequisites();
-        ArrayList<String> relatedCourseList = askForRelatedCourses();
+    private Bookmark askForBlogBookmarkInfo() {
+        BlogBookmark bm = new BlogBookmark();
+        askForGeneralBookmarkInfo(bm);
+        return bm;
+    }
+
+    private Bookmark askForPodcastBookmarkInfo() {
+
+        PodcastBookmark bm = new PodcastBookmark();
+        askForGeneralBookmarkInfo(bm);
+        return bm;
+    }
+
+    private Bookmark askForVideoBookmarkInfo() {
+        VideoBookmark bm = new VideoBookmark();
+        askForGeneralBookmarkInfo(bm);
+        return bm;
+    }
+
+    private Bookmark askForGeneralBookmarkInfo(Bookmark bookmark) {
+        String title = askForInput("Title: ");
+        bookmark.setTitle(title); 
         
-        String description = askForDescription();
-        String comment = askForComment();
+        String author = askForInput("Author: "); 
+        bookmark.setAuthor(author);
 
-        return new BookBookmark(author, title, isbn, tagList, prerequisiteList, relatedCourseList, description, comment);
+        String url = askForInput("Url: ");
+        bookmark.setUrl(url);
 
-    }
+        List<Tag> tagsList = askForTags();
+        bookmark.setTags(tagsList);
 
-    private BlogBookmark askForBlogBookmarkInfo() {
-        String author = askForAuthor();
-        String title = askForTitle();
-        String url = askForUrl();
+        List<Course> relatedCourseList = askForRelatedCourses();
+        bookmark.setRelatedCourses(relatedCourseList);
 
-        ArrayList<String> tagList = askForTags();
-        ArrayList<String> relatedCourseList = askForRelatedCourses();
+        List<Course> prerequisiteCourseList = askForPrerequisites();
+        bookmark.setPrerequisiteCourses(prerequisiteCourseList);
 
-        String description = askForDescription();
-        String comment = askForComment();
-
-        return new BlogBookmark(author, title, url, tagList, relatedCourseList, description, comment);
-    }
-
-    private PodcastBookmark askForPodcastBookmarkInfo() {
-        String author = askForAuthor();
-        String title = askForTitle();
-
-        ArrayList<String> tagsList = askForTags();
-        ArrayList<String> relatedCourseList = askForRelatedCourses();
-
-        String description = askForDescription();
-        String comment = askForComment();
-
-        return new PodcastBookmark(author, title, tagsList, relatedCourseList, description, comment);
-    }
-
-    private VideoBookmark askForVideoBookmarkInfo() {
-        String title = askForTitle();
-        String url = askForUrl();
-
-        ArrayList<String> tagsList = askForTags();
-        ArrayList<String> relatedCourseList = askForRelatedCourses();
-
-        String description = askForDescription();
-        String comment = askForComment();
+        String description = askForInput("Description: ");
+        bookmark.setDescription(description);
         
-        return new VideoBookmark(title, url, relatedCourseList, tagsList, description, comment);
+        String comment = askForInput("Comment");
+        bookmark.setComment(comment);
+
+        return bookmark;
     }
 
-    private String askForAuthor() {
-        io.println("Author: ");
-        return io.nextLine();
-    }
-
-    private String askForTitle() {
-        io.println("Title: ");
-        return io.nextLine();
-    }
-
-    private String askForUrl() {
-        io.println("Url: ");
-        return io.nextLine();
-    }
-
-    private ArrayList<String> askForTags() {
+    private List<Tag> askForTags() {
         io.println("Tags (separated by \",\"): ");
-        String tags = io.nextLine();
-        return new ArrayList<>(Arrays.asList(tags.split(",")));
+        String input = io.nextLine();
+
+        String[] tags = input.split(",");
+        List<Tag> result = new ArrayList();
+        for (int i = 0; i < tags.length; i++) {
+            // toistaiseksi oletetaan, että jokainen lisättävä kurssi on eri
+            result.add(new Tag(tags[i].trim()));
+        }
+
+        return result;
     }
 
-    private ArrayList<String> askForPrerequisites() {
-        io.println("Prerequisite courses (separated by \",\"): ");
-        String prerequisiteCourses = io.nextLine();
-        return new ArrayList<>(Arrays.asList(prerequisiteCourses.split(",")));
+    private List<Course> askForPrerequisites() {
+        return askForCourses("Prerequisite courses (separated by \",\"): ");
 
     }
 
-    private ArrayList<String> askForRelatedCourses() {
-        io.println("Related courses (separated by \",\"): ");
-        String relatedCourses = io.nextLine();
-        return new ArrayList<>(Arrays.asList(relatedCourses.split(",")));
+    private List<Course> askForRelatedCourses() {
+        return askForCourses("Related courses (separated by \",\"): ");
+
     }
 
-    private String askForComment() {
-        io.println("Comment: ");
-        return io.nextLine();
+    private List<Course> askForCourses(String prompt) {
+        io.println(prompt);
+        String input = io.nextLine();
+
+        String[] courses = input.split(",");
+        List<Course> result = new ArrayList();
+        for (int i = 0; i < courses.length; i++) {
+            // toistaiseksi oletetaan, että jokainen lisättävä kurssi on eri
+            result.add(new Course(courses[i].trim()));
+        }
+
+        return result;
     }
 
-    private String askForDescription() {
-        io.println("Description: ");
+    private String askForInput(String prompt) {
+        io.println(prompt);
         return io.nextLine();
     }
 

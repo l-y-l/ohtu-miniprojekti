@@ -3,7 +3,7 @@ package app;
 import app.io.ConsoleIO;
 import app.io.IO;
 import app.ui.TextUI;
-import bookmarks.AbstractBookmark;
+import bookmarks.Bookmark;
 import bookmarks.PodcastBookmark;
 import java.util.List; 
 import java.util.ArrayList; 
@@ -18,7 +18,7 @@ public class App {
     private SessionFactory sessionFactory;
 
 
-    public App(TextUI ui, List<AbstractBookmark> memory, IO io){
+    public App(TextUI ui, List<Bookmark> memory, IO io){
         this.ui = ui;
         this.io = io;
         sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -30,18 +30,18 @@ public class App {
         }
     }
 
-    private List<AbstractBookmark> getBookMarksOnDatabase(){
+    private List<Bookmark> getBookMarksOnDatabase(){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        List result = session.createQuery( "from AbstractBookmark" ).list();
+        List result = session.createQuery( "from Bookmark" ).list();
 
         session.getTransaction().commit();
         session.close();
-        return  (List<AbstractBookmark>) result;
+        return  (List<Bookmark>) result;
     }
 
-    private void saveBookmarkToDatabase(AbstractBookmark bookmark){
+    private void saveBookmarkToDatabase(Bookmark bookmark){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -58,7 +58,7 @@ public class App {
             String command = ui.getMenuCommand();
             switch(command){
                 case("new"):
-                    AbstractBookmark bookmark = ui.askForBookmark();     
+                    Bookmark bookmark = ui.askForBookmark();     
                     if(bookmark != null) {
                         saveBookmarkToDatabase(bookmark);
                     }
@@ -81,7 +81,7 @@ public class App {
     public static void main(String[] args){
         ConsoleIO io = new ConsoleIO(); 
         TextUI ui = new TextUI(io); 
-        List<AbstractBookmark> memory = new ArrayList(); 
+        List<Bookmark> memory = new ArrayList(); 
         App app  = new App(ui, memory, io); 
         app.run(); 
         app.close();

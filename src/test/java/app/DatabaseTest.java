@@ -1,9 +1,12 @@
 package app;
 
+import bookmarks.PodcastBookmark;
+import bookmarks.VideoBookmark;
+import bookmarks.BlogBookmark;
+import bookmarks.BookBookmark;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-import bookmarks.*;
 
 import java.util.*;
 import java.util.logging.*;
@@ -42,7 +45,7 @@ public class DatabaseTest {
     
         session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery( "from AbstractBookmark" ).list();
+        List result = session.createQuery( "from Bookmark" ).list();
         session.getTransaction().commit();
         session.close();
 
@@ -67,7 +70,7 @@ public class DatabaseTest {
     
         session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery( "from AbstractBookmark" ).list();
+        List result = session.createQuery( "from Bookmark" ).list();
         session.getTransaction().commit();
         session.close();
 
@@ -92,7 +95,7 @@ public class DatabaseTest {
     
         session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery( "from AbstractBookmark" ).list();
+        List result = session.createQuery( "from Bookmark" ).list();
         session.getTransaction().commit();
         session.close();
 
@@ -117,7 +120,7 @@ public class DatabaseTest {
     
         session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery( "from AbstractBookmark" ).list();
+        List result = session.createQuery( "from Bookmark" ).list();
         session.getTransaction().commit();
         session.close();
 
