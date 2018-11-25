@@ -11,6 +11,8 @@ import app.utilities.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * An abstract class that is used to create bookmarks, each kind of bookmark is
@@ -34,13 +36,35 @@ public abstract class Bookmark {
     String comment;
     String description;
 
-    @Transient
+    // toistaiseksi eager, sillä jos Session ei auki ja esim kutsutaan bookmarkin 
+    // toString => virhe
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "bookmark_tags",
+            joinColumns = {
+                @JoinColumn(name = "bookmark_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "tag_id")})
+    @Fetch(value = FetchMode.SUBSELECT)
+
     List<Tag> tags;
 
-    @Transient
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "bookmark_related_courses",
+            joinColumns = {
+                @JoinColumn(name = "bookmark_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "course_id")})
+    @Fetch(value = FetchMode.SUBSELECT)
+
     List<Course> relatedCourses;
 
-    @Transient
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "bookmark_prerequisite_courses",
+            joinColumns = {
+                @JoinColumn(name = "bookmark_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "course_id")})
+    @Fetch(value = FetchMode.SUBSELECT)
     List<Course> prerequisiteCourses;
 
     // Hibernate requires a constructor with no parameters
@@ -135,6 +159,7 @@ public abstract class Bookmark {
     }
 
     public String preqCoursesStr() {
+        
         return Utilities.formStringSeparatedByCommas(prerequisiteCourses);
 
     }
@@ -144,11 +169,12 @@ public abstract class Bookmark {
         String result
                 = " Tekijä: " + author + "\n"
                 + " Otsikko: " + title + "\n";
-        
-        if(!(url == null || url.isEmpty())){
+
+        if (!(url == null || url.isEmpty())) {
             result += " Url: " + url + "\n";
         }
 
+        
         result += " Tagit: " + tagsStr() + "\n"
                 + " Esitietokurssit: " + preqCoursesStr() + "\n"
                 + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"

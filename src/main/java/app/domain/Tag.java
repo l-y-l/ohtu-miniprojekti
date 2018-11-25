@@ -2,33 +2,40 @@ package app.domain;
 
 import bookmarks.Bookmark;
 import java.util.List;
+import java.util.Set;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-
-//@Entity
+@Entity
 public class Tag {
-    
-   // @ManyToMany(mappedBy ="tags")
-    private List<Bookmark> bookmarks; 
-    
-    
-    private String name; 
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
+    @ManyToMany(mappedBy = "tags")
+    private Set<Bookmark> bookmarks;
+
+    private String name;
+
+    public Tag(){}
+    
     public Tag(String name) {
         this.name = name;
     }
 
-    public List<Bookmark> getBookmarks() {
+    public Set<Bookmark> getBookmarks() {
         return bookmarks;
     }
 
-    public void setBookmarks(List<Bookmark> bookmarks) {
+    public void setBookmarks(Set<Bookmark> bookmarks) {
         this.bookmarks = bookmarks;
     }
-    
-    
-    
 
     public String getName() {
         return name;
@@ -37,24 +44,31 @@ public class Tag {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
-    
-    
-    @Override
-    public String toString(){
-        return this.name; 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
+    
+
     @Override
-    public boolean equals(Object o){
-        if (o == null || this.getClass() != o.getClass()){
-            return false; 
+    public String toString() {
+        return this.name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
         }
-        
+
         Tag t = (Tag) o;
-        
-        return this.name.equals(t.getName()); 
+
+        return this.name.equals(t.getName());
     }
-    
+
 }
