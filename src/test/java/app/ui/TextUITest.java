@@ -2,7 +2,7 @@ package app.ui;
 
 import app.io.ConsoleIO;
 
-import bookmarks.AbstractBookmark;
+import bookmarks.Bookmark;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,7 +39,7 @@ public class TextUITest {
         scanner = new Scanner(file);
 
         ui = new TextUI(new ConsoleIO(scanner));
-        AbstractBookmark bookmark = ui.askForBookmark();
+        Bookmark bookmark = ui.askForBookmark();
 
 
         assertEquals(bookmark.getAuthor(), "testAuthor");
@@ -58,7 +58,7 @@ public class TextUITest {
 
         scanner = new Scanner(file);
         ui = new TextUI(new ConsoleIO(scanner));
-        AbstractBookmark bookmark = ui.askForBookmark();
+        Bookmark bookmark = ui.askForBookmark();
 
         assertEquals(bookmark.getUrl(), "testUrl");
         assertEquals(bookmark.getTitle(), "testTitle");
@@ -76,7 +76,7 @@ public class TextUITest {
 
         scanner = new Scanner(file);
         ui = new TextUI(new ConsoleIO(scanner));
-        AbstractBookmark bookmark = ui.askForBookmark();
+        Bookmark bookmark = ui.askForBookmark();
 
         assertEquals(bookmark.getUrl(), "testUrl");
         assertEquals(bookmark.getTitle(), "testTitle");
@@ -93,7 +93,7 @@ public class TextUITest {
 
         scanner = new Scanner(file);
         ui = new TextUI(new ConsoleIO(scanner));
-        AbstractBookmark bookmark = ui.askForBookmark();
+        Bookmark bookmark = ui.askForBookmark();
 
         assertEquals(bookmark.getTitle(), "testTitle");
         assertEquals(bookmark.getComment(), "testComment");
@@ -109,7 +109,7 @@ public class TextUITest {
 
         scanner = new Scanner(file);
         ui = new TextUI(new ConsoleIO(scanner));
-        AbstractBookmark bookmark = ui.askForBookmark();
+        Bookmark bookmark = ui.askForBookmark();
         assertNull(bookmark);
     }
 }

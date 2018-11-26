@@ -2,7 +2,7 @@ package app;
 
 import app.io.StubIO;
 import app.ui.TextUI;
-import bookmarks.AbstractBookmark;
+import bookmarks.Bookmark;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -15,7 +15,7 @@ public class Stepdefs {
     App app;
     TextUI ui;
     StubIO io;
-    List<AbstractBookmark> memory = new ArrayList();
+    List<Bookmark> memory = new ArrayList();
     List<String> inputLines = new ArrayList();
     
     
