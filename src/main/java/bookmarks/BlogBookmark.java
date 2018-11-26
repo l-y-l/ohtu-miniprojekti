@@ -14,8 +14,10 @@ import javax.persistence.*;
  */
 
 @Entity
+@Table(name="BlogBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BlogBookmark extends AbstractBookmark{
+    
     // Hibernate requires a constructor with no parameters
     public BlogBookmark(){
         tags = new ArrayList<String>();
@@ -35,13 +37,13 @@ public class BlogBookmark extends AbstractBookmark{
     @Override
     public String toString() {
         return "ID: " + id + "\n"
-               + " Tekijä: " + author +"\n"
-               + " Otsikko: " + title + "\n"
+               + " Author: " + author +"\n"
+               + " Title: " + title + "\n"
                + " Url: " + url + "\n"
-               + " Tyyppi: Blogpost" + "\n"
-               + " Tagit: " + tagsStr() + "\n"
-               + " Samankaltaisia kursseja: " + relatedCoursesStr()+"\n"
-               + " Kuvaus: " + description + "\n"
-               + " Kommentti: " + comment;
+               + " Type: Blogpost" + "\n"
+               + " Tags: " + tagsStr() + "\n"
+               + " Related courses: " + relatedCoursesStr()+"\n"
+               + " Description: " + description + "\n"
+               + " Comment: " + comment;
     }
 }

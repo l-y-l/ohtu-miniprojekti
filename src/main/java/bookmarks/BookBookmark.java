@@ -15,8 +15,10 @@ import javax.persistence.*;
  */
 
 @Entity
+@Table(name="BookBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BookBookmark extends AbstractBookmark {
+    @Column
     private String ISBN;
     public String getISBN(){
         return ISBN;
@@ -45,15 +47,15 @@ public class BookBookmark extends AbstractBookmark {
     @Override
     public String toString() {
         return "ID: " + id + "\n"
-               + " Kirjoittaja: " + author + "\n"
-               + " Otsikko: " + title +  "\n"
-               + " Tyyppi: Kirja" +"\n"
+               + " Author: " + author + "\n"
+               + " Title: " + title +  "\n"
+               + " Type: Book" +"\n"
                + " ISBN: " + ISBN + "\n"
-               + " Tagit: "  + tagsStr() + "\n"
-               + " Esitietokurssit: " + preqCoursesStr() + "\n"
-               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
-               + " Kuvaus: " + description + "\n"
-               + " Kommentti: " + comment;
+               + " Tags: "  + tagsStr() + "\n"
+               + " Prerequisite courses: " + preqCoursesStr() + "\n"
+               + " Related courses: " + relatedCoursesStr() + "\n"
+               + " Description: " + description + "\n"
+               + " Comment: " + comment;
     }
 
 }

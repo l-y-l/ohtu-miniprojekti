@@ -14,26 +14,36 @@ import javax.persistence.*;
  */
 
 @Entity
+@Table(name="AbstractBookmark")
 public abstract class AbstractBookmark {
     @Id
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    Long id;
-
-    String author;
-    String title;
-    String comment;
-    String url;
-    String description;
+    protected Long id;
+    
+    @Column(name = "author")
+    protected String author;
+    
+    @Column(name = "title")
+    protected String title;
+    
+    @Column(name = "comment")
+    protected String comment;
+    
+    @Column(name = "url")
+    protected String url;
+    
+    @Column(name = "description")
+    protected String description;
 
     @Transient
-    ArrayList<String> tags;
+    protected ArrayList<String> tags;
 
     @Transient
-    ArrayList<String> relatedCourses;
+    protected ArrayList<String> relatedCourses;
 
     @Transient
-    ArrayList<String> prerequisiteCourses;
+    protected ArrayList<String> prerequisiteCourses;
 
     public String getAuthor() {
         return author;
