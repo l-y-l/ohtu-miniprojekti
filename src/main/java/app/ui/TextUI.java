@@ -30,7 +30,7 @@ public class TextUI {
     }
 
     public String getMenuCommand() {
-        io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks \"search\" to search the database or \"exit\" to exit the application");
+        io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks \"search\" to search the database \"delete\" to delete a bookmark or \"exit\" to exit the application");
         return io.nextLine();
     }
 
