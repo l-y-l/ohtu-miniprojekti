@@ -1,4 +1,4 @@
-package app.domain.bookmarks;
+package bookmarks;
 
 import app.domain.Course;
 import app.domain.Tag;
@@ -82,9 +82,9 @@ public class BookmarkTest {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
         String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
         String prereqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " +  prerequisiteCourses.get(2); 
-        String testString = " Tyyppi: Blogpost\n Tekijä: " + author + "\n Otsikko: " + title + "\n Url: " + url + "\n"
-                + " Tagit: " + tagsStr + "\n Esitietokurssit: " + prereqStr +  "\n Samankaltaisia kursseja: " + relatedStr
-                + "\n Kuvaus: " + description + "\n Kommentti: " + comment; 
+        String testString = " Type: Blogpost\n Author: " + author + "\n Title: " + title + "\n Url: " + url + "\n"
+                + " Tags: " + tagsStr + "\n Prerequisite courses: " + prereqStr +  "\n Related courses: " + relatedStr
+                + "\n Description: " + description + "\n Comment: " + comment; 
         assertEquals(testString, blogB.toString());
     }
 
@@ -93,9 +93,9 @@ public class BookmarkTest {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
         String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
         String prereqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " +  prerequisiteCourses.get(2); 
-        String testString = " Tyyppi: Kirja\n ISBN: " + ISBN + "\n Tekijä: " + author + "\n Otsikko: " + title 
-                + "\n Tagit: " + tagsStr + "\n Esitietokurssit: " + prereqStr +  "\n Samankaltaisia kursseja: " + relatedStr
-                + "\n Kuvaus: " + description + "\n Kommentti: " + comment; 
+        String testString = " Type: Book\n ISBN: " + ISBN + "\n Author: " + author + "\n Title: " + title 
+                + "\n Tags: " + tagsStr + "\n Prerequisite courses: " + prereqStr +  "\n Related courses: " + relatedStr
+                + "\n Description: " + description + "\n Comment: " + comment; 
         assertEquals(testString, bookB.toString());
     }
 
@@ -104,9 +104,9 @@ public class BookmarkTest {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
         String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
         String prereqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " +  prerequisiteCourses.get(2); 
-        String testString = " Tyyppi: Podcast\n Tekijä: " + author + "\n Otsikko: " + title + "\n Url: " + url + "\n"
-                + " Tagit: " + tagsStr + "\n Esitietokurssit: " + prereqStr +  "\n Samankaltaisia kursseja: " + relatedStr
-                + "\n Kuvaus: " + description + "\n Kommentti: " + comment; 
+        String testString = " Type: Podcast\n Author: " + author + "\n Title: " + title + "\n Url: " + url + "\n"
+                + " Tags: " + tagsStr + "\n Prerequisite courses: " + prereqStr +  "\n Related courses: " + relatedStr
+                + "\n Description: " + description + "\n Comment: " + comment; 
         assertEquals(testString, podcastB.toString());
     }
 
@@ -115,9 +115,9 @@ public class BookmarkTest {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
         String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
         String prereqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " +  prerequisiteCourses.get(2); 
-        String testString = " Tyyppi: Video\n Tekijä: " + author + "\n Otsikko: " + title + "\n Url: " + url + "\n"
-                + " Tagit: " + tagsStr + "\n Esitietokurssit: " + prereqStr +  "\n Samankaltaisia kursseja: " + relatedStr
-                + "\n Kuvaus: " + description + "\n Kommentti: " + comment; 
+        String testString = " Type: Video\n Author: " + author + "\n Title: " + title + "\n Url: " + url + "\n"
+                + " Tags: " + tagsStr + "\n Prerequisite courses: " + prereqStr +  "\n Related courses: " + relatedStr
+                + "\n Description: " + description + "\n Comment: " + comment; 
         assertEquals(testString, videoB.toString());
     }
     

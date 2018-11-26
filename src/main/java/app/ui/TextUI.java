@@ -32,7 +32,30 @@ public class TextUI {
     }
 
     public String getMenuCommand() {
-        return askForInput("Type \"new\" new bookmark or \"list\" to list all bookmarks or \"exit\" to exit the application");
+        io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks \"search\" to search the database or \"exit\" to exit the application");
+        return io.nextLine();
+    }
+
+    public String askForField() {
+        io.println("Which field would you like to search?");
+        io.println("Give field (A = Author) (T = Title) (C = Comment) (D = Description)");
+        String command = io.nextLine();
+        switch(command){
+            case("A"):
+                return "author";
+            case("T"):
+                return "title";
+            case("C"):
+                return "comment";
+            case("D"):
+                return "description";
+            default:
+                return "";
+        }
+    }
+    public String askForSearch(){
+        io.println("Give a search term: ");
+        return io.nextLine();
     }
 
     public Bookmark askForBookmark() {
@@ -65,7 +88,7 @@ public class TextUI {
 
     public void printBookmarkList(List<Bookmark> bookmarks) {
         if (bookmarks.isEmpty()) {
-            io.println("There are currently no bookmarks on memory. Add a new bookmark with command \"new\"");
+            io.println("There are currently no bookmarks in memory. Add a new bookmark with command \"new\"");
         }
         for (Bookmark bmark : bookmarks) {
             io.println(bmark.toString());
@@ -103,9 +126,9 @@ public class TextUI {
 
     private Bookmark askForGeneralBookmarkInfo(Bookmark bookmark) {
         String title = askForInput("Title: ");
-        bookmark.setTitle(title); 
-        
-        String author = askForInput("Author: "); 
+        bookmark.setTitle(title);
+
+        String author = askForInput("Author: ");
         bookmark.setAuthor(author);
 
         String url = askForInput("Url: ");
@@ -122,7 +145,7 @@ public class TextUI {
 
         String description = askForInput("Description: ");
         bookmark.setDescription(description);
-        
+
         String comment = askForInput("Comment");
         bookmark.setComment(comment);
 

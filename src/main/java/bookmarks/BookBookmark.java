@@ -18,6 +18,7 @@ import javax.persistence.*;
  */
 
 @Entity
+@Table(name="BookBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BookBookmark extends Bookmark {
     private String ISBN;
@@ -27,7 +28,7 @@ public class BookBookmark extends Bookmark {
     public void setISBN(String ISBN){
         this.ISBN=ISBN;
     }
-    
+
     public BookBookmark(){
         tags = new ArrayList();
         relatedCourses = new ArrayList();
@@ -35,14 +36,14 @@ public class BookBookmark extends Bookmark {
     }
 
     public BookBookmark(String author, String title, String ISBN, List<Tag> tags, List<Course> prerequisiteCourses, List<Course> relatedCourses, String description, String comment) {
-        super(author, title, "", tags, prerequisiteCourses, relatedCourses, description, comment); 
+        super(author, title, "", tags, prerequisiteCourses, relatedCourses, description, comment);
         this.ISBN = ISBN;
     }
 
     @Override
     public String toString() {
-        String result = " Tyyppi: Kirja\n ISBN: " + this.ISBN + "\n";
-        return result + super.toString(); 
+        String result = " Type: Book\n ISBN: " + this.ISBN + "\n";
+        return result + super.toString();
     }
 
 }

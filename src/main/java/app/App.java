@@ -2,6 +2,7 @@ package app;
 
 import app.domain.Course;
 import app.domain.Tag;
+import app.dao.BookMarkDAO;
 import app.io.ConsoleIO;
 import app.io.IO;
 import app.ui.TextUI;
@@ -18,66 +19,34 @@ public class App {
 
     private final TextUI ui;
     private IO io;
-    private SessionFactory sessionFactory;
+    private BookMarkDAO dao;
 
-    public App(TextUI ui, List<Bookmark> memory, IO io) {
-        this.ui = ui;
+    public App(IO io) {
         this.io = io;
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
-
-    public void close() {
-        if (sessionFactory != null) {
-            sessionFactory.close();
-        }
-    }
-
-    private List<Bookmark> getBookMarksOnDatabase() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        List result = session.createQuery("from Bookmark").list();
-
-        session.getTransaction().commit();
-        session.close();
-        return (List<Bookmark>) result;
-    }
-
-    private void saveBookmarkToDatabase(Bookmark bookmark) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.save(bookmark);
-
-        for (Tag t : bookmark.getTags()) {
-            session.save(t);
-        }
-
-        for (Course c : bookmark.getPrerequisiteCourses()) {
-            session.save(c);
-        }
-
-        for (Course c : bookmark.getRelatedCourses()) {
-            session.save(c);
-        }
-        session.getTransaction().commit();
-        session.close();
+        this.ui = new TextUI(io);
+        this.dao = new BookMarkDAO();
     }
 
     public void run() {
         ui.printWelcomeMessage();
         boolean run = true;
+        //TODO: hide this to an other class
         while (run) {
             String command = ui.getMenuCommand();
             switch (command) {
                 case ("new"):
                     Bookmark bookmark = ui.askForBookmark();
                     if (bookmark != null) {
-                        saveBookmarkToDatabase(bookmark);
+                        dao.saveBookmarkToDatabase(bookmark);
                     }
                     break;
                 case ("list"):
-                    ui.printBookmarkList(getBookMarksOnDatabase());
+                    ui.printBookmarkList(dao.getBookMarksOnDatabase());
+                    break;
+                case ("search"):
+                    String field = ui.askForField();
+                    String search = ui.askForSearch();
+                    ui.printBookmarkList(dao.searchByTitle(field, search));
                     break;
                 case ("exit"):
                     ui.printGoodbyeMessage();
@@ -91,11 +60,12 @@ public class App {
         }
     }
 
+    public void close() {
+        this.dao.close();
+    }
+
     public static void main(String[] args) {
-        ConsoleIO io = new ConsoleIO();
-        TextUI ui = new TextUI(io);
-        List<Bookmark> memory = new ArrayList();
-        App app = new App(ui, memory, io);
+        App app = new App(new ConsoleIO());
         app.run();
         app.close();
     }

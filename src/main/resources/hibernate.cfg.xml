@@ -9,6 +9,7 @@
         <property name="connection.pool_size">1</property>
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
         <property name="show_sql">false</property>
+		<property name="hibernate.hbm2ddl.auto">validate</property>
         <!-- use create to drop and create, use for example update to not drop -->
         <property name="hbm2ddl.auto">update</property>
 

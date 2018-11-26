@@ -36,7 +36,7 @@ public abstract class Bookmark {
     String comment;
     String description;
 
-    // toistaiseksi eager, sillä jos Session ei auki ja esim kutsutaan bookmarkin 
+    // toistaiseksi eager, sillä jos Session ei auki ja esim kutsutaan bookmarkin
     // toString => virhe
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "bookmark_tags",
@@ -159,7 +159,7 @@ public abstract class Bookmark {
     }
 
     public String preqCoursesStr() {
-        
+
         return Utilities.formStringSeparatedByCommas(prerequisiteCourses);
 
     }
@@ -167,19 +167,19 @@ public abstract class Bookmark {
     @Override
     public String toString() {
         String result
-                = " Tekijä: " + author + "\n"
-                + " Otsikko: " + title + "\n";
+                = " Author: " + author + "\n"
+                + " Title: " + title + "\n";
 
         if (!(url == null || url.isEmpty())) {
             result += " Url: " + url + "\n";
         }
 
-        
-        result += " Tagit: " + tagsStr() + "\n"
-                + " Esitietokurssit: " + preqCoursesStr() + "\n"
-                + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
-                + " Kuvaus: " + description + "\n"
-                + " Kommentti: " + comment;
+
+        result += " Tags: " + tagsStr() + "\n"
+                + " Prerequisite courses: " + preqCoursesStr() + "\n"
+                + " Related courses: " + relatedCoursesStr() + "\n"
+                + " Description: " + description + "\n"
+                + " Comment: " + comment;
         return result;
     }
 

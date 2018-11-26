@@ -11,6 +11,7 @@ import javax.persistence.*;
  * @author jussiste
  */
 @Entity
+@Table(name="PodcastBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class PodcastBookmark extends Bookmark {
 
@@ -25,12 +26,12 @@ public class PodcastBookmark extends Bookmark {
     }
 
 
-    
-    
+
+
 
     @Override
     public String toString() {
-        return " Tyyppi: Podcast\n" + super.toString();
+        return " Type: Podcast\n" + super.toString();
     }
 
 }

@@ -17,6 +17,7 @@ import javax.persistence.*;
  * @author jussiste
  */
 @Entity
+@Table(name="VideoBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class VideoBookmark extends Bookmark {
 
@@ -31,13 +32,13 @@ public class VideoBookmark extends Bookmark {
         super(author, title, url, tags, prerequisiteCourses, relatedCourses, description, comment);
     }
 
-    
-    
+
+
 
     @Override
     public String toString() {
 
-        return " Tyyppi: Video\n" + super.toString();
+        return " Type: Video\n" + super.toString();
     }
 
 }

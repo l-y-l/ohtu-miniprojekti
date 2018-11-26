@@ -17,12 +17,13 @@ import javax.persistence.*;
  * @author jussiste
  */
 @Entity
+@Table(name="BlogBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BlogBookmark extends Bookmark {
-    
-    
+
+
     public BlogBookmark(){
-        super(); 
+        super();
     }
 
     public BlogBookmark(String author, String title, String url, List<Tag> tags,
@@ -32,11 +33,11 @@ public class BlogBookmark extends Bookmark {
     }
 
 
-    
-    
+
+
 
     @Override
     public String toString() {
-        return " Tyyppi: Blogpost\n" +  super.toString();
+        return " Type: Blogpost\n" +  super.toString();
     }
 }
