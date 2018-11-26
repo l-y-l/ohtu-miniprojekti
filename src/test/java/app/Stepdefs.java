@@ -39,8 +39,7 @@ public class Stepdefs {
     public void app_is_created() throws Throwable {
         inputLines.add("exit");
         io = new StubIO(inputLines); 
-        ui = new TextUI(io);
-        app = new App(ui, memory, io);
+        app = new App(io);
         app.run();
     }
     

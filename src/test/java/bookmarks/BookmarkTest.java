@@ -67,7 +67,7 @@ public class BookmarkTest {
     public void BlogBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
         String relatedStr = releatedCourses.get(0) + ", " + releatedCourses.get(1) + ", " + releatedCourses.get(2);
-        String testString = "Tekijä: " + author + "\n Otsikko: " + title + "\n Url: " + url + "\n Tyyppi: Blogpost" + "\n Tagit: " + tagsStr + "\n Samankaltaisia kursseja: " + relatedStr + "\n Kuvaus: " + description + "\n Kommentti: " + comment;
+        String testString = "Author: " + author + "\nTitle: " + title + "\nUrl: " + url + "\nType: Blogpost" + "\nTags: " + tagsStr + "\nRelated courses: " + relatedStr + "\nDescription: " + description + "\nComment: " + comment;
         assertEquals(testString, blogB.toString());
     }
 
@@ -77,14 +77,14 @@ public class BookmarkTest {
         String relatedStr = releatedCourses.get(0) + ", " + releatedCourses.get(1) + ", " + releatedCourses.get(2);
         String preqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " + prerequisiteCourses.get(2);
         String testString =  "Kirjoittaja: "+ author +"\n"
-                            +" Otsikko: " + title+ "\n"
-                            +" Tyyppi: Kirja"+"\n"
+                            +"Title: " + title+ "\n"
+                            +"Type: Book"+"\n"
                             +" ISBN: " + ISBN+"\n"
-                            +" Tagit: " +tagsStr+"\n"
+                            +"Tags: " +tagsStr+"\n"
                             +" Esitietokurssit: " + preqStr+"\n"
-                            +" Samankaltaisia kursseja: "+ relatedStr+"\n"
-                            +" Kuvaus: "+description +"\n"
-                            +" Kommentti: "+comment;
+                            +"Related courses: "+ relatedStr+"\n"
+                            +"Description: "+description +"\n"
+                            +"Comment: "+comment;
         assertEquals(testString, bookB.toString());
     }
 
@@ -92,13 +92,13 @@ public class BookmarkTest {
     public void PodcastBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
         String relatedStr = releatedCourses.get(0) + ", " + releatedCourses.get(1) + ", " + releatedCourses.get(2);
-        String testString =  "Tekijä: "+ author +"\n"
-                            +" Otsikko: " + title+ "\n"
-                            +" Tyyppi: Podcast"+"\n"
-                            +" Tagit: " +tagsStr+"\n"
-                            +" Samankaltaisia kursseja: "+ relatedStr+"\n"
-                            +" Kuvaus: "+description +"\n"
-                            +" Kommentti: "+comment;
+        String testString =  "Author: "+ author +"\n"
+                            +"Title: " + title+ "\n"
+                            +"Type: Podcast"+"\n"
+                            +"Tags: " +tagsStr+"\n"
+                            +"Related courses: "+ relatedStr+"\n"
+                            +"Description: "+description +"\n"
+                            +"Comment: "+comment;
         assertEquals(testString, podcastB.toString());
     }
 
@@ -107,12 +107,12 @@ public class BookmarkTest {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
         String relatedStr = releatedCourses.get(0) + ", " + releatedCourses.get(1) + ", " + releatedCourses.get(2);
         String testString =  "Otsikko: " + title+ "\n"
-                            +" Url: "+url+ "\n"
-                            +" Tyyppi: Video"+"\n"
-                            +" Tagit: " +tagsStr+"\n"
-                            +" Samankaltaisia kursseja: "+ relatedStr+"\n"
-                            +" Kuvaus: "+description +"\n"
-                            +" Kommentti: "+comment;
+                            +"Url: "+url+ "\n"
+                            +"Type: Video"+"\n"
+                            +"Tags: " +tagsStr+"\n"
+                            +"Related courses: "+ relatedStr+"\n"
+                            +"Description: "+description +"\n"
+                            +"Comment: "+comment;
         assertEquals(testString, videoB.toString());
     }
 }

@@ -14,6 +14,7 @@ import javax.persistence.*;
  */
 
 @Entity
+@Table(name="PodcastBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class PodcastBookmark extends AbstractBookmark {
     // Hibernate requires a constructor with no parameters
@@ -35,13 +36,13 @@ public class PodcastBookmark extends AbstractBookmark {
 
     @Override
     public String toString() {
-        return   "Tekijä: " + author + "\n"
-               + " Otsikko: " + title + "\n"
-               + " Tyyppi: Podcast" + "\n"
-               + " Tagit: " + tagsStr() + "\n"
-               + " Samankaltaisia kursseja: " + relatedCoursesStr() + "\n"
-               + " Kuvaus: " + description + "\n"
-               + " Kommentti: " + comment;
+        return   "Author: " + author + "\n"
+               + "Title: " + title + "\n"
+               + "Type: Podcast" + "\n"
+               + "Tags: " + tagsStr() + "\n"
+               + "Related courses: " + relatedCoursesStr() + "\n"
+               + "Description: " + description + "\n"
+               + "Comment: " + comment;
     }
 
 }
