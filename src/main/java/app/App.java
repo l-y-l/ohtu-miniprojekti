@@ -44,9 +44,17 @@ public class App {
                     ui.printBookmarkList(dao.getBookMarksOnDatabase());
                     break;
                 case ("search"):
-                    String field = ui.askForField();
+                    String searchfield = ui.askForField();
                     String search = ui.askForSearch();
-                    ui.printBookmarkList(dao.searchByTitle(field, search));
+                    ui.printBookmarkList(dao.searchField(searchfield, search));
+                    break;
+                case("edit"):
+                    Long editID= ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
+                    String editfield= ui.askForEditField();
+                    io.println("\nOld values: ");
+                    io.println(dao.getSingleBookmarkInfo(editID));
+                    String newEntry=ui.askForNewField(editfield);
+                    dao.editEntry(editID, editfield, newEntry);
                     break;
                 case ("exit"):
                     ui.printGoodbyeMessage();

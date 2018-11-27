@@ -1,5 +1,8 @@
 package app;
 
+import app.dao.BookMarkDAO;
+import app.domain.Course;
+import app.domain.Tag;
 import bookmarks.PodcastBookmark;
 import bookmarks.VideoBookmark;
 import bookmarks.BlogBookmark;
@@ -7,127 +10,70 @@ import bookmarks.BookBookmark;
 import static org.junit.Assert.*;
 import org.junit.*;
 
-
 import java.util.*;
 import java.util.logging.*;
+import javax.transaction.Transactional;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 
+@Transactional
 public class DatabaseTest {
-	  private SessionFactory sessionFactory;
+
+    private BookMarkDAO dao;
 
     @Before
     public void setUp() throws Exception {
-        try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Exception e) {
-            System.out.println("QAQ");
-        }
+        dao = new BookMarkDAO();
     }
+
     @After
     public void tearDown() throws Exception {
-      if ( sessionFactory != null ) {
-        sessionFactory.close();
-      }
-    }
-  
-    @Test
-    public void blogBookmarksDontCauseCrashing(){
-        // Just tests that this doesn't crash
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.save( new BlogBookmark() );
-        session.save( new BlogBookmark() );
-
-        session.getTransaction().commit();
-        session.close();
-    
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        List result = session.createQuery( "from Bookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
-
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        result = session.createQuery( "from BlogBookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
+        dao.close();
     }
 
+    @Transactional
     @Test
-    public void bookBookmarksDontCauseCrashing(){
+    public void blogBookmarksDontCauseCrashing() {
         // Just tests that this doesn't crash
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.save( new BookBookmark() );
-        session.save( new BookBookmark() );
-
-        session.getTransaction().commit();
-        session.close();
-    
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        List result = session.createQuery( "from Bookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
-
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        result = session.createQuery( "from BookBookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
+        dao.saveBookmarkToDatabase(new BlogBookmark());
+        assertNotNull(dao.getBookMarksOnDatabase());
     }
 
+    @Transactional
     @Test
-    public void podcastBookmarksDontCauseCrashing(){
-        // Just tests that this doesn't crash
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.save( new PodcastBookmark() );
-        session.save( new PodcastBookmark() );
-
-        session.getTransaction().commit();
-        session.close();
-    
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        List result = session.createQuery( "from Bookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
-
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        result = session.createQuery( "from PodcastBookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
+    public void bookBookmarksDontCauseCrashing() {
+        dao.saveBookmarkToDatabase(new BookBookmark());
+        assertNotNull(dao.getBookMarksOnDatabase());
     }
 
+    @Transactional
     @Test
-    public void VideoBookmarksDontCauseCrashing(){
+    public void podcastBookmarksDontCauseCrashing() {
+        dao.saveBookmarkToDatabase(new PodcastBookmark());
+        assertNotNull(dao.getBookMarkClass("PodcastBookmark"));
+    }
+
+    @Transactional
+    @Test
+    public void VideoBookmarksDontCauseCrashing() {
         // Just tests that this doesn't crash
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-
-        session.save( new VideoBookmark() );
-        session.save( new VideoBookmark() );
-
-        session.getTransaction().commit();
-        session.close();
-    
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        List result = session.createQuery( "from Bookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
-
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        result = session.createQuery( "from VideoBookmark" ).list();
-        session.getTransaction().commit();
-        session.close();
+        dao.saveBookmarkToDatabase(new VideoBookmark());
+        assertNotNull(dao.getBookMarkClass("VideoBookmark"));
+    }
+    @Transactional
+    @Test
+    public void searchMethodWorks(){
+        dao.saveBookmarkToDatabase(new BookBookmark("simeon", "book","",new ArrayList<Tag>(), new ArrayList<Course>(), new ArrayList<Course>(),"",""));
+        assertNotNull(dao.searchField("author", "simeon"));
+    }
+    @Transactional
+    @Test
+    public void userCanEditAnEntry(){
+        dao.saveBookmarkToDatabase(new BookBookmark());
+        long bookmarkID = dao.getBookMarksOnDatabase().get(dao.getBookMarksOnDatabase().size()-1).getId();
+        dao.editEntry(bookmarkID, "author", "testAuthor");
+        dao.editEntry(bookmarkID, "title", "testTitle");
+        assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testAuthor"));
+        assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testTitle"));
     }
 }

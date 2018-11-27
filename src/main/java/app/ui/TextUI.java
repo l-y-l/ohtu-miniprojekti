@@ -189,10 +189,33 @@ public class TextUI {
 
         return result;
     }
-
+    public long askForEntryToEdit(List<Bookmark> bookmarks){
+        System.out.println("Select an entry to edit by typing it's ID: ");
+        for(Bookmark bookmark: bookmarks){
+           io.println(bookmark.shortPrint());
+        }
+        return (long)io.nextInt();
+    }
+    public String askForEditField(){
+        System.out.println("Select field to edit: A = Author or T = title");
+        String field= io.nextLine();
+        while(true){
+            if(field.equals("A")){
+                return "author";
+            }else if(field.equals("T")){
+                return "title";
+            }else{
+                field=io.nextLine();
+            }
+        }
+    }
+    public String askForNewField(String field){
+        System.out.println("Give new entry for "+field);
+        return io.nextLine();
+    }
     private String askForInput(String prompt) {
         io.println(prompt);
         return io.nextLine();
     }
-
+   
 }

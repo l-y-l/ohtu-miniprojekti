@@ -114,6 +114,10 @@ public abstract class Bookmark {
         return description;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -182,5 +186,7 @@ public abstract class Bookmark {
                 + " Comment: " + comment;
         return result;
     }
-
+    public String shortPrint(){
+        return "ID: "+this.id+" Title: "+this.title+" Author: "+this.author;
+    }
 }
