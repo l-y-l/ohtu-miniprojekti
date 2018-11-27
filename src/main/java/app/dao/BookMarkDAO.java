@@ -8,6 +8,7 @@ package app.dao;
 import bookmarks.Bookmark;
 import app.domain.Course;
 import app.domain.Tag;
+import app.utilities.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -29,7 +30,12 @@ public class BookMarkDAO {
      * Initializes the class with a SessionFactory.
      */
     public BookMarkDAO() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
+        this(Utilities.DEPLOYMENT_DATABASE);
+    }
+    
+    
+    public BookMarkDAO(String configurationFileName){
+        sessionFactory = new Configuration().configure(configurationFileName).buildSessionFactory(); 
     }
 
     /**

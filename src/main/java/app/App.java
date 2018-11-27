@@ -6,6 +6,7 @@ import app.dao.BookMarkDAO;
 import app.io.ConsoleIO;
 import app.io.IO;
 import app.ui.TextUI;
+import app.utilities.Utilities;
 import bookmarks.Bookmark;
 import bookmarks.PodcastBookmark;
 import java.util.List;
@@ -25,6 +26,12 @@ public class App {
         this.io = io;
         this.ui = new TextUI(io);
         this.dao = new BookMarkDAO();
+    }
+    
+    public App(IO io, BookMarkDAO dao){
+        this.io = io; 
+        this.ui = new TextUI(io); 
+        this.dao = dao; 
     }
     
 

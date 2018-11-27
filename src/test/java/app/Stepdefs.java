@@ -1,7 +1,9 @@
 package app;
 
+import app.dao.BookMarkDAO;
 import app.io.StubIO;
 import app.ui.TextUI;
+import app.utilities.Utilities;
 import bookmarks.Bookmark;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -17,6 +19,9 @@ public class Stepdefs {
     StubIO io;
     List<Bookmark> memory = new ArrayList();
     List<String> inputLines = new ArrayList();
+    private BookMarkDAO dao; 
+    
+
     
     
     @Given("bookmark type {string} is selected")
@@ -39,13 +44,20 @@ public class Stepdefs {
     public void app_is_created() throws Throwable {
         inputLines.add("exit");
         io = new StubIO(inputLines); 
-        app = new App(io);
+        dao = new BookMarkDAO(Utilities.TEST_DATABASE);
+        app = new App(io, dao);
         app.run();
     }
     
     @Then("system will respond with {string}")
     public void system_will_respond_with(String expectedOutput) throws Throwable {
         assertTrue(io.getPrints().contains(expectedOutput));
+        close();
+    }
+    
+    
+    private void close(){
+        dao.close();
     }
     
 }
