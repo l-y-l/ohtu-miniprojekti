@@ -11,6 +11,8 @@ import java.util.List;
  * 
  */
 public class Utilities {
+    public static String DEPLOYMENT_DATABASE = "hibernate.cfg.xml";
+    public static String TEST_DATABASE = "test.cfg.xml"; 
     
     
     /**

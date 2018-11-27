@@ -3,6 +3,7 @@ package app;
 import app.dao.BookMarkDAO;
 import app.domain.Course;
 import app.domain.Tag;
+import app.utilities.Utilities;
 import bookmarks.PodcastBookmark;
 import bookmarks.VideoBookmark;
 import bookmarks.BlogBookmark;
@@ -23,7 +24,7 @@ public class DatabaseTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new BookMarkDAO();
+        dao = new BookMarkDAO(Utilities.TEST_DATABASE);
     }
 
     @After
