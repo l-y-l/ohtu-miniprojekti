@@ -162,4 +162,18 @@ public class BookMarkDAO {
         session.close();
         System.out.println("The entry has been updated!");
     }
+  
+    /**
+     * Deletes bookmark from database by bookmark-id.
+     * @param bookmark_id
+     */
+    public void deleteBookmarkFromDatabase(Long bookmark_id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.delete(session.load(Bookmark.class, bookmark_id));
+
+        session.getTransaction().commit();
+        session.close();
+    }
 }

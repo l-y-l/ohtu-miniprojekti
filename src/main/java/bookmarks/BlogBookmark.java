@@ -38,6 +38,6 @@ public class BlogBookmark extends Bookmark {
 
     @Override
     public String toString() {
-        return " Type: Blogpost\n" +  super.toString();
+        return "ID: " + id +  "\n Type: Blogpost\n" +  super.toString();
     }
 }

@@ -26,6 +26,7 @@ public class App {
         this.ui = new TextUI(io);
         this.dao = new BookMarkDAO();
     }
+    
 
     public void run() {
         ui.printWelcomeMessage();
@@ -42,6 +43,12 @@ public class App {
                     break;
                 case ("list"):
                     ui.printBookmarkList(dao.getBookMarksOnDatabase());
+                    break;
+                case("delete"):
+                    Long bookmark_id = ui.askForBookmarkToDelete();
+                    if (bookmark_id != null) {
+                        dao.deleteBookmarkFromDatabase(bookmark_id);
+                    }
                     break;
                 case ("search"):
                     String searchfield = ui.askForField();

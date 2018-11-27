@@ -31,7 +31,7 @@ public class PodcastBookmark extends Bookmark {
 
     @Override
     public String toString() {
-        return " Type: Podcast\n" + super.toString();
+        return "ID: " + id + "\n Type: Podcast\n" + super.toString();
     }
 
 }
