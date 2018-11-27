@@ -38,7 +38,7 @@ public class VideoBookmark extends Bookmark {
     @Override
     public String toString() {
 
-        return " Type: Video\n" + super.toString();
+        return "ID: " + id +  "\n Type: Video\n" + super.toString();
     }
 
 }
