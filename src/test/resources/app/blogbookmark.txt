@@ -1,9 +1,10 @@
 BG
-testAuthor
 testTitle
+testAuthor
 testUrl
 testTag
 testReleated
+testPrerequisite
 testDescription
 testComment
 

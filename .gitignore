@@ -18,3 +18,12 @@ gradle-app.setting
 .nb-gradle-properties
 
 nbproject/
+*.log
+h2*.jar
+bookmarks.h2.db
+
+#IntelliJ Idea IDE
+.DS_Store
+.idea
+out
+*.iml

@@ -1,10 +1,12 @@
 package app;
 
+import app.domain.Course;
+import app.domain.Tag;
 import app.dao.BookMarkDAO;
 import app.io.ConsoleIO;
 import app.io.IO;
 import app.ui.TextUI;
-import bookmarks.AbstractBookmark;
+import bookmarks.Bookmark;
 import bookmarks.PodcastBookmark;
 import java.util.List;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class App {
             String command = ui.getMenuCommand();
             switch (command) {
                 case ("new"):
-                    AbstractBookmark bookmark = ui.askForBookmark();
+                    Bookmark bookmark = ui.askForBookmark();
                     if (bookmark != null) {
                         dao.saveBookmarkToDatabase(bookmark);
                     }
