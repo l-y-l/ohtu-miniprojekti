@@ -35,5 +35,10 @@ public class StubIO implements IO {
         // System.out.println("<");
         return "";
     }
+
+    @Override
+    public int nextInt() {
+        return 0;
+    }
     
 }

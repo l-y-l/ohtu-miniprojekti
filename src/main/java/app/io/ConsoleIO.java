@@ -22,5 +22,8 @@ public class ConsoleIO implements IO {
     public String nextLine() {
         return scanner.nextLine();
     }
-    
+    @Override
+    public int nextInt(){
+        return scanner.nextInt();
+    }
 }
