@@ -20,4 +20,10 @@ gradle-app.setting
 nbproject/
 *.log
 h2*.jar
-*.db
+bookmarks.h2.db
+
+#IntelliJ Idea IDE
+.DS_Store
+.idea
+out
+*.iml

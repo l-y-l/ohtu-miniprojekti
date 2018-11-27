@@ -42,7 +42,7 @@ public class BookBookmark extends Bookmark {
 
     @Override
     public String toString() {
-        String result = " Type: Book\n ISBN: " + this.ISBN + "\n";
+        String result = "ID: " + id + "\n Type: Book\n ISBN: " + this.ISBN + "\n";
         return result + super.toString();
     }
 
