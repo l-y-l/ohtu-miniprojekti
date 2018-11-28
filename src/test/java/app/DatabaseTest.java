@@ -8,6 +8,7 @@ import bookmarks.PodcastBookmark;
 import bookmarks.VideoBookmark;
 import bookmarks.BlogBookmark;
 import bookmarks.BookBookmark;
+import bookmarks.Bookmark;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -61,20 +62,58 @@ public class DatabaseTest {
         dao.saveBookmarkToDatabase(new VideoBookmark());
         assertNotNull(dao.getBookMarkClass("VideoBookmark"));
     }
+
     @Transactional
     @Test
-    public void searchMethodWorks(){
-        dao.saveBookmarkToDatabase(new BookBookmark("simeon", "book","",new ArrayList<Tag>(), new ArrayList<Course>(), new ArrayList<Course>(),"",""));
+    public void searchMethodWorks() {
+        dao.saveBookmarkToDatabase(new BookBookmark("simeon", "book", "", new ArrayList<Tag>(), new ArrayList<Course>(), new ArrayList<Course>(), "", ""));
         assertNotNull(dao.searchField("author", "simeon"));
     }
+
     @Transactional
     @Test
-    public void userCanEditAnEntry(){
+    public void userCanEditAnEntry() {
         dao.saveBookmarkToDatabase(new BookBookmark());
-        long bookmarkID = dao.getBookMarksOnDatabase().get(dao.getBookMarksOnDatabase().size()-1).getId();
+        long bookmarkID = dao.getBookMarksOnDatabase().get(dao.getBookMarksOnDatabase().size() - 1).getId();
         dao.editEntry(bookmarkID, "author", "testAuthor");
         dao.editEntry(bookmarkID, "title", "testTitle");
         assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testAuthor"));
         assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testTitle"));
     }
+
+    @Transactional
+    @Test
+    public void deleteMethodRemovesCorrectBookmark() {
+        Bookmark bm = new BookBookmark();
+        dao.saveBookmarkToDatabase(bm);
+        long id = bm.getId();
+        dao.deleteBookmarkFromDatabase(id);
+        assertTrue(dao.getBookMarksOnDatabase().isEmpty());
+    }
+
+    @Transactional
+    @Test
+    public void deleteMethodRemovesOnlySpecifiedBookmark() {
+        Bookmark bm1 = new BookBookmark();
+        Bookmark bm2 = new BookBookmark();
+        dao.saveBookmarkToDatabase(bm1);
+        dao.saveBookmarkToDatabase(bm2);
+        long id1 = bm1.getId();
+        long id2 = bm2.getId();
+        dao.deleteBookmarkFromDatabase(id1);
+        List<Bookmark> bookmarks = dao.getBookMarksOnDatabase();
+        assertFalse(bookmarks.stream().anyMatch(bm -> id1 == bm.getId()));
+        assertTrue(bookmarks.stream().anyMatch(bm -> id2 == bm.getId()));
+    }
+
+    @Transactional
+    @Test
+    public void deleteRemovesNothingWithWrongId() {
+        Bookmark bm = new BookBookmark();
+        dao.saveBookmarkToDatabase(bm);
+        long false_id = 666;  
+        dao.deleteBookmarkFromDatabase(false_id);
+        assertEquals(1, dao.getBookMarksOnDatabase().size());
+    }
+
 }

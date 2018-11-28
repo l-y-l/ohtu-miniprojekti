@@ -46,7 +46,7 @@ public class BookMarkDAO {
         if (sessionFactory != null) {
             sessionFactory.close();
         }
-        tagDAO.close(); 
+        tagDAO.close();
     }
 
     /**
@@ -74,7 +74,6 @@ public class BookMarkDAO {
         session.save(bookmark);
         // save tags and stuff
 
-        
         bookmark.setTags(tagDAO.saveTagsToDatabase(session, bookmark.getTags()));
 
         for (Course c : bookmark.getRelatedCourses()) {
@@ -181,12 +180,15 @@ public class BookMarkDAO {
      * @param bookmark_id
      */
     public void deleteBookmarkFromDatabase(Long bookmark_id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
 
-        session.delete(session.load(Bookmark.class, bookmark_id));
-
-        session.getTransaction().commit();
-        session.close();
+        try (Session session = sessionFactory.openSession()) {
+            Bookmark bookmark = (Bookmark) session.createQuery("from Bookmark where id = " + bookmark_id).uniqueResult();
+            if (bookmark != null) {
+                session.beginTransaction();
+                session.delete(session.load(Bookmark.class, bookmark_id));
+                
+                session.getTransaction().commit();
+            }
+        }
     }
 }
