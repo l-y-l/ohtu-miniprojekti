@@ -3,6 +3,7 @@ package app.domain;
 import bookmarks.Bookmark;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,6 +22,7 @@ public class Tag {
     @ManyToMany(mappedBy = "tags")
     private Set<Bookmark> bookmarks;
 
+    @Column(name = "name", unique = true)
     private String name;
 
     public Tag(){}
