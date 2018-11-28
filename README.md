@@ -22,9 +22,20 @@ Ohjelmistotuotantokurssin miniprojekti
 
 ## Installation
 
+### For using the program
+
+* What you will need: 
+  * [Java](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
+* Click 'releases' on this main page of the project (to the left of the green 'Clone or download' button)
+* Download the .jar file of the latest release 
+* Open the command prompt, navigate to the folder where you downloaded the .jar file, and execute the command `java -jar bookmark_libraryV2.jar` (replace the filename with the correct one if you have renamed it)
+* The program will begin in your command prompt
+
+### For using the program if you also want the ability to run the tests, modify source code etc.
+
 * What you will need: 
   * [Java](https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) for running the program
-  * [Gradle](https://gradle.org/install/) for building the executable
+  * [Gradle](https://gradle.org/install/)
 
 * Clone / download this repository by clicking on the green 'Clone or download' button in the upper right corner
 * Navigate to the downloaded folder 
