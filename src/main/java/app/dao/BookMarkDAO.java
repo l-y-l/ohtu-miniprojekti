@@ -25,6 +25,7 @@ import org.hibernate.criterion.Restrictions;
 public class BookMarkDAO {
 
     private SessionFactory sessionFactory;
+    private TagDAO tagDAO;
 
     /**
      * Initializes the class with a SessionFactory.
@@ -32,10 +33,10 @@ public class BookMarkDAO {
     public BookMarkDAO() {
         this(Utilities.DEPLOYMENT_DATABASE);
     }
-    
-    
-    public BookMarkDAO(String configurationFileName){
-        sessionFactory = new Configuration().configure(configurationFileName).buildSessionFactory(); 
+
+    public BookMarkDAO(String configurationFileName) {
+        sessionFactory = new Configuration().configure(configurationFileName).buildSessionFactory();
+        tagDAO = new TagDAO(configurationFileName);
     }
 
     /**
@@ -45,6 +46,7 @@ public class BookMarkDAO {
         if (sessionFactory != null) {
             sessionFactory.close();
         }
+        tagDAO.close(); 
     }
 
     /**
@@ -72,17 +74,18 @@ public class BookMarkDAO {
         session.save(bookmark);
         // save tags and stuff
 
-        for (Tag t : bookmark.getTags()) {
-            session.save(t);
-
-        }
+        
+        bookmark.setTags(tagDAO.saveTagsToDatabase(session, bookmark.getTags()));
 
         for (Course c : bookmark.getRelatedCourses()) {
-            session.save(c);
+
+            session.saveOrUpdate(c);
+
         }
 
         for (Course c : bookmark.getPrerequisiteCourses()) {
-            session.save(c);
+
+            session.saveOrUpdate(c);
 
         }
 
@@ -130,6 +133,7 @@ public class BookMarkDAO {
 
     /**
      * Method that returns the info of a single database entry in String form.
+     *
      * @param id id of the database entity
      * @return bookmark.toString
      */
@@ -137,17 +141,19 @@ public class BookMarkDAO {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Bookmark bookmark = session.load(Bookmark.class, id);
-        String ret= "";
-        ret+=bookmark.toString();
+        String ret = "";
+        ret += bookmark.toString();
         session.close();
         return ret;
     }
 
     /**
-     * Method that allows to edit either the author or the title field of a given entry.
+     * Method that allows to edit either the author or the title field of a
+     * given entry.
+     *
      * @param id id of entry
      * @param field field to be edited
-     * @param newEntry new data 
+     * @param newEntry new data
      */
     public void editEntry(Long id, String field, String newEntry) {
         Session session = sessionFactory.openSession();
@@ -168,9 +174,10 @@ public class BookMarkDAO {
         session.close();
         System.out.println("The entry has been updated!");
     }
-  
+
     /**
      * Deletes bookmark from database by bookmark-id.
+     *
      * @param bookmark_id
      */
     public void deleteBookmarkFromDatabase(Long bookmark_id) {

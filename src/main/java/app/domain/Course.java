@@ -17,13 +17,14 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "relatedCourses")
     private Set<Bookmark> relatedToBookmars;
 
     @ManyToMany(mappedBy = "prerequisiteCourses")
-    private Set<Bookmark> prerequisiteForBookmarks; 
+    private Set<Bookmark> prerequisiteForBookmarks;
 
     public Course() {
     }
@@ -51,8 +52,6 @@ public class Course {
     public void setPrerequisiteForBookmarks(Set<Bookmark> prerequisiteForBookmarks) {
         this.prerequisiteForBookmarks = prerequisiteForBookmarks;
     }
-    
-    
 
     public Long getId() {
         return id;
