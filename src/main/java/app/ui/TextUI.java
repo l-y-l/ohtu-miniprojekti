@@ -32,7 +32,7 @@ public class TextUI {
     }
 
     public String getMenuCommand() {
-        io.println("Type \"new\" new bookmark, \"list\" to list all bookmarks, \"search\" to search the database, \"delete\" to delete a bookmark, \"edit\" to edit a bookmark or \"exit\" to exit the application");
+        io.println("Use one of the following commands:\n\"new\" to add new bookmark \n\"list\" to list all bookmarks \n\"search\" to search the database \n\"delete\" to delete a bookmark\n\"edit\" to edit a bookmark or \n\"exit\" to exit the application");
         return io.nextLine();
     }
 
@@ -92,6 +92,7 @@ public class TextUI {
         }
         for (Bookmark bmark : bookmarks) {
             io.println(bmark.toString());
+            System.out.println("==================================================");
         }
     }
 
