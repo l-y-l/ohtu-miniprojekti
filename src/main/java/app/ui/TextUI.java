@@ -32,14 +32,14 @@ public class TextUI {
     }
 
     public int getMenuCommand() {
-        io.println("\nSelect one of the following options by entering it's number\n1. Add a new bookmark\n2. List all existing bookmarks\n3. Search a specific bookmark"
+        io.println("\nSelect one of the following options \n1. Add a new bookmark by typing \n2. List all existing bookmarks\n3. Search a specific bookmark"
                 + "\n4. Edit a bookmark\n5. Delete a bookmark\n0. Exit the application");
         String s=io.nextLine();
         int command;
         try{
             command= Integer.parseInt(s);
         }catch(Exception e){
-            command=-1;
+            return 6;
         }
         return command;
     }
