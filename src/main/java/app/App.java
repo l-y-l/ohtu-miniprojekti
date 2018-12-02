@@ -1,20 +1,11 @@
 package app;
 
-import app.domain.Course;
-import app.domain.Tag;
+
 import app.dao.BookMarkDAO;
 import app.io.ConsoleIO;
 import app.io.IO;
 import app.ui.TextUI;
-import app.utilities.Utilities;
 import bookmarks.Bookmark;
-import bookmarks.PodcastBookmark;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import org.hibernate.*;
-import org.hibernate.cfg.*;
 
 public class App {
 

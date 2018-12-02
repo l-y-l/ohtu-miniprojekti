@@ -6,8 +6,6 @@ import app.io.IO;
 import bookmarks.Bookmark;
 import bookmarks.BookBookmark;
 import bookmarks.BlogBookmark;
-import bookmarks.PodcastBookmark;
-import bookmarks.VideoBookmark;
 import java.util.*;
 
 public class TextUI {
@@ -60,7 +58,7 @@ public class TextUI {
 
     public Bookmark askForBookmark() {
         io.println("Add a new bookmark.");
-        io.println("Give type (B = Book) (BG = Blog) (P = Podcast) (V = Video): ");
+        io.println("Give type (B = Book) (BG = Blog): ");
         String type = io.nextLine();
 
         Bookmark bookmark = null;
@@ -69,12 +67,7 @@ public class TextUI {
             bookmark = askForBookBookmarkInfo();
         } else if (type.equals("BG")) {
             bookmark = askForBlogBookmarkInfo();
-        } else if (type.equals("P")) {
-            bookmark = askForPodcastBookmarkInfo();
-
-        } else if (type.equals("V")) {
-            bookmark = askForVideoBookmarkInfo();
-        }
+        } 
 
         if (bookmark != null) {
             io.println(defaultSuccessMessage);
@@ -107,19 +100,6 @@ public class TextUI {
 
     private Bookmark askForBlogBookmarkInfo() {
         BlogBookmark bm = new BlogBookmark();
-        askForGeneralBookmarkInfo(bm);
-        return bm;
-    }
-
-    private Bookmark askForPodcastBookmarkInfo() {
-
-        PodcastBookmark bm = new PodcastBookmark();
-        askForGeneralBookmarkInfo(bm);
-        return bm;
-    }
-
-    private Bookmark askForVideoBookmarkInfo() {
-        VideoBookmark bm = new VideoBookmark();
         askForGeneralBookmarkInfo(bm);
         return bm;
     }
@@ -159,7 +139,7 @@ public class TextUI {
         String[] tags = input.split(",");
         List<Tag> result = new ArrayList();
         for (int i = 0; i < tags.length; i++) {
-            // toistaiseksi oletetaan, että jokainen lisättävä kurssi on eri
+            // pitäisikö tässä vaiheessa katsoa, että ei lisätä uutta tagia jos samanniminen on?
             result.add(new Tag(tags[i].trim()));
         }
 

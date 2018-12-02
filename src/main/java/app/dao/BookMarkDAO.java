@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.dao;
 
 import bookmarks.Bookmark;
 import app.domain.Course;
-import app.domain.Tag;
 import app.utilities.Utilities;
 import java.util.ArrayList;
 import java.util.List;

@@ -28,7 +28,7 @@ public class Stepdefs {
     
     public void createTestBookmarks() {
         inputLines.add("new");
-        inputLines.add("P");
+        inputLines.add("BG");
         inputLines.add("Cucumber Experience");
         inputLines.add("Martin Dawes");
         inputLines.add("martindawes.com/cucumberexperience");
@@ -51,7 +51,7 @@ public class Stepdefs {
         inputLines.add("a valuable part of a good testing arsenal.");
         
         inputLines.add("new");
-        inputLines.add("P");
+        inputLines.add("BG");
         inputLines.add("DeleteCast");
         inputLines.add("Mr. Delete");
         inputLines.add("mrdelete.com/deletecast");

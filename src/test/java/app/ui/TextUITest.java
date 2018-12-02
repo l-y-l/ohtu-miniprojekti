@@ -3,17 +3,12 @@ package app.ui;
 import app.io.ConsoleIO;
 
 import bookmarks.Bookmark;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.util.Scanner;
 
@@ -48,24 +43,6 @@ public class TextUITest {
     }
 
     @Test
-    public void textUIcreatesVideoBookmarks() throws FileNotFoundException {
-        File file = null;
-        try {
-            file = new File("src/test/resources/app/videobookmark.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        scanner = new Scanner(file);
-        ui = new TextUI(new ConsoleIO(scanner));
-        Bookmark bookmark = ui.askForBookmark();
-
-        assertEquals(bookmark.getUrl(), "testUrl");
-        assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
-    }
-
-    @Test
     public void textUIcreatesBlogBookmarks() throws FileNotFoundException {
         File file = null;
         try {
@@ -82,22 +59,7 @@ public class TextUITest {
         assertEquals(bookmark.getTitle(), "testTitle");
         assertEquals(bookmark.getComment(), "testComment");
     }
-    @Test
-    public void textUIcreatesPodcastBookmarks() throws FileNotFoundException {
-        File file = null;
-        try {
-            file = new File("src/test/resources/app/podcastbookmark.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        scanner = new Scanner(file);
-        ui = new TextUI(new ConsoleIO(scanner));
-        Bookmark bookmark = ui.askForBookmark();
-
-        assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
-    }
     @Test
     public void invalidInputCreatesNoBookMark() throws FileNotFoundException{
         File file = null;
