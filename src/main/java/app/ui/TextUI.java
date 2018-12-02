@@ -31,17 +31,10 @@ public class TextUI {
         io.println("Unrecognized option" );
     }
 
-    public int getMenuCommand() {
+    public String getMenuCommand() {
         io.println("\nSelect one of the following options \n1. Add a new bookmark by typing \n2. List all existing bookmarks\n3. Search a specific bookmark"
                 + "\n4. Edit a bookmark\n5. Delete a bookmark\n0. Exit the application");
-        String s=io.nextLine();
-        int command;
-        try{
-            command= Integer.parseInt(s);
-        }catch(Exception e){
-            return 6;
-        }
-        return command;
+        return io.nextLine();
     }
 
     public String askForField() {

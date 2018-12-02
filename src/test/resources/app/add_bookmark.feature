@@ -1,7 +1,7 @@
 Feature: Adding a bookmark with valid information is possible
 
     Scenario: user can only select a bookmark type that exists
-       Given  option "new" is selected
+       Given  option "1" is selected
        And  bookmark type "nothing" is selected
        And  app is created
        Then  system will respond with "Invalid choice"
