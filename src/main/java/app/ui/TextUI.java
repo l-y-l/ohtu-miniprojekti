@@ -20,20 +20,28 @@ public class TextUI {
     }
 
     public void printWelcomeMessage() {
-        io.println("Welcome");
+        io.println("Welcome!");
     }
 
     public void printGoodbyeMessage() {
         io.println("Goodbye");
     }
 
-    public void printUnrecognizedOption(String option) {
-        io.println("Unrecognized option '" + option + "'");
+    public void printUnrecognizedOption() {
+        io.println("Unrecognized option" );
     }
 
-    public String getMenuCommand() {
-        io.println("Type \"new\" new bookmark or \"list\" to list all bookmarks \"search\" to search the database \"delete\" to delete a bookmark or \"exit\" to exit the application");
-        return io.nextLine();
+    public int getMenuCommand() {
+        io.println("\nSelect one of the following options by entering it's number\n1. Add a new bookmark\n2. List all existing bookmarks\n3. Search a specific bookmark"
+                + "\n4. Edit a bookmark\n5. Delete a bookmark\n0. Exit the application");
+        String s=io.nextLine();
+        int command;
+        try{
+            command= Integer.parseInt(s);
+        }catch(Exception e){
+            command=-1;
+        }
+        return command;
     }
 
     public String askForField() {
@@ -88,10 +96,11 @@ public class TextUI {
 
     public void printBookmarkList(List<Bookmark> bookmarks) {
         if (bookmarks.isEmpty()) {
-            io.println("There are currently no bookmarks in memory. Add a new bookmark with command \"new\"");
+            io.println("There are currently no bookmarks in memory. Add a new bookmark with command 1");
         }
         for (Bookmark bmark : bookmarks) {
             io.println(bmark.toString());
+            System.out.println("==================================");
         }
     }
 
@@ -190,7 +199,7 @@ public class TextUI {
         return result;
     }
     public long askForEntryToEdit(List<Bookmark> bookmarks){
-        System.out.println("Select an entry to edit by typing it's ID: ");
+        System.out.println("Select an entry to edit/remove by typing it's ID: ");
         for(Bookmark bookmark: bookmarks){
            io.println(bookmark.shortPrint());
         }
@@ -220,7 +229,12 @@ public class TextUI {
 
     public Long askForBookmarkToDelete() {
         io.println("Give ID of the bookmark you want to delete: ");
-        return Long.parseLong(io.nextLine());
+        Long id;
+        try{
+            id=Long.parseLong(io.nextLine());
+        }catch(NumberFormatException e){
+            return 0L;
+        }
+        return id;
     }
-
 }
