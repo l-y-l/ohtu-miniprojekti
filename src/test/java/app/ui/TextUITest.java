@@ -1,19 +1,17 @@
 package app.ui;
 
 import app.io.ConsoleIO;
+import bookmarks.BlogBookmark;
+import bookmarks.BookBookmark;
 
 import bookmarks.Bookmark;
-import java.io.ByteArrayInputStream;
+import bookmarks.OtherBookmark;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
 import java.util.Scanner;
 
@@ -42,27 +40,8 @@ public class TextUITest {
         Bookmark bookmark = ui.askForBookmark();
 
 
-        assertEquals(bookmark.getAuthor(), "testAuthor");
+        assertEquals(bookmark.getDescription(), "testDescription");
         assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
-    }
-
-    @Test
-    public void textUIcreatesVideoBookmarks() throws FileNotFoundException {
-        File file = null;
-        try {
-            file = new File("src/test/resources/app/videobookmark.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        scanner = new Scanner(file);
-        ui = new TextUI(new ConsoleIO(scanner));
-        Bookmark bookmark = ui.askForBookmark();
-
-        assertEquals(bookmark.getUrl(), "testUrl");
-        assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
     }
 
     @Test
@@ -77,27 +56,39 @@ public class TextUITest {
         scanner = new Scanner(file);
         ui = new TextUI(new ConsoleIO(scanner));
         Bookmark bookmark = ui.askForBookmark();
-
-        assertEquals(bookmark.getUrl(), "testUrl");
-        assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
-    }
-    @Test
-    public void textUIcreatesPodcastBookmarks() throws FileNotFoundException {
-        File file = null;
-        try {
-            file = new File("src/test/resources/app/podcastbookmark.txt");
-        } catch (Exception e) {
-            e.printStackTrace();
+        try{ 
+            BlogBookmark blog = (BlogBookmark) bookmark; 
+            assertEquals("testUrl", blog.getUrl());
+        } catch (Exception e){
+            assertTrue(false); 
         }
-
+        assertEquals(bookmark.getTitle(), "testTitle");
+    }
+    
+    
+    @Test
+    public void textUICreatesOtherBookmarks() throws FileNotFoundException{
+        File file = null; 
+        try{
+            file = new File("src/test/resources/app/otherbookmark.txt");
+        } catch (Exception e){
+            e.printStackTrace(); 
+        }
         scanner = new Scanner(file);
         ui = new TextUI(new ConsoleIO(scanner));
-        Bookmark bookmark = ui.askForBookmark();
-
-        assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
+        Bookmark bookmark =  ui.askForBookmark(); 
+        assertTrue(bookmark.toString().contains("Type: Other"));
+        
+        try{
+            OtherBookmark other = (OtherBookmark) bookmark; 
+            assertEquals("otherUrl", other.getUrl());
+        } catch (Exception e){
+            assertTrue(false); 
+        }
+        assertEquals("otherTitle", bookmark.getTitle());
+        assertEquals("Description for a peculiar bookmark", bookmark.getDescription());
     }
+
     @Test
     public void invalidInputCreatesNoBookMark() throws FileNotFoundException{
         File file = null;

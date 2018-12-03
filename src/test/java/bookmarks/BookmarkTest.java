@@ -1,12 +1,8 @@
 package bookmarks;
 
-import app.domain.Course;
 import app.domain.Tag;
-import bookmarks.PodcastBookmark;
-import bookmarks.VideoBookmark;
 import bookmarks.BlogBookmark;
 import bookmarks.BookBookmark;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
@@ -18,11 +14,8 @@ public class BookmarkTest {
     Long id;
     String author;
     String title;
-    String comment;
     String description;
     List<Tag> tags;
-    List<Course> relatedCourses;
-    List<Course> prerequisiteCourses;
 
     // Unique bookmark variables.
     String ISBN;
@@ -33,35 +26,27 @@ public class BookmarkTest {
     // Bookmarks.
     BlogBookmark blogB;
     BookBookmark bookB;
-    PodcastBookmark podcastB;
-    VideoBookmark videoB;
+    OtherBookmark otherB;
 
-    public BookmarkTest(){
+    public BookmarkTest() {
         setUp();
     }
+
     public void setUp() {
         initializeAbstractClassVariables();
         initializeUniqueClassVariables();
         initializeBookmarks();
     }
 
-
-
     private void initializeAbstractClassVariables() {
         author = "TestAuthor";
         title = "TestTitle";
-        comment = "TestComment";
         description = "TestDescription";
 
         tags = new ArrayList<>();
-        relatedCourses = new ArrayList<>();
-        prerequisiteCourses = new ArrayList<>();
 
         for (int i = 1; i < 4; i++) {
             tags.add(new Tag("tag" + i));
-            relatedCourses.add(new Course("relatedCourse" + i));
-            prerequisiteCourses.add(new Course("description" + i));
-
         }
     }
 
@@ -71,92 +56,46 @@ public class BookmarkTest {
     }
 
     public void initializeBookmarks() {
-        blogB = new BlogBookmark(author, title, url, tags, prerequisiteCourses, relatedCourses, description, comment);
-        bookB = new BookBookmark(author, title, ISBN, tags, prerequisiteCourses, relatedCourses, description, comment);
-        podcastB = new PodcastBookmark(author, title, url, tags, prerequisiteCourses, relatedCourses, description, comment);
-        videoB = new VideoBookmark(author, title, url, tags, prerequisiteCourses, relatedCourses, description, comment);
+        blogB = new BlogBookmark(title, url, tags, description);
+        bookB = new BookBookmark(ISBN, author, title, tags, description);
+        otherB = new OtherBookmark(title, url, tags, description);
     }
 
     // Tests:
     @Test
     public void BlogBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
-        String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
-        String preqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " + prerequisiteCourses.get(2);
-
 
         String testString = "ID: " + id + "\n"
-                + " Type: Blogpost"+"\n"
-                + " Author: " + author + "\n"
-                + " Title: " + title+ "\n"
-                + " Url: "+url+ "\n"
-                + " Tags: " +tagsStr+"\n"
-                + " Prerequisite courses: " + preqStr + "\n"
-                + " Related courses: "+ relatedStr+"\n"
-                + " Description: "+description +"\n"
-                + " Comment: "+comment;
+                + " Type: Blogpost" + "\n"
+                + " Url: " + url + "\n"
+                + " Title: " + title + "\n"
+                + " Tags: " + tagsStr + "\n"
+                + " Description: " + description;
         assertEquals(testString, blogB.toString());
     }
 
     @Test
     public void BookBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
-        String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
-        String preqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " + prerequisiteCourses.get(2);
 
         String testString = "ID: " + id + "\n"
-                + " Type: Book"+"\n"
+                + " Type: Book" + "\n"
                 + " ISBN: " + ISBN + "\n"
                 + " Author: " + author + "\n"
-                + " Title: " + title+ "\n"
-                + " Tags: " +tagsStr+"\n"
-                + " Prerequisite courses: " + preqStr + "\n"
-                + " Related courses: "+ relatedStr+"\n"
-                + " Description: "+description +"\n"
-                + " Comment: "+comment;
+                + " Title: " + title + "\n"
+                + " Tags: " + tagsStr + "\n"
+                + " Description: " + description;
         assertEquals(testString, bookB.toString());
     }
 
     @Test
-    public void PodcastBookmarkTest() {
+    public void OtherBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
-        String preqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " + prerequisiteCourses.get(2);
-
-        String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
-
-        String testString = "ID: " + id + "\n"
-                + " Type: Podcast"+"\n"
-                + " Author: " + author + "\n"
-                + " Title: " + title+ "\n"
-                + " Url: "+url+ "\n"
-                + " Tags: " +tagsStr+"\n"
-                + " Prerequisite courses: " + preqStr + "\n"
-                + " Related courses: "+ relatedStr+"\n"
-                + " Description: "+description +"\n"
-                + " Comment: "+comment;
-        assertEquals(testString, podcastB.toString());
+        String testString = "ID: " + otherB.getId() + "\n Type: Other"
+               + "\n Url: " + url + "\n Title: " + title + "\n Tags: " + tagsStr
+                + "\n Description: " + description;
+        assertEquals(otherB.toString(), testString);
     }
-
-    @Test
-    public void VideoBookmarkTest() {
-        String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
-        String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
-        String preqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " + prerequisiteCourses.get(2);
-
-        String testString = "ID: " + id + "\n"
-                + " Type: Video"+"\n"
-                + " Author: " + author + "\n"
-                + " Title: " + title+ "\n"
-                + " Url: "+url+ "\n"
-                + " Tags: " +tagsStr+"\n"
-                + " Prerequisite courses: " + preqStr + "\n"
-                + " Related courses: "+ relatedStr+"\n"
-                + " Description: "+description +"\n"
-                + " Comment: "+comment;
-        assertEquals(testString, videoB.toString());
-    }
-
-
-
 
 }

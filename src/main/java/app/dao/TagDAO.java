@@ -2,7 +2,6 @@ package app.dao;
 
 import app.domain.Tag;
 import app.utilities.Utilities;
-import bookmarks.Bookmark;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.dao;
 
 import bookmarks.Bookmark;
-import app.domain.Course;
-import app.domain.Tag;
 import app.utilities.Utilities;
+import bookmarks.BookBookmark;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -75,18 +69,6 @@ public class BookMarkDAO {
         // save tags and stuff
 
         bookmark.setTags(tagDAO.saveTagsToDatabase(session, bookmark.getTags()));
-
-        for (Course c : bookmark.getRelatedCourses()) {
-
-            session.saveOrUpdate(c);
-
-        }
-
-        for (Course c : bookmark.getPrerequisiteCourses()) {
-
-            session.saveOrUpdate(c);
-
-        }
 
         session.getTransaction().commit();
         session.close();
@@ -161,7 +143,7 @@ public class BookMarkDAO {
         Bookmark bookmark = session.load(Bookmark.class, id);
         switch (field) {
             case ("author"):
-                bookmark.setAuthor(newEntry);
+                bookmark.updateAttribute("author", newEntry);
                 break;
             case ("title"):
                 bookmark.setTitle(newEntry);
@@ -175,7 +157,7 @@ public class BookMarkDAO {
     }
 
     /**
-     * Deletes bookmark from database by bookmark-id.
+     *  bookmark from database by bookmark-id.
      *
      * @param bookmark_id
      */
