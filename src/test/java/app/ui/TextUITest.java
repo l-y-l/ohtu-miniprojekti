@@ -59,6 +59,24 @@ public class TextUITest {
         assertEquals(bookmark.getTitle(), "testTitle");
         assertEquals(bookmark.getComment(), "testComment");
     }
+    
+    
+    @Test
+    public void textUICreatesOtherBookmarks() throws FileNotFoundException{
+        File file = null; 
+        try{
+            file = new File("src/test/resources/app/otherbookmark.txt");
+        } catch (Exception e){
+            e.printStackTrace(); 
+        }
+        scanner = new Scanner(file);
+        ui = new TextUI(new ConsoleIO(scanner));
+        Bookmark bookmark =  ui.askForBookmark(); 
+        assertTrue(bookmark.toString().contains("Type: Other"));
+        assertEquals("otherUrl", bookmark.getUrl());
+        assertEquals("otherTitle", bookmark.getTitle());
+        assertEquals("Description for a peculiar bookmark", bookmark.getDescription());
+    }
 
     @Test
     public void invalidInputCreatesNoBookMark() throws FileNotFoundException{

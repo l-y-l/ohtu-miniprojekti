@@ -30,6 +30,7 @@ public class BookmarkTest {
     // Bookmarks.
     BlogBookmark blogB;
     BookBookmark bookB;
+    OtherBookmark otherB; 
 
 
     public BookmarkTest(){
@@ -69,6 +70,7 @@ public class BookmarkTest {
     public void initializeBookmarks() {
         blogB = new BlogBookmark(author, title, url, tags, prerequisiteCourses, relatedCourses, description, comment);
         bookB = new BookBookmark(author, title, ISBN, tags, prerequisiteCourses, relatedCourses, description, comment);
+        otherB = new OtherBookmark(title, url, description); 
     }
 
     // Tests:
@@ -109,6 +111,13 @@ public class BookmarkTest {
                 + " Description: "+description +"\n"
                 + " Comment: "+comment;
         assertEquals(testString, bookB.toString());
+    }
+    
+    @Test
+    public void OtherBookmarkTest(){
+        String testString = "ID: " + otherB.getId() + "\n Type: Other\n "
+                + "Title: " + title + "\n Url: " + url + "\n Description: " + description; 
+        assertEquals(otherB.toString(), testString); 
     }
 
 }

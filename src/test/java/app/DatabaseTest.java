@@ -7,6 +7,7 @@ import app.utilities.Utilities;
 import bookmarks.BlogBookmark;
 import bookmarks.BookBookmark;
 import bookmarks.Bookmark;
+import bookmarks.OtherBookmark;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -41,6 +42,13 @@ public class DatabaseTest {
     @Test
     public void bookBookmarksDontCauseCrashing() {
         dao.saveBookmarkToDatabase(new BookBookmark());
+        assertNotNull(dao.getBookMarksOnDatabase());
+    }
+    
+    @Transactional 
+    @Test
+    public void otherBookmarksDontCauseCrashing(){
+        dao.saveBookmarkToDatabase(new OtherBookmark());
         assertNotNull(dao.getBookMarksOnDatabase());
     }
 

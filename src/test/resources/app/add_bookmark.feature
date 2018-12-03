@@ -32,3 +32,11 @@ Feature: Adding a bookmark with valid information is possible
        And  app is created
        Then  system will respond with "Your bookmark has been read!"
 
+    Scenario: user can add an Other Bookmark
+        Given option "1" is selected
+        And bookmark type "O" is selected
+        When input "testTitle1" is entered
+        And input "testUrl" is entered
+        And input "testDescription" is entered
+        And app is created
+        Then system will respond with "Your bookmark has been read!"
