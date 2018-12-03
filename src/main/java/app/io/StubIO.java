@@ -8,11 +8,14 @@ import java.util.List;
 public class StubIO implements IO {
     
     private List<String> lines;
+    private List<Integer> inputNumbers;
     private int i;
+    private int j;
     private ArrayList<String> prints;
     
-    public StubIO(List<String> values) {
-        this.lines = values;
+    public StubIO(List<String> lines, List<Integer> inputNumbers) {
+        this.lines = lines;
+        this.inputNumbers = inputNumbers;
         prints = new ArrayList<>();
     }
     
@@ -38,6 +41,9 @@ public class StubIO implements IO {
 
     @Override
     public int nextInt() {
+        if (j < inputNumbers.size()) {
+            return inputNumbers.get(j++);
+        }
         return 0;
     }
     
