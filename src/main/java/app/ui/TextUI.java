@@ -1,6 +1,5 @@
 package app.ui;
 
-import app.domain.Course;
 import app.domain.Tag;
 import app.io.IO;
 import bookmarks.Bookmark;
@@ -132,12 +131,6 @@ public class TextUI {
         List<Tag> tagsList = askForTags();
         bookmark.setTags(tagsList);
 
-        List<Course> relatedCourseList = askForRelatedCourses();
-        bookmark.setRelatedCourses(relatedCourseList);
-
-        List<Course> prerequisiteCourseList = askForPrerequisites();
-        bookmark.setPrerequisiteCourses(prerequisiteCourseList);
-
         String description = askForInput("Description: ");
         bookmark.setDescription(description);
 
@@ -161,29 +154,6 @@ public class TextUI {
         return result;
     }
 
-    private List<Course> askForPrerequisites() {
-        return askForCourses("Prerequisite courses (separated by \",\"): ");
-
-    }
-
-    private List<Course> askForRelatedCourses() {
-        return askForCourses("Related courses (separated by \",\"): ");
-
-    }
-
-    private List<Course> askForCourses(String prompt) {
-        io.println(prompt);
-        String input = io.nextLine();
-
-        String[] courses = input.split(",");
-        List<Course> result = new ArrayList();
-        for (int i = 0; i < courses.length; i++) {
-            // toistaiseksi oletetaan, että jokainen lisättävä kurssi on eri
-            result.add(new Course(courses[i].trim()));
-        }
-
-        return result;
-    }
 
     public long askForEntryToEdit(List<Bookmark> bookmarks) {
         System.out.println("Select an entry to edit/remove by typing it's ID: ");

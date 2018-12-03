@@ -4,7 +4,5 @@ testTitle
 testAuthor
 
 testTag1, testTag2
-testRelCourse
-testPreqCourse
 testDescription
 testComment

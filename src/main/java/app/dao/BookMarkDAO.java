@@ -1,7 +1,6 @@
 package app.dao;
 
 import bookmarks.Bookmark;
-import app.domain.Course;
 import app.utilities.Utilities;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,18 +68,6 @@ public class BookMarkDAO {
         // save tags and stuff
 
         bookmark.setTags(tagDAO.saveTagsToDatabase(session, bookmark.getTags()));
-
-        for (Course c : bookmark.getRelatedCourses()) {
-
-            session.saveOrUpdate(c);
-
-        }
-
-        for (Course c : bookmark.getPrerequisiteCourses()) {
-
-            session.saveOrUpdate(c);
-
-        }
 
         session.getTransaction().commit();
         session.close();

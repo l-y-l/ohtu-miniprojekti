@@ -1,6 +1,5 @@
 package bookmarks;
 
-import app.domain.Course;
 import app.domain.Tag;
 import bookmarks.BlogBookmark;
 import bookmarks.BookBookmark;
@@ -18,8 +17,7 @@ public class BookmarkTest {
     String comment;
     String description;
     List<Tag> tags;
-    List<Course> relatedCourses;
-    List<Course> prerequisiteCourses;
+
 
     // Unique bookmark variables.
     String ISBN;
@@ -51,14 +49,9 @@ public class BookmarkTest {
         description = "TestDescription";
 
         tags = new ArrayList<>();
-        relatedCourses = new ArrayList<>();
-        prerequisiteCourses = new ArrayList<>();
 
         for (int i = 1; i < 4; i++) {
             tags.add(new Tag("tag" + i));
-            relatedCourses.add(new Course("relatedCourse" + i));
-            prerequisiteCourses.add(new Course("description" + i));
-
         }
     }
 
@@ -68,8 +61,8 @@ public class BookmarkTest {
     }
 
     public void initializeBookmarks() {
-        blogB = new BlogBookmark(author, title, url, tags, prerequisiteCourses, relatedCourses, description, comment);
-        bookB = new BookBookmark(author, title, ISBN, tags, prerequisiteCourses, relatedCourses, description, comment);
+        blogB = new BlogBookmark(author, title, url, tags,  description, comment);
+        bookB = new BookBookmark(author, title, ISBN, tags, description, comment);
         otherB = new OtherBookmark(title, url, description); 
     }
 
@@ -77,8 +70,6 @@ public class BookmarkTest {
     @Test
     public void BlogBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
-        String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
-        String preqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " + prerequisiteCourses.get(2);
 
 
         String testString = "ID: " + id + "\n"
@@ -87,8 +78,6 @@ public class BookmarkTest {
                 + " Title: " + title+ "\n"
                 + " Url: "+url+ "\n"
                 + " Tags: " +tagsStr+"\n"
-                + " Prerequisite courses: " + preqStr + "\n"
-                + " Related courses: "+ relatedStr+"\n"
                 + " Description: "+description +"\n"
                 + " Comment: "+comment;
         assertEquals(testString, blogB.toString());
@@ -97,8 +86,6 @@ public class BookmarkTest {
     @Test
     public void BookBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
-        String relatedStr = relatedCourses.get(0) + ", " + relatedCourses.get(1) + ", " + relatedCourses.get(2);
-        String preqStr = prerequisiteCourses.get(0) + ", " + prerequisiteCourses.get(1) + ", " + prerequisiteCourses.get(2);
 
         String testString = "ID: " + id + "\n"
                 + " Type: Book"+"\n"
@@ -106,8 +93,6 @@ public class BookmarkTest {
                 + " Author: " + author + "\n"
                 + " Title: " + title+ "\n"
                 + " Tags: " +tagsStr+"\n"
-                + " Prerequisite courses: " + preqStr + "\n"
-                + " Related courses: "+ relatedStr+"\n"
                 + " Description: "+description +"\n"
                 + " Comment: "+comment;
         assertEquals(testString, bookB.toString());

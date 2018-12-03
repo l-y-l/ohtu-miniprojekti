@@ -14,8 +14,6 @@ Feature: Adding a bookmark with valid information is possible
        And  input "testAuthor1" is entered
        And input "testUrl" is entered
        And  input "test,Tags,1" is entered
-       And  input "test,Prerequisite,C1" is entered
-       And  input "test,Related,C1" is entered
        And input "testDescription" is entered
        And input "testComment" is entered
        And  app is created
@@ -28,7 +26,6 @@ Feature: Adding a bookmark with valid information is possible
        And  input "testTitle1" is entered
        And  input "testUrl1" is entered
        And  input "test,Tags,1" is entered
-       And  input "test,Related,C1" is entered
        And  app is created
        Then  system will respond with "Your bookmark has been read!"
 

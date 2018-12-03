@@ -1,7 +1,6 @@
 package app;
 
 import app.dao.BookMarkDAO;
-import app.domain.Course;
 import app.domain.Tag;
 import app.utilities.Utilities;
 import bookmarks.BlogBookmark;
@@ -55,7 +54,7 @@ public class DatabaseTest {
     @Transactional
     @Test
     public void searchMethodWorks() {
-        dao.saveBookmarkToDatabase(new BookBookmark("simeon", "book", "", new ArrayList<Tag>(), new ArrayList<Course>(), new ArrayList<Course>(), "", ""));
+        dao.saveBookmarkToDatabase(new BookBookmark("simeon", "book", "", new ArrayList<Tag>(),  "", ""));
         assertNotNull(dao.searchField("author", "simeon"));
     }
 

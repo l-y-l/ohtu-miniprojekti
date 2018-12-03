@@ -20,6 +20,5 @@
         <mapping class="bookmarks.BookBookmark"/>
         <mapping class="bookmarks.OtherBookmark"/>
         <mapping class="app.domain.Tag" />
-        <mapping class="app.domain.Course" />
     </session-factory>
 </hibernate-configuration>

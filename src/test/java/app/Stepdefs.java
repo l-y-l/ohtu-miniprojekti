@@ -33,8 +33,6 @@ public class Stepdefs {
         inputLines.add("Martin Dawes");
         inputLines.add("martindawes.com/cucumberexperience");
         inputLines.add("cucumber,podcast");
-        inputLines.add("cucumber tutorial, cucumberAdvanced");
-        inputLines.add("testing101");
         inputLines.add("Delve into the depths of cucumber.");
         inputLines.add("Do not delve into the depths of cucumber.");
         
@@ -45,8 +43,6 @@ public class Stepdefs {
         inputLines.add("Cucumber Chief");
         inputLines.add("cucumberTutorial.com");
         inputLines.add("cucumber,tutorial");
-        inputLines.add("programming101,testing101");
-        inputLines.add("testing101,cucumberAdvanced");
         inputLines.add("a tutorial for definition testing");
         inputLines.add("a valuable part of a good testing arsenal.");
         
@@ -57,8 +53,6 @@ public class Stepdefs {
         inputLines.add("Mr. Delete");
         inputLines.add("mrdelete.com/deletecast");
         inputLines.add("deleted");
-        inputLines.add("deleted1,deleted2");
-        inputLines.add("deletion");
         inputLines.add("Will be deleted.");
         inputLines.add("Wont exist for long.");
     }
