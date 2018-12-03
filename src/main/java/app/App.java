@@ -7,6 +7,7 @@ import app.io.IO;
 import app.ui.TextUI;
 import bookmarks.Bookmark;
 
+
 public class App {
 
     private final TextUI ui;
@@ -18,56 +19,59 @@ public class App {
         this.ui = new TextUI(io);
         this.dao = new BookMarkDAO();
     }
-    
+
     public App(IO io, BookMarkDAO dao){
         this.io = io; 
         this.ui = new TextUI(io); 
         this.dao = dao; 
     }
     
-
     public void run() {
         ui.printWelcomeMessage();
         boolean run = true;
+        String command = "";
+        int safety=0;
         //TODO: hide this to an other class
         while (run) {
-            String command = ui.getMenuCommand();
+            command = ui.getMenuCommand();
             switch (command) {
-                case ("new"):
+                case ("1"):
                     Bookmark bookmark = ui.askForBookmark();
                     if (bookmark != null) {
                         dao.saveBookmarkToDatabase(bookmark);
                     }
                     break;
-                case ("list"):
+                case ("2"):
                     ui.printBookmarkList(dao.getBookMarksOnDatabase());
                     break;
-                case("delete"):
-                    Long bookmark_id = ui.askForBookmarkToDelete();
-                    if (bookmark_id != null) {
-                        dao.deleteBookmarkFromDatabase(bookmark_id);
-                    }
-                    break;
-                case ("search"):
+                case ("3"):
                     String searchfield = ui.askForField();
                     String search = ui.askForSearch();
                     ui.printBookmarkList(dao.searchField(searchfield, search));
                     break;
-                case("edit"):
-                    Long editID= ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
-                    String editfield= ui.askForEditField();
+                case ("4"):
+                    Long editID = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
+                    String editfield = ui.askForEditField();
                     io.println("\nOld values: ");
                     io.println(dao.getSingleBookmarkInfo(editID));
-                    String newEntry=ui.askForNewField(editfield);
+                    String newEntry = ui.askForNewField(editfield);
                     dao.editEntry(editID, editfield, newEntry);
                     break;
-                case ("exit"):
+                case ("5"):
+                    Long bookmark_id = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
+                    if (bookmark_id != null) {
+                        dao.deleteBookmarkFromDatabase(bookmark_id);
+                    }
+                    break;
+                case ("0"):
                     ui.printGoodbyeMessage();
                     run = false;
                     break;
                 default:
-                    ui.printUnrecognizedOption(command);
-                    run = false;
+                    ui.printUnrecognizedOption();
+                    if(safety++>100){
+                        run=false;
+                    }
                     break;
             }
         }
