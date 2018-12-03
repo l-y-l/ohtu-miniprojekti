@@ -6,6 +6,7 @@ import app.io.IO;
 import bookmarks.Bookmark;
 import bookmarks.BookBookmark;
 import bookmarks.BlogBookmark;
+import bookmarks.OtherBookmark;
 import java.util.*;
 
 public class TextUI {
@@ -58,7 +59,7 @@ public class TextUI {
 
     public Bookmark askForBookmark() {
         io.println("Add a new bookmark.");
-        io.println("Give type (B = Book) (BG = Blog): ");
+        io.println("Give type (B = Book) (BG = Blog), (O = Other): ");
         String type = io.nextLine();
 
         Bookmark bookmark = null;
@@ -67,7 +68,9 @@ public class TextUI {
             bookmark = askForBookBookmarkInfo();
         } else if (type.equals("BG")) {
             bookmark = askForBlogBookmarkInfo();
-        } 
+        } else if (type.equals("O")){
+            bookmark = askForOtherBookmarkInfo(); 
+        }
 
         if (bookmark != null) {
             io.println(defaultSuccessMessage);
@@ -86,6 +89,14 @@ public class TextUI {
         for (Bookmark bmark : bookmarks) {
             io.println(bmark.toString());
         }
+    }
+    
+    private Bookmark askForOtherBookmarkInfo(){
+        String title = askForInput("Title: "); 
+        String url = askForInput("Url: "); 
+        String description = askForInput("Description: "); 
+        
+        return new OtherBookmark(title, url, description); 
     }
 
     private Bookmark askForBookBookmarkInfo() {

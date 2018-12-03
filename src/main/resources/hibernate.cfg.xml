@@ -17,6 +17,7 @@
         <mapping class="bookmarks.Bookmark"/>
         <mapping class="bookmarks.BlogBookmark"/>
         <mapping class="bookmarks.BookBookmark"/>
+        <mapping class="bookmarks.OtherBookmark"/>
         <mapping class="app.domain.Tag" />
         <mapping class="app.domain.Course" />
     </session-factory>
