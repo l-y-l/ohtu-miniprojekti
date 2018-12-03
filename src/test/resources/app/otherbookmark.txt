@@ -1,5 +1,6 @@
 O
-otherTitle
 otherUrl
+otherTitle
+otherTag
 Description for a peculiar bookmark
 

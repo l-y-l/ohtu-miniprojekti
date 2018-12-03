@@ -37,15 +37,11 @@ public class TextUI {
 
     public String askForField() {
         io.println("Which field would you like to search?");
-        io.println("Give field (A = Author) (T = Title) (C = Comment) (D = Description)");
+        io.println("Give field (T = Title) (D = Description)");
         String command = io.nextLine();
         switch (command) {
-            case ("A"):
-                return "author";
             case ("T"):
                 return "title";
-            case ("C"):
-                return "comment";
             case ("D"):
                 return "description";
             default:
@@ -69,8 +65,8 @@ public class TextUI {
             bookmark = askForBookBookmarkInfo();
         } else if (type.equals("BG")) {
             bookmark = askForBlogBookmarkInfo();
-        } else if (type.equals("O")){
-            bookmark = askForOtherBookmarkInfo(); 
+        } else if (type.equals("O")) {
+            bookmark = askForOtherBookmarkInfo();
         }
 
         if (bookmark != null) {
@@ -93,27 +89,39 @@ public class TextUI {
             System.out.println("==================================================");
         }
     }
-    
-    private Bookmark askForOtherBookmarkInfo(){
-        String title = askForInput("Title: "); 
-        String url = askForInput("Url: "); 
-        String description = askForInput("Description: "); 
-        
-        return new OtherBookmark(title, url, description); 
+
+    private Bookmark askForOtherBookmarkInfo() {
+        OtherBookmark bm = new OtherBookmark();
+        String url = askForInput("Url: ");
+        bm.setUrl(url);
+        askForGeneralBookmarkInfo(bm);
+        return bm;
     }
 
     private Bookmark askForBookBookmarkInfo() {
         BookBookmark bm = new BookBookmark();
-
-        io.println("ISBN: ");
-        String isbn = io.nextLine();
+        String isbn = askForInput("ISBN: ");
         bm.setISBN(isbn);
-        askForGeneralBookmarkInfo(bm);
+
+        String title = askForInput("Title: ");
+        bm.setTitle(title);
+
+        String author = askForInput("Author: ");
+        bm.setAuthor(author);
+
+        List<Tag> tagsList = askForTags();
+        bm.setTags(tagsList);
+
+        String description = askForInput("Description: ");
+        bm.setDescription(description);
+
         return bm;
     }
 
     private Bookmark askForBlogBookmarkInfo() {
         BlogBookmark bm = new BlogBookmark();
+        String url = askForInput("Url: ");
+        bm.setUrl(url);
         askForGeneralBookmarkInfo(bm);
         return bm;
     }
@@ -122,20 +130,11 @@ public class TextUI {
         String title = askForInput("Title: ");
         bookmark.setTitle(title);
 
-        String author = askForInput("Author: ");
-        bookmark.setAuthor(author);
-
-        String url = askForInput("Url: ");
-        bookmark.setUrl(url);
-
         List<Tag> tagsList = askForTags();
         bookmark.setTags(tagsList);
 
         String description = askForInput("Description: ");
         bookmark.setDescription(description);
-
-        String comment = askForInput("Comment");
-        bookmark.setComment(comment);
 
         return bookmark;
     }
@@ -154,9 +153,8 @@ public class TextUI {
         return result;
     }
 
-
     public long askForEntryToEdit(List<Bookmark> bookmarks) {
-        System.out.println("Select an entry to edit/remove by typing it's ID: ");
+        System.out.println("Select an entry to edit/remove by typing its ID: ");
         for (Bookmark bookmark : bookmarks) {
             io.println(bookmark.shortPrint());
         }

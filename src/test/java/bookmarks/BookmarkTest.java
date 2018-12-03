@@ -14,10 +14,8 @@ public class BookmarkTest {
     Long id;
     String author;
     String title;
-    String comment;
     String description;
     List<Tag> tags;
-
 
     // Unique bookmark variables.
     String ISBN;
@@ -28,24 +26,21 @@ public class BookmarkTest {
     // Bookmarks.
     BlogBookmark blogB;
     BookBookmark bookB;
-    OtherBookmark otherB; 
+    OtherBookmark otherB;
 
-
-    public BookmarkTest(){
+    public BookmarkTest() {
         setUp();
     }
+
     public void setUp() {
         initializeAbstractClassVariables();
         initializeUniqueClassVariables();
         initializeBookmarks();
     }
 
-
-
     private void initializeAbstractClassVariables() {
         author = "TestAuthor";
         title = "TestTitle";
-        comment = "TestComment";
         description = "TestDescription";
 
         tags = new ArrayList<>();
@@ -61,9 +56,9 @@ public class BookmarkTest {
     }
 
     public void initializeBookmarks() {
-        blogB = new BlogBookmark(author, title, url, tags,  description, comment);
-        bookB = new BookBookmark(author, title, ISBN, tags, description, comment);
-        otherB = new OtherBookmark(title, url, description); 
+        blogB = new BlogBookmark(title, url, tags, description);
+        bookB = new BookBookmark(ISBN, author, title, tags, description);
+        otherB = new OtherBookmark(title, url, tags, description);
     }
 
     // Tests:
@@ -71,15 +66,12 @@ public class BookmarkTest {
     public void BlogBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
 
-
         String testString = "ID: " + id + "\n"
-                + " Type: Blogpost"+"\n"
-                + " Author: " + author + "\n"
-                + " Title: " + title+ "\n"
-                + " Url: "+url+ "\n"
-                + " Tags: " +tagsStr+"\n"
-                + " Description: "+description +"\n"
-                + " Comment: "+comment;
+                + " Type: Blogpost" + "\n"
+                + " Url: " + url + "\n"
+                + " Title: " + title + "\n"
+                + " Tags: " + tagsStr + "\n"
+                + " Description: " + description;
         assertEquals(testString, blogB.toString());
     }
 
@@ -88,21 +80,22 @@ public class BookmarkTest {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
 
         String testString = "ID: " + id + "\n"
-                + " Type: Book"+"\n"
+                + " Type: Book" + "\n"
                 + " ISBN: " + ISBN + "\n"
                 + " Author: " + author + "\n"
-                + " Title: " + title+ "\n"
-                + " Tags: " +tagsStr+"\n"
-                + " Description: "+description +"\n"
-                + " Comment: "+comment;
+                + " Title: " + title + "\n"
+                + " Tags: " + tagsStr + "\n"
+                + " Description: " + description;
         assertEquals(testString, bookB.toString());
     }
-    
+
     @Test
-    public void OtherBookmarkTest(){
-        String testString = "ID: " + otherB.getId() + "\n Type: Other\n "
-                + "Title: " + title + "\n Url: " + url + "\n Description: " + description; 
-        assertEquals(otherB.toString(), testString); 
+    public void OtherBookmarkTest() {
+        String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
+        String testString = "ID: " + otherB.getId() + "\n Type: Other"
+               + "\n Url: " + url + "\n Title: " + title + "\n Tags: " + tagsStr
+                + "\n Description: " + description;
+        assertEquals(otherB.toString(), testString);
     }
 
 }

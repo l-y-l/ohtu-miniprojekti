@@ -2,6 +2,7 @@ package app.dao;
 
 import bookmarks.Bookmark;
 import app.utilities.Utilities;
+import bookmarks.BookBookmark;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -142,7 +143,7 @@ public class BookMarkDAO {
         Bookmark bookmark = session.load(Bookmark.class, id);
         switch (field) {
             case ("author"):
-                bookmark.setAuthor(newEntry);
+                bookmark.updateAttribute("author", newEntry);
                 break;
             case ("title"):
                 bookmark.setTitle(newEntry);
@@ -156,7 +157,7 @@ public class BookMarkDAO {
     }
 
     /**
-     * Deletes bookmark from database by bookmark-id.
+     *  bookmark from database by bookmark-id.
      *
      * @param bookmark_id
      */

@@ -15,27 +15,47 @@ import javax.persistence.*;
 @Table(name="BookBookmark")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class BookBookmark extends Bookmark {
+    private String author; 
     private String ISBN;
+
+
+    public BookBookmark(){
+        super(); 
+    }
+
+    public BookBookmark(String ISBN, String author, String title,  List<Tag> tags, String description) {
+        super(title, tags, description);
+        this.author = author; 
+        this.ISBN = ISBN;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+    
+        
     public String getISBN(){
         return ISBN;
     }
     public void setISBN(String ISBN){
         this.ISBN=ISBN;
     }
-
-    public BookBookmark(){
-        tags = new ArrayList();
-    }
-
-    public BookBookmark(String author, String title, String ISBN, List<Tag> tags, String description, String comment) {
-        super(author, title, "", tags, description, comment);
-        this.ISBN = ISBN;
-    }
+   
 
     @Override
     public String toString() {
-        String result = "ID: " + id + "\n Type: Book\n ISBN: " + this.ISBN + "\n";
-        return result + super.toString();
+        String result = "ID: " + id + "\n Type: Book\n ISBN: " + this.ISBN + "\n Author: " + author;
+        return result + "\n" + super.toString();
     }
+    
+    @Override
+    public String shortPrint(){
+        return super.shortPrint() + " Author: " + author; 
+    }
+
 
 }

@@ -2,6 +2,8 @@ package bookmarks;
 
 import app.domain.Tag;
 import app.utilities.Utilities;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
@@ -22,12 +24,7 @@ public abstract class Bookmark {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String author;
     String title;
-    // not really common to all subclasses; should perhaps be moved? Ebooks may have
-    // url, though...
-    String url;
-    String comment;
     String description;
 
     // toistaiseksi eager, sillä jos Session ei auki ja esim kutsutaan bookmarkin
@@ -39,29 +36,17 @@ public abstract class Bookmark {
             inverseJoinColumns = {
                 @JoinColumn(name = "tag_id")})
     @Fetch(value = FetchMode.SUBSELECT)
-
     List<Tag> tags;
+
     // Hibernate requires a constructor with no parameters
     public Bookmark() {
         tags = new ArrayList();
     }
 
-    public Bookmark(String author, String title, String url, List<Tag> tags, String description, String comment) {
-        this.author = author;
+    public Bookmark(String title, List<Tag> tags, String description) {
         this.title = title;
-        this.url = url;
         this.tags = tags;
         this.description = description;
-        this.comment = comment;
-
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getTitle() {
@@ -70,14 +55,6 @@ public abstract class Bookmark {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public String getDescription() {
@@ -92,14 +69,6 @@ public abstract class Bookmark {
         this.description = description;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     public List<Tag> getTags() {
         return tags;
     }
@@ -111,23 +80,44 @@ public abstract class Bookmark {
     public String tagsStr() {
         return Utilities.formStringSeparatedByCommas(tags);
     }
+
     @Override
     public String toString() {
         String result
-                = " Author: " + author + "\n"
-                + " Title: " + title + "\n";
-
-        if (!(url == null || url.isEmpty())) {
-            result += " Url: " + url + "\n";
-        }
-
-
-        result += " Tags: " + tagsStr() + "\n"
-                + " Description: " + description + "\n"
-                + " Comment: " + comment;
+                = " Title: " + title + "\n"
+                + " Tags: " + tagsStr() + "\n"
+                + " Description: " + description;
         return result;
     }
-    public String shortPrint(){
-        return "ID: "+this.id+" Title: "+this.title+" Author: "+this.author;
+
+    public String shortPrint() {
+        return "ID: " + this.id + " Title: " + this.title;
     }
+
+    
+    /**
+     * Changes the value of a field if such a field exists
+     * 
+     * <p>Bookmark does not have author, so a normal setter for author cannot 
+     * be called on Bookmark instances. However, this method can be called, 
+     * and the value will be changed if there is a method setAuthor.</p>
+     * 
+     * <p>If the actual class of this is not Book, the method does nothing. 
+     * Of course this can be used in similar fashion with urls etc.</p>
+     * 
+     * @param attributeName Name of the class variable to be changed
+     * @param newValue New value for the class variable
+     */
+    public void updateAttribute(String attributeName, String newValue) {
+
+        try {
+            String modifiedName = Character.toUpperCase(attributeName.charAt(0)) + 
+                    attributeName.substring(1);
+            Method setter = this.getClass().getDeclaredMethod("set" + modifiedName, "".getClass());
+            setter.invoke(this, newValue);
+        } catch (Exception e) {
+        }
+    }
+;
+
 }

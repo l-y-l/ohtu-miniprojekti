@@ -1,8 +1,11 @@
 package app.ui;
 
 import app.io.ConsoleIO;
+import bookmarks.BlogBookmark;
+import bookmarks.BookBookmark;
 
 import bookmarks.Bookmark;
+import bookmarks.OtherBookmark;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -37,9 +40,8 @@ public class TextUITest {
         Bookmark bookmark = ui.askForBookmark();
 
 
-        assertEquals(bookmark.getAuthor(), "testAuthor");
+        assertEquals(bookmark.getDescription(), "testDescription");
         assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
     }
 
     @Test
@@ -54,10 +56,13 @@ public class TextUITest {
         scanner = new Scanner(file);
         ui = new TextUI(new ConsoleIO(scanner));
         Bookmark bookmark = ui.askForBookmark();
-
-        assertEquals(bookmark.getUrl(), "testUrl");
+        try{ 
+            BlogBookmark blog = (BlogBookmark) bookmark; 
+            assertEquals("testUrl", blog.getUrl());
+        } catch (Exception e){
+            assertTrue(false); 
+        }
         assertEquals(bookmark.getTitle(), "testTitle");
-        assertEquals(bookmark.getComment(), "testComment");
     }
     
     
@@ -73,7 +78,13 @@ public class TextUITest {
         ui = new TextUI(new ConsoleIO(scanner));
         Bookmark bookmark =  ui.askForBookmark(); 
         assertTrue(bookmark.toString().contains("Type: Other"));
-        assertEquals("otherUrl", bookmark.getUrl());
+        
+        try{
+            OtherBookmark other = (OtherBookmark) bookmark; 
+            assertEquals("otherUrl", other.getUrl());
+        } catch (Exception e){
+            assertTrue(false); 
+        }
         assertEquals("otherTitle", bookmark.getTitle());
         assertEquals("Description for a peculiar bookmark", bookmark.getDescription());
     }

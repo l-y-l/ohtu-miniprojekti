@@ -54,15 +54,16 @@ public class DatabaseTest {
     @Transactional
     @Test
     public void searchMethodWorks() {
-        dao.saveBookmarkToDatabase(new BookBookmark("simeon", "book", "", new ArrayList<Tag>(),  "", ""));
+        dao.saveBookmarkToDatabase(new BookBookmark("123", "simeon", "book",  new ArrayList<Tag>(),  ""));
         assertNotNull(dao.searchField("author", "simeon"));
     }
 
     @Transactional
     @Test
     public void userCanEditAnEntry() {
-        dao.saveBookmarkToDatabase(new BookBookmark());
-        long bookmarkID = dao.getBookMarksOnDatabase().get(dao.getBookMarksOnDatabase().size() - 1).getId();
+        BookBookmark book = new BookBookmark(); 
+        dao.saveBookmarkToDatabase(book);
+        long bookmarkID = book.getId();
         dao.editEntry(bookmarkID, "author", "testAuthor");
         dao.editEntry(bookmarkID, "title", "testTitle");
         assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testAuthor"));
