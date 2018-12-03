@@ -139,7 +139,13 @@ public class BookMarkDAO {
     public String getSingleBookmarkInfo(Long id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Bookmark bookmark = session.load(Bookmark.class, id);
+        Bookmark bookmark;
+        try {
+            bookmark = session.load(Bookmark.class, id);
+        } catch (Exception e) {
+            System.out.println("Bookmark not found");
+            return "";
+        }
         String ret = "";
         ret += bookmark.toString();
         session.close();
@@ -157,8 +163,13 @@ public class BookMarkDAO {
     public void editEntry(Long id, String field, String newEntry) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
-        Bookmark bookmark = session.load(Bookmark.class, id);
+        Bookmark bookmark;
+        try {
+            bookmark = session.load(Bookmark.class, id);
+        } catch (Exception e) {
+            System.out.println("Bookmark not found");
+            return;
+        }
         switch (field) {
             case ("author"):
                 bookmark.setAuthor(newEntry);
@@ -180,15 +191,20 @@ public class BookMarkDAO {
      * @param bookmark_id
      */
     public void deleteBookmarkFromDatabase(Long bookmark_id) {
+        Session session = sessionFactory.openSession();
+        Bookmark bookmark;
+        try{
+            bookmark = (Bookmark) session.createQuery("from Bookmark where id = " + bookmark_id).uniqueResult();
+        }catch (Exception e){
+            System.out.println("Bookmark not found");
+            return;
+        }
+        if (bookmark != null) {
+            session.beginTransaction();
+            session.delete(session.load(Bookmark.class, bookmark_id));
 
-        try (Session session = sessionFactory.openSession()) {
-            Bookmark bookmark = (Bookmark) session.createQuery("from Bookmark where id = " + bookmark_id).uniqueResult();
-            if (bookmark != null) {
-                session.beginTransaction();
-                session.delete(session.load(Bookmark.class, bookmark_id));
-                
-                session.getTransaction().commit();
-            }
+            session.getTransaction().commit();
         }
     }
 }
+

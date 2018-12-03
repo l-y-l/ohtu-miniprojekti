@@ -202,14 +202,32 @@ public class TextUI {
         return (long) io.nextInt();
     }
 
-    public String askForEditField() {
-        System.out.println("Select field to edit: A = Author or T = title");
+    public String askForEditField(String bookmark) {
+        String [] data= bookmark.split(" ");
+        String ask="Select field to edit:";
+        System.out.println(data[3]);
+        if(data[3].contains("Book")){
+            ask+="\nA = Author  \nT = title\nD = description";
+        }
+        if(data[3].contains("Blogpost")){
+            ask+="\nT = title\nU = url \nC = comment\nD = description";
+        }
+        if(data[3].contains("Other")){
+            ask+="\nT = title\nU = url \nD = description";
+        }
+        System.out.println(ask);
         String field = io.nextLine();
         while (true) {
             if (field.equals("A")) {
                 return "author";
             } else if (field.equals("T")) {
                 return "title";
+            } else if (field.equals("U")) {
+                return "url";
+            } else if (field.equals("C")) {
+                return "comment";
+            } else if (field.equals("D")) {
+                return "description";
             } else {
                 field = io.nextLine();
             }
