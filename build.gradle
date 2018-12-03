@@ -6,7 +6,7 @@
  */
 
 plugins {
-   id 'com.github.johnrengelman.shadow' version '2.0.1'
+    id 'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
 apply plugin: 'java'
@@ -30,7 +30,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'io.cucumber:cucumber-java:4.2.0'
     testCompile 'io.cucumber:cucumber-junit:4.2.0'
-	testCompile 'org.mockito:mockito-core:2.10.0'
+    testCompile 'org.mockito:mockito-core:2.10.0'
 }
 
 test {
