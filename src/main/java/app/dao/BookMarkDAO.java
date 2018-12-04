@@ -20,7 +20,10 @@ public class BookMarkDAO {
 
     private SessionFactory sessionFactory;
     private TagDAO tagDAO;
-
+    
+    public final String titleOrderQuery = "FROM Bookmark b ORDER BY b.title ASC";
+    public final String creationOrderQueryDESC = "FROM Bookmark b ORDER BY b.created DESC";
+    public final String creationOrderQueryASC = "FROM Bookmark b ORDER BY b.created ASC";
     /**
      * Initializes the class with a SessionFactory.
      */
@@ -49,14 +52,39 @@ public class BookMarkDAO {
      * @return list of Bookmarks
      */
     public List<Bookmark> getBookMarksOnDatabase() {
+        return getBookmarksWithQuery("from Bookmark");
+    }
+    
+    /**
+     * Returns bookmarks defined by given hql query.
+     *
+     * @param query hql query for fetching bookmarks
+     * @return list of Bookmarks
+     */
+    public List<Bookmark> getBookmarksWithQuery(String query) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery("from Bookmark").list();
+        List result = session.createQuery(query).list();
         session.getTransaction().commit();
         session.close();
         return (List<Bookmark>) result;
     }
-
+    
+    /**
+     * Returns bookmarks listed in an order defined by variable method.
+     *
+     * @param method Bookmark listing method key.
+     * @return list of Bookmarks
+     */
+    public List<Bookmark> getBookmarksInOrder(String method) {
+        switch(method) {
+            case("T"): return getBookmarksWithQuery(titleOrderQuery);
+            case("CD"): return getBookmarksWithQuery(creationOrderQueryDESC);
+            case("CA"): return getBookmarksWithQuery(creationOrderQueryASC);
+            default: return getBookMarksOnDatabase();
+        }
+    }
+    
     /**
      * Saves a bookmark to the database.
      *

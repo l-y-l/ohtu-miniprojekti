@@ -78,6 +78,12 @@ public class TextUI {
         return null;
 
     }
+    
+    public String askForListingMethod() {
+        io.println("Choose listing method:");
+        io.println("(T = Title)(CD = Creation time Descending)(CA = Creation time Ascending)");
+        return io.nextLine();
+    }
 
     public void printBookmarkList(List<Bookmark> bookmarks) {
         if (bookmarks.isEmpty()) {
@@ -89,7 +95,7 @@ public class TextUI {
             System.out.println("==================================================");
         }
     }
-
+    
     private Bookmark askForOtherBookmarkInfo() {
         OtherBookmark bm = new OtherBookmark();
         String url = askForInput("Url: ");
