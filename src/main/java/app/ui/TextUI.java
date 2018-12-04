@@ -156,7 +156,7 @@ public class TextUI {
         return bookmark;
     }
 
-    private List<Tag> askForTags() {
+    public List<Tag> askForTags() {
         io.println("Tags (separated by \",\"): ");
         String input = io.nextLine();
 
@@ -203,17 +203,17 @@ public class TextUI {
     }
 
     public String askForEditField(String bookmark) {
-        String [] data= bookmark.split(" ");
-        String ask="Select field to edit:";
+        String[] data = bookmark.split(" ");
+        String ask = "Select field to edit:";
         System.out.println(data[3]);
-        if(data[3].contains("Book")){
-            ask+="\nA = Author  \nT = title\nD = description";
+        if (data[3].contains("Book")) {
+            ask += "\nA = Author  \nT = title\nD = description \nX = tags";
         }
-        if(data[3].contains("Blogpost")){
-            ask+="\nT = title\nU = url \nC = comment\nD = description";
+        if (data[3].contains("Blogpost")) {
+            ask += "\nT = title\nU = url \nC = comment\nD = description \nX = tags ";
         }
-        if(data[3].contains("Other")){
-            ask+="\nT = title\nU = url \nD = description";
+        if (data[3].contains("Other")) {
+            ask += "\nT = title\nU = url \nD = description \nX = tags";
         }
         System.out.println(ask);
         String field = io.nextLine();
@@ -228,6 +228,8 @@ public class TextUI {
                 return "comment";
             } else if (field.equals("D")) {
                 return "description";
+            } else if (field.equals("X")) {
+                return "tags";
             } else {
                 field = io.nextLine();
             }

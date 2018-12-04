@@ -75,8 +75,8 @@ public class DatabaseTest {
     public void userCanEditAnEntry() {
         dao.saveBookmarkToDatabase(new BookBookmark());
         long bookmarkID = dao.getBookMarksOnDatabase().get(dao.getBookMarksOnDatabase().size() - 1).getId();
-        dao.editEntry(bookmarkID, "author", "testAuthor");
-        dao.editEntry(bookmarkID, "title", "testTitle");
+        dao.editEntry(bookmarkID, "author", "testAuthor", new ArrayList<Tag>());
+        dao.editEntry(bookmarkID, "title", "testTitle", new ArrayList<Tag>());
         assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testAuthor"));
         assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testTitle"));
     }

@@ -39,6 +39,7 @@ public class App {
         ui.printWelcomeMessage();
         boolean run = true;
         String command = "";
+        String newEntry = "";
         int safety = 0;
         //TODO: hide this to an other class
         while (run) {
@@ -57,10 +58,17 @@ public class App {
             } else if (command.equals("4") || command.equals("edit")) {
                 Long editID = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
                 String editfield = ui.askForEditField(dao.getSingleBookmarkInfo(editID));
+                List<Tag> tagList = null;
                 io.println("\nOld values: ");
                 io.println(dao.getSingleBookmarkInfo(editID));
-                String newEntry = ui.askForNewField(editfield);
-                dao.editEntry(editID, editfield, newEntry);
+                if (editfield.equals("tags")) {
+                    tagList = ui.askForTags();
+                } else {
+                    newEntry = ui.askForNewField(editfield);
+                }
+
+                dao.editEntry(editID, editfield, newEntry, tagList);
+
             } else if (command.equals("5") || command.equals("delete")) {
                 Long bookmark_id = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
                 if (bookmark_id != null) {
