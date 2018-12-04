@@ -127,6 +127,9 @@ public abstract class Bookmark {
     public String tagsStr() {
         return Utilities.formStringSeparatedByCommas(tags);
     }
+    
+    public void setUrl(String url) {
+    }
 
     @Override
     public String toString() {
