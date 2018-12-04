@@ -1,22 +1,18 @@
 package app;
 
 import app.dao.BookMarkDAO;
-import app.domain.Course;
 import app.domain.Tag;
 import app.utilities.Utilities;
-import bookmarks.PodcastBookmark;
-import bookmarks.VideoBookmark;
 import bookmarks.BlogBookmark;
 import bookmarks.BookBookmark;
 import bookmarks.Bookmark;
+import bookmarks.OtherBookmark;
 import static org.junit.Assert.*;
 import org.junit.*;
 
 import java.util.*;
-import java.util.logging.*;
 import javax.transaction.Transactional;
-import org.hibernate.*;
-import org.hibernate.cfg.*;
+
 
 @Transactional
 public class DatabaseTest {
@@ -47,26 +43,18 @@ public class DatabaseTest {
         dao.saveBookmarkToDatabase(new BookBookmark());
         assertNotNull(dao.getBookMarksOnDatabase());
     }
-
-    @Transactional
+    
+    @Transactional 
     @Test
-    public void podcastBookmarksDontCauseCrashing() {
-        dao.saveBookmarkToDatabase(new PodcastBookmark());
-        assertNotNull(dao.getBookMarkClass("PodcastBookmark"));
-    }
-
-    @Transactional
-    @Test
-    public void VideoBookmarksDontCauseCrashing() {
-        // Just tests that this doesn't crash
-        dao.saveBookmarkToDatabase(new VideoBookmark());
-        assertNotNull(dao.getBookMarkClass("VideoBookmark"));
+    public void otherBookmarksDontCauseCrashing(){
+        dao.saveBookmarkToDatabase(new OtherBookmark());
+        assertNotNull(dao.getBookMarksOnDatabase());
     }
 
     @Transactional
     @Test
     public void searchMethodWorks() {
-        dao.saveBookmarkToDatabase(new BookBookmark("simeon", "book", "", new ArrayList<Tag>(), new ArrayList<Course>(), new ArrayList<Course>(), "", ""));
+        dao.saveBookmarkToDatabase(new BookBookmark("123", "simeon", "book",  new ArrayList<Tag>(),  ""));
         assertNotNull(dao.searchField("author", "simeon"));
     }
 

@@ -1,9 +1,0 @@
-V
-testTitle
-testCreator
-testUrl
-testTag
-testReleated1, testReleated2
-testPrereq
-testDescription
-testComment

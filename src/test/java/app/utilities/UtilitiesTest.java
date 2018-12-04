@@ -1,17 +1,13 @@
 
 package app.utilities;
 
-import app.domain.Tag;
 import static app.utilities.Utilities.formStringSeparatedByCommas;
 import org.junit.Test;
 import java.util.List; 
 import java.util.ArrayList; 
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 
 public class UtilitiesTest {

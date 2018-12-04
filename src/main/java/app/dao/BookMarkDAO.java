@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package app.dao;
 
 import bookmarks.Bookmark;
-import app.domain.Course;
 import app.domain.Tag;
 import app.ui.TextUI;
 import app.utilities.Utilities;
+import bookmarks.BlogBookmark;
+import bookmarks.BookBookmark;
+import bookmarks.OtherBookmark;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -27,6 +24,10 @@ public class BookMarkDAO {
 
     private SessionFactory sessionFactory;
     private TagDAO tagDAO;
+
+    public final String titleOrderQuery = "FROM Bookmark b ORDER BY b.title ASC";
+    public final String creationOrderQueryDESC = "FROM Bookmark b ORDER BY b.created DESC";
+    public final String creationOrderQueryASC = "FROM Bookmark b ORDER BY b.created ASC";
 
     /**
      * Initializes the class with a SessionFactory.
@@ -56,12 +57,41 @@ public class BookMarkDAO {
      * @return list of Bookmarks
      */
     public List<Bookmark> getBookMarksOnDatabase() {
+        return getBookmarksWithQuery("from Bookmark");
+    }
+
+    /**
+     * Returns bookmarks defined by given hql query.
+     *
+     * @param query hql query for fetching bookmarks
+     * @return list of Bookmarks
+     */
+    public List<Bookmark> getBookmarksWithQuery(String query) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List result = session.createQuery("from Bookmark").list();
+        List result = session.createQuery(query).list();
         session.getTransaction().commit();
         session.close();
         return (List<Bookmark>) result;
+    }
+
+    /**
+     * Returns bookmarks listed in an order defined by variable method.
+     *
+     * @param method Bookmark listing method key.
+     * @return list of Bookmarks
+     */
+    public List<Bookmark> getBookmarksInOrder(String method) {
+        switch (method) {
+            case ("T"):
+                return getBookmarksWithQuery(titleOrderQuery);
+            case ("CD"):
+                return getBookmarksWithQuery(creationOrderQueryDESC);
+            case ("CA"):
+                return getBookmarksWithQuery(creationOrderQueryASC);
+            default:
+                return getBookMarksOnDatabase();
+        }
     }
 
     /**
@@ -76,18 +106,6 @@ public class BookMarkDAO {
         // save tags and stuff
 
         bookmark.setTags(tagDAO.saveTagsToDatabase(session, bookmark.getTags()));
-
-        for (Course c : bookmark.getRelatedCourses()) {
-
-            session.saveOrUpdate(c);
-
-        }
-
-        for (Course c : bookmark.getPrerequisiteCourses()) {
-
-            session.saveOrUpdate(c);
-
-        }
 
         session.getTransaction().commit();
         session.close();
@@ -171,9 +189,12 @@ public class BookMarkDAO {
             System.out.println("Bookmark not found");
             return;
         }
+        if (bookmark.getClass().equals(OtherBookmark.class)) {
+
+        }
         switch (field) {
             case ("author"):
-                bookmark.setAuthor(newEntry);
+                bookmark.updateAttribute("author", newEntry);
                 break;
             case ("title"):
                 bookmark.setTitle(newEntry);
@@ -181,13 +202,29 @@ public class BookMarkDAO {
             case ("description"):
                 bookmark.setDescription(newEntry);
                 break;
-            case ("comment"):
-                bookmark.setComment(newEntry);
-                break;
             case ("url"):
-                bookmark.setUrl(newEntry);
+                if (bookmark.getClass().equals(OtherBookmark.class)) {
+                    OtherBookmark other = (OtherBookmark) bookmark;
+                    other.setUrl(newEntry);
+                    session.evict(bookmark);
+                    session.update(bookmark);
+                    session.getTransaction().commit();
+                    session.close();
+                    System.out.println("The entry has been updated!");
+                    return;
+                }
+                if (bookmark.getClass().equals(BlogBookmark.class)) {
+                    BlogBookmark blog = (BlogBookmark) bookmark;
+                    blog.setUrl(newEntry);
+                    session.evict(bookmark);
+                    session.update(bookmark);
+                    session.getTransaction().commit();
+                    session.close();
+                    System.out.println("The entry has been updated!");
+                    return;
+                }
                 break;
-            case("tags"):
+            case ("tags"):
                 bookmark.setTags(tagDAO.saveTagsToDatabase(session, taglist));
                 break;
             default:
@@ -201,7 +238,7 @@ public class BookMarkDAO {
     }
 
     /**
-     * Deletes bookmark from database by bookmark-id.
+     * bookmark from database by bookmark-id.
      *
      * @param bookmark_id
      */

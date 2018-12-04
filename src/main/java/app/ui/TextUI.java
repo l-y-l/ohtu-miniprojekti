@@ -1,13 +1,11 @@
 package app.ui;
 
-import app.domain.Course;
 import app.domain.Tag;
 import app.io.IO;
 import bookmarks.Bookmark;
 import bookmarks.BookBookmark;
 import bookmarks.BlogBookmark;
-import bookmarks.PodcastBookmark;
-import bookmarks.VideoBookmark;
+import bookmarks.OtherBookmark;
 import java.util.*;
 
 public class TextUI {
@@ -39,15 +37,11 @@ public class TextUI {
 
     public String askForField() {
         io.println("Which field would you like to search?");
-        io.println("Give field (A = Author) (T = Title) (C = Comment) (D = Description)");
+        io.println("Give field (T = Title) (D = Description)");
         String command = io.nextLine();
         switch (command) {
-            case ("A"):
-                return "author";
             case ("T"):
                 return "title";
-            case ("C"):
-                return "comment";
             case ("D"):
                 return "description";
             default:
@@ -62,7 +56,7 @@ public class TextUI {
 
     public Bookmark askForBookmark() {
         io.println("Add a new bookmark.");
-        io.println("Give type (B = Book) (BG = Blog) (P = Podcast) (V = Video): ");
+        io.println("Give type (B = Book) (BG = Blog), (O = Other): ");
         String type = io.nextLine();
 
         Bookmark bookmark = null;
@@ -71,11 +65,8 @@ public class TextUI {
             bookmark = askForBookBookmarkInfo();
         } else if (type.equals("BG")) {
             bookmark = askForBlogBookmarkInfo();
-        } else if (type.equals("P")) {
-            bookmark = askForPodcastBookmarkInfo();
-
-        } else if (type.equals("V")) {
-            bookmark = askForVideoBookmarkInfo();
+        } else if (type.equals("O")) {
+            bookmark = askForOtherBookmarkInfo();
         }
 
         if (bookmark != null) {
@@ -86,6 +77,12 @@ public class TextUI {
         io.println("Invalid choice");
         return null;
 
+    }
+    
+    public String askForListingMethod() {
+        io.println("Choose listing method:");
+        io.println("(T = Title)(CD = Creation time Descending)(CA = Creation time Ascending)");
+        return io.nextLine();
     }
 
     public void printBookmarkList(List<Bookmark> bookmarks) {
@@ -98,32 +95,39 @@ public class TextUI {
             System.out.println("==================================================");
         }
     }
+    
+    private Bookmark askForOtherBookmarkInfo() {
+        OtherBookmark bm = new OtherBookmark();
+        String url = askForInput("Url: ");
+        bm.setUrl(url);
+        askForGeneralBookmarkInfo(bm);
+        return bm;
+    }
 
     private Bookmark askForBookBookmarkInfo() {
         BookBookmark bm = new BookBookmark();
-
-        io.println("ISBN: ");
-        String isbn = io.nextLine();
+        String isbn = askForInput("ISBN: ");
         bm.setISBN(isbn);
-        askForGeneralBookmarkInfo(bm);
+
+        String title = askForInput("Title: ");
+        bm.setTitle(title);
+
+        String author = askForInput("Author: ");
+        bm.setAuthor(author);
+
+        List<Tag> tagsList = askForTags();
+        bm.setTags(tagsList);
+
+        String description = askForInput("Description: ");
+        bm.setDescription(description);
+
         return bm;
     }
 
     private Bookmark askForBlogBookmarkInfo() {
         BlogBookmark bm = new BlogBookmark();
-        askForGeneralBookmarkInfo(bm);
-        return bm;
-    }
-
-    private Bookmark askForPodcastBookmarkInfo() {
-
-        PodcastBookmark bm = new PodcastBookmark();
-        askForGeneralBookmarkInfo(bm);
-        return bm;
-    }
-
-    private Bookmark askForVideoBookmarkInfo() {
-        VideoBookmark bm = new VideoBookmark();
+        String url = askForInput("Url: ");
+        bm.setUrl(url);
         askForGeneralBookmarkInfo(bm);
         return bm;
     }
@@ -132,26 +136,11 @@ public class TextUI {
         String title = askForInput("Title: ");
         bookmark.setTitle(title);
 
-        String author = askForInput("Author: ");
-        bookmark.setAuthor(author);
-
-        String url = askForInput("Url: ");
-        bookmark.setUrl(url);
-
         List<Tag> tagsList = askForTags();
         bookmark.setTags(tagsList);
 
-        List<Course> relatedCourseList = askForRelatedCourses();
-        bookmark.setRelatedCourses(relatedCourseList);
-
-        List<Course> prerequisiteCourseList = askForPrerequisites();
-        bookmark.setPrerequisiteCourses(prerequisiteCourseList);
-
         String description = askForInput("Description: ");
         bookmark.setDescription(description);
-
-        String comment = askForInput("Comment");
-        bookmark.setComment(comment);
 
         return bookmark;
     }
@@ -163,39 +152,15 @@ public class TextUI {
         String[] tags = input.split(",");
         List<Tag> result = new ArrayList();
         for (int i = 0; i < tags.length; i++) {
-            // toistaiseksi oletetaan, että jokainen lisättävä kurssi on eri
+            // pitäisikö tässä vaiheessa katsoa, että ei lisätä uutta tagia jos samanniminen on?
             result.add(new Tag(tags[i].trim()));
         }
 
         return result;
     }
 
-    private List<Course> askForPrerequisites() {
-        return askForCourses("Prerequisite courses (separated by \",\"): ");
-
-    }
-
-    private List<Course> askForRelatedCourses() {
-        return askForCourses("Related courses (separated by \",\"): ");
-
-    }
-
-    private List<Course> askForCourses(String prompt) {
-        io.println(prompt);
-        String input = io.nextLine();
-
-        String[] courses = input.split(",");
-        List<Course> result = new ArrayList();
-        for (int i = 0; i < courses.length; i++) {
-            // toistaiseksi oletetaan, että jokainen lisättävä kurssi on eri
-            result.add(new Course(courses[i].trim()));
-        }
-
-        return result;
-    }
-
     public long askForEntryToEdit(List<Bookmark> bookmarks) {
-        System.out.println("Select an entry to edit/remove by typing it's ID: ");
+        System.out.println("Select an entry to edit/remove by typing its ID: ");
         for (Bookmark bookmark : bookmarks) {
             io.println(bookmark.shortPrint());
         }
@@ -210,7 +175,7 @@ public class TextUI {
             ask += "\nA = Author  \nT = title\nD = description \nX = tags";
         }
         if (data[3].contains("Blogpost")) {
-            ask += "\nT = title\nU = url \nC = comment\nD = description \nX = tags ";
+            ask += "\nT = title\nU = url \nD = description \nX = tags ";
         }
         if (data[3].contains("Other")) {
             ask += "\nT = title\nU = url \nD = description \nX = tags";
@@ -224,8 +189,6 @@ public class TextUI {
                 return "title";
             } else if (field.equals("U")) {
                 return "url";
-            } else if (field.equals("C")) {
-                return "comment";
             } else if (field.equals("D")) {
                 return "description";
             } else if (field.equals("X")) {

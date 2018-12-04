@@ -18,9 +18,7 @@
         <mapping class="bookmarks.Bookmark"/>
         <mapping class="bookmarks.BlogBookmark"/>
         <mapping class="bookmarks.BookBookmark"/>
-        <mapping class="bookmarks.PodcastBookmark"/>
-        <mapping class="bookmarks.VideoBookmark"/>
+        <mapping class="bookmarks.OtherBookmark"/>
         <mapping class="app.domain.Tag" />
-        <mapping class="app.domain.Course" />
     </session-factory>
 </hibernate-configuration>
