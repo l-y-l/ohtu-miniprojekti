@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.UpdateTimestamp;
 //import java.sql.Timestamp;
 
 /**
@@ -31,10 +33,12 @@ public abstract class Bookmark {
     
     String description;
     
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created")
     Date created;
     
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated")
     Date updated;
@@ -61,15 +65,6 @@ public abstract class Bookmark {
         this.description = description;
     }
     
-    @PrePersist
-    protected void onCreate() {
-    updated = created = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-    updated = new Date();
-    }
 
     public String getTitle() {
         return title;

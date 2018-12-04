@@ -64,6 +64,7 @@ public class BookMarkDAO {
     public List<Bookmark> getBookmarksWithQuery(String query) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+        // concern: can an user influence the query? Injection danger?
         List result = session.createQuery(query).list();
         session.getTransaction().commit();
         session.close();

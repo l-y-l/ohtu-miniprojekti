@@ -21,6 +21,7 @@ nbproject/
 *.log
 h2*.jar
 bookmarks.h2.db
+*.db
 
 #IntelliJ Idea IDE
 .DS_Store
