@@ -48,6 +48,13 @@ public class Stepdefs {
         inputLines.add("DeleteCast");
         inputLines.add("deleted");
         inputLines.add("Will be deleted.");
+        
+        inputLines.add("1");
+        inputLines.add("BG");
+        inputLines.add("polarnews.com/antarcticweekly");
+        inputLines.add("Antarctic weekly");
+        inputLines.add("antarctic,podcast");
+        inputLines.add("Life at the south pole station.");
     }
 
     @Given("bookmark type {string} is selected")
@@ -108,6 +115,21 @@ public class Stepdefs {
             }
         }
         assertTrue(!found);
+        close();
+    }
+    
+    @Then("system response will contain {string} before {string}")
+    public void system_response_will_contain_1st_before_2nd(String first, String second) {
+        boolean found1 = false;
+        boolean found2 = false;
+        for (String print : io.getPrints()) {
+            if(!found1 && print.contains(first)) found1 = true;
+            else if(print.contains(second)) {
+                found2 = true;
+                break;
+            }
+        }
+        assertTrue(found1 && found2);
         close();
     }
 

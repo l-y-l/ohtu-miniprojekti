@@ -71,7 +71,9 @@ public class BookmarkTest {
                 + " Url: " + url + "\n"
                 + " Title: " + title + "\n"
                 + " Tags: " + tagsStr + "\n"
-                + " Description: " + description;
+                + " Description: " + description + "\n"
+                + " Created: " + blogB.getCreated() + "\n"
+                + " Last edited: " + blogB.getUpdated();
         assertEquals(testString, blogB.toString());
     }
 
@@ -85,16 +87,24 @@ public class BookmarkTest {
                 + " Author: " + author + "\n"
                 + " Title: " + title + "\n"
                 + " Tags: " + tagsStr + "\n"
-                + " Description: " + description;
+                + " Description: " + description + "\n"
+                + " Created: " + bookB.getCreated() + "\n"
+                + " Last edited: " + bookB.getUpdated();
         assertEquals(testString, bookB.toString());
     }
 
     @Test
     public void OtherBookmarkTest() {
         String tagsStr = tags.get(0) + ", " + tags.get(1) + ", " + tags.get(2);
-        String testString = "ID: " + otherB.getId() + "\n Type: Other"
-               + "\n Url: " + url + "\n Title: " + title + "\n Tags: " + tagsStr
-                + "\n Description: " + description;
+        
+        String testString = "ID: " + otherB.getId() 
+                + "\n Type: Other"
+                + "\n Url: " + url 
+                + "\n Title: " + title 
+                + "\n Tags: " + tagsStr
+                + "\n Description: " + description + "\n"
+                + " Created: " + otherB.getCreated() + "\n"
+                + " Last edited: " + otherB.getUpdated();
         assertEquals(otherB.toString(), testString);
     }
 

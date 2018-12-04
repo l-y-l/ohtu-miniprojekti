@@ -42,7 +42,8 @@ public class App {
                     }
                     break;
                 case ("2"):
-                    ui.printBookmarkList(dao.getBookMarksOnDatabase());
+                    String method = ui.askForListingMethod();
+                    ui.printBookmarkList(dao.getBookmarksInOrder(method));
                     break;
                 case ("3"):
                     String searchfield = ui.askForField();

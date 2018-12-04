@@ -5,10 +5,12 @@ import app.utilities.Utilities;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+//import java.sql.Timestamp;
 
 /**
  * An abstract class that is used to create bookmarks, each kind of bookmark is
@@ -23,10 +25,20 @@ public abstract class Bookmark {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
+    
+    @Column(name = "title")
     String title;
+    
     String description;
-
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created")
+    Date created;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated")
+    Date updated;
+    
     // toistaiseksi eager, sillä jos Session ei auki ja esim kutsutaan bookmarkin
     // toString => virhe
     @ManyToMany(fetch = FetchType.EAGER)
@@ -48,6 +60,16 @@ public abstract class Bookmark {
         this.tags = tags;
         this.description = description;
     }
+    
+    @PrePersist
+    protected void onCreate() {
+    updated = created = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+    updated = new Date();
+    }
 
     public String getTitle() {
         return title;
@@ -61,6 +83,22 @@ public abstract class Bookmark {
         return description;
     }
 
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setEdited(Date edited) {
+        this.updated = edited;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -86,7 +124,9 @@ public abstract class Bookmark {
         String result
                 = " Title: " + title + "\n"
                 + " Tags: " + tagsStr() + "\n"
-                + " Description: " + description;
+                + " Description: " + description + "\n"
+                + " Created: " + created + "\n"
+                + " Last edited: " + updated;
         return result;
     }
 
