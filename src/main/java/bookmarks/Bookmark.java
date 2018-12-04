@@ -79,12 +79,21 @@ public abstract class Bookmark {
         this.title = title;
     }
 
+
     public String getDescription() {
         return description;
     }
 
     public Date getCreated() {
         return created;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public void setCreated(Date created) {
