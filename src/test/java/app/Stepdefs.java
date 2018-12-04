@@ -27,7 +27,7 @@ public class Stepdefs {
     }
     
     public void createTestBookmarks() {
-        inputLines.add("new");
+        inputLines.add("1");
         inputLines.add("P");
         inputLines.add("Cucumber Experience");
         inputLines.add("Martin Dawes");
@@ -38,7 +38,7 @@ public class Stepdefs {
         inputLines.add("Delve into the depths of cucumber.");
         inputLines.add("Do not delve into the depths of cucumber.");
         
-        inputLines.add("new");
+        inputLines.add("1");
         inputLines.add("B");
         inputLines.add("12345-abcde");
         inputLines.add("Cucumber tutorial");
@@ -50,7 +50,7 @@ public class Stepdefs {
         inputLines.add("a tutorial for definition testing");
         inputLines.add("a valuable part of a good testing arsenal.");
         
-        inputLines.add("new");
+        inputLines.add("1");
         inputLines.add("P");
         inputLines.add("DeleteCast");
         inputLines.add("Mr. Delete");
@@ -85,7 +85,7 @@ public class Stepdefs {
     
     @When("app is created")
     public void app_is_created() throws Throwable {
-        inputLines.add("exit");
+        inputLines.add("0");
         io = new StubIO(inputLines, inputNumbers);
         dao = new BookMarkDAO(Utilities.TEST_DATABASE);
         app = new App(io, dao);
