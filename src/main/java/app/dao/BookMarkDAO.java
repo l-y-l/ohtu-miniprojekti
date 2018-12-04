@@ -1,8 +1,17 @@
 package app.dao;
 
 import bookmarks.Bookmark;
+
 import app.utilities.Utilities;
 import bookmarks.BookBookmark;
+
+import app.domain.Tag;
+import app.ui.TextUI;
+import app.utilities.Utilities;
+import bookmarks.BlogBookmark;
+import bookmarks.BookBookmark;
+import bookmarks.OtherBookmark;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -20,10 +29,12 @@ public class BookMarkDAO {
 
     private SessionFactory sessionFactory;
     private TagDAO tagDAO;
-    
+
     public final String titleOrderQuery = "FROM Bookmark b ORDER BY b.title ASC";
     public final String creationOrderQueryDESC = "FROM Bookmark b ORDER BY b.created DESC";
     public final String creationOrderQueryASC = "FROM Bookmark b ORDER BY b.created ASC";
+
+
     /**
      * Initializes the class with a SessionFactory.
      */
@@ -71,6 +82,7 @@ public class BookMarkDAO {
         return (List<Bookmark>) result;
     }
     
+    
     /**
      * Returns bookmarks listed in an order defined by variable method.
      *
@@ -78,14 +90,18 @@ public class BookMarkDAO {
      * @return list of Bookmarks
      */
     public List<Bookmark> getBookmarksInOrder(String method) {
-        switch(method) {
-            case("T"): return getBookmarksWithQuery(titleOrderQuery);
-            case("CD"): return getBookmarksWithQuery(creationOrderQueryDESC);
-            case("CA"): return getBookmarksWithQuery(creationOrderQueryASC);
-            default: return getBookMarksOnDatabase();
+        switch (method) {
+            case ("T"):
+                return getBookmarksWithQuery(titleOrderQuery);
+            case ("CD"):
+                return getBookmarksWithQuery(creationOrderQueryDESC);
+            case ("CA"):
+                return getBookmarksWithQuery(creationOrderQueryASC);
+            default:
+                return getBookMarksOnDatabase();
         }
     }
-    
+
     /**
      * Saves a bookmark to the database.
      *
@@ -150,7 +166,13 @@ public class BookMarkDAO {
     public String getSingleBookmarkInfo(Long id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Bookmark bookmark = session.load(Bookmark.class, id);
+        Bookmark bookmark;
+        try {
+            bookmark = session.load(Bookmark.class, id);
+        } catch (Exception e) {
+            System.out.println("Bookmark not found");
+            return "";
+        }
         String ret = "";
         ret += bookmark.toString();
         session.close();
@@ -165,11 +187,19 @@ public class BookMarkDAO {
      * @param field field to be edited
      * @param newEntry new data
      */
-    public void editEntry(Long id, String field, String newEntry) {
+    public void editEntry(Long id, String field, String newEntry, List<Tag> taglist) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+        Bookmark bookmark;
+        try {
+            bookmark = session.load(Bookmark.class, id);
+        } catch (Exception e) {
+            System.out.println("Bookmark not found");
+            return;
+        }
+        if (bookmark.getClass().equals(OtherBookmark.class)) {
 
-        Bookmark bookmark = session.load(Bookmark.class, id);
+        }
         switch (field) {
             case ("author"):
                 bookmark.updateAttribute("author", newEntry);
@@ -177,6 +207,36 @@ public class BookMarkDAO {
             case ("title"):
                 bookmark.setTitle(newEntry);
                 break;
+            case ("description"):
+                bookmark.setDescription(newEntry);
+                break;
+            case ("url"):
+                if (bookmark.getClass().equals(OtherBookmark.class)) {
+                    OtherBookmark other = (OtherBookmark) bookmark;
+                    other.setUrl(newEntry);
+                    session.evict(bookmark);
+                    session.update(bookmark);
+                    session.getTransaction().commit();
+                    session.close();
+                    System.out.println("The entry has been updated!");
+                    return;
+                }
+                if (bookmark.getClass().equals(BlogBookmark.class)) {
+                    BlogBookmark blog = (BlogBookmark) bookmark;
+                    blog.setUrl(newEntry);
+                    session.evict(bookmark);
+                    session.update(bookmark);
+                    session.getTransaction().commit();
+                    session.close();
+                    System.out.println("The entry has been updated!");
+                    return;
+                }
+                break;
+            case ("tags"):
+                bookmark.setTags(tagDAO.saveTagsToDatabase(session, taglist));
+                break;
+            default:
+                return;
         }
         session.evict(bookmark);
         session.update(bookmark);
@@ -186,20 +246,24 @@ public class BookMarkDAO {
     }
 
     /**
-     *  bookmark from database by bookmark-id.
+     * bookmark from database by bookmark-id.
      *
      * @param bookmark_id
      */
     public void deleteBookmarkFromDatabase(Long bookmark_id) {
+        Session session = sessionFactory.openSession();
+        Bookmark bookmark;
+        try {
+            bookmark = (Bookmark) session.createQuery("from Bookmark where id = " + bookmark_id).uniqueResult();
+        } catch (Exception e) {
+            System.out.println("Bookmark not found");
+            return;
+        }
+        if (bookmark != null) {
+            session.beginTransaction();
+            session.delete(session.load(Bookmark.class, bookmark_id));
 
-        try (Session session = sessionFactory.openSession()) {
-            Bookmark bookmark = (Bookmark) session.createQuery("from Bookmark where id = " + bookmark_id).uniqueResult();
-            if (bookmark != null) {
-                session.beginTransaction();
-                session.delete(session.load(Bookmark.class, bookmark_id));
-                
-                session.getTransaction().commit();
-            }
+            session.getTransaction().commit();
         }
     }
 }

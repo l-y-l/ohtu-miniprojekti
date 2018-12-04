@@ -61,11 +61,10 @@ public class DatabaseTest {
     @Transactional
     @Test
     public void userCanEditAnEntry() {
-        BookBookmark book = new BookBookmark(); 
-        dao.saveBookmarkToDatabase(book);
-        long bookmarkID = book.getId();
-        dao.editEntry(bookmarkID, "author", "testAuthor");
-        dao.editEntry(bookmarkID, "title", "testTitle");
+        dao.saveBookmarkToDatabase(new BookBookmark());
+        long bookmarkID = dao.getBookMarksOnDatabase().get(dao.getBookMarksOnDatabase().size() - 1).getId();
+        dao.editEntry(bookmarkID, "author", "testAuthor", new ArrayList<Tag>());
+        dao.editEntry(bookmarkID, "title", "testTitle", new ArrayList<Tag>());
         assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testAuthor"));
         assertTrue(dao.getSingleBookmarkInfo(bookmarkID).contains("testTitle"));
     }
