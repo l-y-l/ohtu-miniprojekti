@@ -118,20 +118,7 @@ public class BookMarkDAO {
         session.close();
     }
 
-    /**
-     * Return all bookmarks of a specific time e.g VideoBookmars
-     *
-     * @param search type to be searched
-     * @return list of bookmarks
-     */
-    public List<Bookmark> getBookMarkClass(String search) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List result = session.createQuery("from " + search).list();
-        session.getTransaction().commit();
-        session.close();
-        return (List<Bookmark>) result;
-    }
+
 
     /**
      * Used to search a specific field in the database using a search term. The
@@ -210,26 +197,7 @@ public class BookMarkDAO {
                 bookmark.setDescription(newEntry);
                 break;
             case ("url"):
-                if (bookmark.getClass().equals(OtherBookmark.class)) {
-                    OtherBookmark other = (OtherBookmark) bookmark;
-                    other.setUrl(newEntry);
-                    session.evict(bookmark);
-                    session.update(bookmark);
-                    session.getTransaction().commit();
-                    session.close();
-                    System.out.println("The entry has been updated!");
-                    return;
-                }
-                if (bookmark.getClass().equals(BlogBookmark.class)) {
-                    BlogBookmark blog = (BlogBookmark) bookmark;
-                    blog.setUrl(newEntry);
-                    session.evict(bookmark);
-                    session.update(bookmark);
-                    session.getTransaction().commit();
-                    session.close();
-                    System.out.println("The entry has been updated!");
-                    return;
-                }
+                bookmark.setUrl(newEntry);
                 break;
             case ("tags"):
                 bookmark.setTags(tagDAO.saveTagsToDatabase(session, taglist));
@@ -237,10 +205,14 @@ public class BookMarkDAO {
             default:
                 return;
         }
+        updateInformation(session, bookmark);
+        session.close();
+    }
+    
+    public void updateInformation(Session session, Bookmark bookmark) {
         session.evict(bookmark);
         session.update(bookmark);
         session.getTransaction().commit();
-        session.close();
         System.out.println("The entry has been updated!");
     }
 

@@ -30,7 +30,8 @@ public class BlogBookmark extends Bookmark {
     public String getUrl() {
         return url;
     }
-
+    
+    @Override
     public void setUrl(String url) {
         this.url = url;
     }

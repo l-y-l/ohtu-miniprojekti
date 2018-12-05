@@ -22,7 +22,8 @@ public class OtherBookmark extends Bookmark {
     public String getUrl() {
         return url;
     }
-
+    
+    @Override
     public void setUrl(String url) {
         this.url = url;
     }
@@ -39,5 +40,6 @@ public class OtherBookmark extends Bookmark {
     public String shortPrint() {
         return super.shortPrint() + " Url: " + url; 
     }
+
 
 }
