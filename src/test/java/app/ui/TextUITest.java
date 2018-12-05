@@ -112,13 +112,19 @@ public class TextUITest {
     
     @Test
     public void askForTags (){
-        System.out.println("will try create io");
         StubIO io = new StubIO("a,b,c,d");
-        System.out.println("io created");
         TextUI ui = new TextUI(io);
-        System.out.println("ui created");
         List<Tag> tags = ui.askForTags();
-        System.out.println("tags asked");
+        assertEquals(tags.get(0).getName(), "a");
+        assertEquals(tags.get(1).getName(), "b");
+        assertEquals(tags.get(2).getName(), "c");
+        assertEquals(tags.get(3).getName(), "d");
+    }
+    @Test
+    public void askForTagsHandlesSpaces (){
+        StubIO io = new StubIO("a, b, c, d ");
+        TextUI ui = new TextUI(io);
+        List<Tag> tags = ui.askForTags();
         assertEquals(tags.get(0).getName(), "a");
         assertEquals(tags.get(1).getName(), "b");
         assertEquals(tags.get(2).getName(), "c");

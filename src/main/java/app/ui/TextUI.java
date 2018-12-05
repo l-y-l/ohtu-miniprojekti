@@ -164,6 +164,7 @@ public class TextUI {
             io.println(bookmark.shortPrint());
         }
     }
+
     private Long getInt(){
         Long value;
         try {
