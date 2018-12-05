@@ -103,5 +103,4 @@ public class DatabaseTest {
         dao.deleteBookmarkFromDatabase(false_id);
         assertEquals(1, dao.getBookMarksOnDatabase().size());
     }
-
 }
