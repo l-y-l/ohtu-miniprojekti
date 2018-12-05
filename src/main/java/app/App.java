@@ -1,21 +1,13 @@
 package app;
 
-import app.domain.Course;
-import app.domain.Tag;
 import app.dao.BookMarkDAO;
+import app.domain.Tag;
 import app.io.ConsoleIO;
 import app.io.IO;
 import app.ui.TextUI;
-import app.utilities.Utilities;
 import bookmarks.Bookmark;
-import bookmarks.PodcastBookmark;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
-import org.hibernate.*;
-import org.hibernate.cfg.*;
+import java.util.List;
 
 public class App {
 
@@ -44,19 +36,21 @@ public class App {
         //TODO: hide this to an other class
         while (run) {
             command = ui.getMenuCommand();
+
             if (command.equals("1") || command.equals("new")) {
                 Bookmark bookmark = ui.askForBookmark();
                 if (bookmark != null) {
                     dao.saveBookmarkToDatabase(bookmark);
                 }
             } else if (command.equals("2") || command.equals("list")) {
-                ui.printBookmarkList(dao.getBookMarksOnDatabase());
+                String method = ui.askForListingMethod();
+                ui.printBookmarkList(dao.getBookmarksInOrder(method));
             } else if (command.equals("3") || command.equals("search")) {
                 String searchfield = ui.askForField();
                 String search = ui.askForSearch();
                 ui.printBookmarkList(dao.searchField(searchfield, search));
             } else if (command.equals("4") || command.equals("edit")) {
-                Long editID = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
+                Long editID = ui.askForBookmarkToEdit(dao.getBookMarksOnDatabase());
                 String editfield = ui.askForEditField(dao.getSingleBookmarkInfo(editID));
                 List<Tag> tagList = null;
                 io.println("\nOld values: ");
@@ -67,12 +61,16 @@ public class App {
                     newEntry = ui.askForNewField(editfield);
                 }
 
-                dao.editEntry(editID, editfield, newEntry, tagList);
+                if (dao.editEntry(editID, editfield, newEntry, tagList)){
+                    ui.viewBookmarkEditedMessage();
+                }
 
             } else if (command.equals("5") || command.equals("delete")) {
-                Long bookmark_id = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
+                Long bookmark_id = ui.askForBookmarkToDelete(dao.getBookMarksOnDatabase());
                 if (bookmark_id != null) {
-                    dao.deleteBookmarkFromDatabase(bookmark_id);
+                    if (dao.deleteBookmarkFromDatabase(bookmark_id)){
+                        ui.viewBookmarkDeletedMessage();
+                    }
                 }
             } else if (command.equals("0") || command.equals("exit")) {
                 ui.printGoodbyeMessage();
