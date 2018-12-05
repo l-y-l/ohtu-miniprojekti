@@ -281,7 +281,12 @@ public class BookMarkDAO {
 
     private void initializeDatabase() {
         String objects = "";
-        try (Scanner s = new Scanner(new File(ClassLoader.getSystemClassLoader().getResource("initial.sql").getPath()))) {
+        
+        
+        // classloader and resource as stream are a cumbersome solution, 
+        // but the only one I managed to make work in every situation (also running as a .jar)
+        ClassLoader cl = getClass().getClassLoader();     
+        try (Scanner s = new Scanner(cl.getResourceAsStream("initial.sql"))) {
             while (s.hasNext()) {
                 objects += s.nextLine();
             }
