@@ -9,7 +9,6 @@ import bookmarks.Bookmark;
 
 import java.util.List;
 
-
 public class App {
 
     private final TextUI ui;
@@ -44,7 +43,8 @@ public class App {
                     dao.saveBookmarkToDatabase(bookmark);
                 }
             } else if (command.equals("2") || command.equals("list")) {
-                ui.printBookmarkList(dao.getBookMarksOnDatabase());
+                String method = ui.askForListingMethod();
+                ui.printBookmarkList(dao.getBookmarksInOrder(method));
             } else if (command.equals("3") || command.equals("search")) {
                 String searchfield = ui.askForField();
                 String search = ui.askForSearch();
@@ -84,7 +84,7 @@ public class App {
         this.dao.close();
     }
 
-    public static void main(String[] args) {       
+    public static void main(String[] args) {
         App app = new App(new ConsoleIO());
         app.run();
         app.close();

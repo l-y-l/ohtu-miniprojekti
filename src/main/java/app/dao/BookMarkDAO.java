@@ -2,18 +2,10 @@ package app.dao;
 
 import bookmarks.Bookmark;
 
-import app.utilities.Utilities;
-import bookmarks.BookBookmark;
-
 import app.domain.Tag;
-import app.ui.TextUI;
 import app.utilities.Utilities;
-import bookmarks.BlogBookmark;
-import bookmarks.BookBookmark;
 import bookmarks.OtherBookmark;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 
 import java.util.ArrayList;
 import java.util.List;
