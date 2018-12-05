@@ -147,7 +147,7 @@ public class TextUI {
     }
 
     public List<Tag> askForTags() {
-        System.out.println("askForTags");
+        System.out.println("Tags (separated by commas): ");
         String input = io.nextLine();
         String[] tags = input.split(",");
         List<Tag> result = new ArrayList();
