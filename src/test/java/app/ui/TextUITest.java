@@ -1,11 +1,15 @@
 package app.ui;
 
 import app.io.ConsoleIO;
-import bookmarks.BlogBookmark;
-import bookmarks.BookBookmark;
+import app.io.StubIO;
 
 import bookmarks.Bookmark;
+import bookmarks.BlogBookmark;
+import bookmarks.BookBookmark;
 import bookmarks.OtherBookmark;
+import app.domain.Tag;
+
+import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -29,7 +33,7 @@ public class TextUITest {
     public void textUIcreatesBookBookmarks() throws FileNotFoundException {
         File file = null;
         try {
-            file = new File("src/test/resources/app/bookmark.txt");
+            file = new File("src/test/resources/app/testinput/bookmark.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,7 +52,7 @@ public class TextUITest {
     public void textUIcreatesBlogBookmarks() throws FileNotFoundException {
         File file = null;
         try {
-            file = new File("src/test/resources/app/blogbookmark.txt");
+            file = new File("src/test/resources/app/testinput/blogbookmark.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +74,7 @@ public class TextUITest {
     public void textUICreatesOtherBookmarks() throws FileNotFoundException{
         File file = null; 
         try{
-            file = new File("src/test/resources/app/otherbookmark.txt");
+            file = new File("src/test/resources/app/testinput/otherbookmark.txt");
         } catch (Exception e){
             e.printStackTrace(); 
         }
@@ -93,7 +97,7 @@ public class TextUITest {
     public void invalidInputCreatesNoBookMark() throws FileNotFoundException{
         File file = null;
         try {
-            file = new File("src/test/resources/app/invalid.txt");
+            file = new File("src/test/resources/app/testinput/invalid.txt");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,5 +106,22 @@ public class TextUITest {
         ui = new TextUI(new ConsoleIO(scanner));
         Bookmark bookmark = ui.askForBookmark();
         assertNull(bookmark);
+    }
+
+
+    
+    @Test
+    public void askForTags (){
+        System.out.println("will try create io");
+        StubIO io = new StubIO("a,b,c,d");
+        System.out.println("io created");
+        TextUI ui = new TextUI(io);
+        System.out.println("ui created");
+        List<Tag> tags = ui.askForTags();
+        System.out.println("tags asked");
+        assertEquals(tags.get(0).getName(), "a");
+        assertEquals(tags.get(1).getName(), "b");
+        assertEquals(tags.get(2).getName(), "c");
+        assertEquals(tags.get(3).getName(), "d");
     }
 }

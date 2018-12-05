@@ -8,15 +8,21 @@ import java.util.List;
 public class StubIO implements IO {
     
     private List<String> lines;
-    private List<Integer> inputNumbers;
     private int i;
     private int j;
     private ArrayList<String> prints;
     
-    public StubIO(List<String> lines, List<Integer> inputNumbers) {
+    public StubIO(List<String> lines) {
         this.lines = lines;
-        this.inputNumbers = inputNumbers;
         prints = new ArrayList<>();
+    }
+
+    public StubIO(String input) {
+        lines = new ArrayList<>();
+        String[] ilines = input.split("\n");
+        for (int i=0;i<ilines.length;i++){
+            lines.add(ilines[i]);
+        }
     }
     
     @Override
@@ -39,12 +45,21 @@ public class StubIO implements IO {
         return "";
     }
 
+    // is the nextInt() actually used somewhere?
     @Override
     public int nextInt() {
-        if (j < inputNumbers.size()) {
-            return inputNumbers.get(j++);
+        String line = nextLine();
+        int no;
+        try {
+            no = Integer.parseInt(line);
+        } catch (NumberFormatException e) {
+            // System.out.println("<0");
+            // is it good to return 0 in case of an exception 
+            // or would it be better to throw an exception like ConsoleIO would do?
+            return 0;
         }
-        return 0;
+        // System.out.println("<"+no);
+        return no;
     }
     
 }

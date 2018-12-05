@@ -88,7 +88,7 @@ public class TextUI {
     public void printBookmarkList(List<Bookmark> bookmarks) {
         io.println("");
         if (bookmarks.isEmpty()) {
-            io.println("No bookmarks found");
+            io.println("No bookmarks found.");
         }
         for (Bookmark bmark : bookmarks) {
             io.println(bmark.toString());
@@ -147,9 +147,8 @@ public class TextUI {
     }
 
     public List<Tag> askForTags() {
-        io.println("Tags (separated by \",\"): ");
+        System.out.println("askForTags");
         String input = io.nextLine();
-
         String[] tags = input.split(",");
         List<Tag> result = new ArrayList();
         for (int i = 0; i < tags.length; i++) {

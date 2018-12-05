@@ -24,8 +24,6 @@ public class UtilitiesTest {
         for(int i = 8; i >= 3; i--){
             integerList.add(i);
         }
-        
-        
     }
     
     @Test
