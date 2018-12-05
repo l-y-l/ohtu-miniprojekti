@@ -173,8 +173,9 @@ public class BookMarkDAO {
      * @param id id of entry
      * @param field field to be edited
      * @param newEntry new data
+     * @return success, true if bookmark was edited, false if not
      */
-    public void editEntry(Long id, String field, String newEntry, List<Tag> taglist) {
+    public boolean editEntry(Long id, String field, String newEntry, List<Tag> taglist) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Bookmark bookmark;
@@ -182,7 +183,7 @@ public class BookMarkDAO {
             bookmark = session.load(Bookmark.class, id);
         } catch (Exception e) {
             System.out.println("Bookmark not found");
-            return;
+            return false;
         }
         if (bookmark.getClass().equals(OtherBookmark.class)) {
 
@@ -204,10 +205,11 @@ public class BookMarkDAO {
                 bookmark.setTags(tagDAO.saveTagsToDatabase(session, taglist));
                 break;
             default:
-                return;
+                return false;
         }
         updateInformation(session, bookmark);
         session.close();
+        return true;
     }
     
     public void updateInformation(Session session, Bookmark bookmark) {
@@ -221,22 +223,25 @@ public class BookMarkDAO {
      * bookmark from database by bookmark-id.
      *
      * @param bookmark_id
+     * @return success, true if bookmark was deleted, false if not
      */
-    public void deleteBookmarkFromDatabase(Long bookmark_id) {
+    public boolean deleteBookmarkFromDatabase(Long bookmark_id) {
         Session session = sessionFactory.openSession();
         Bookmark bookmark;
         try {
             bookmark = (Bookmark) session.createQuery("from Bookmark where id = " + bookmark_id).uniqueResult();
         } catch (Exception e) {
             System.out.println("Bookmark not found");
-            return;
+            return false;
         }
         if (bookmark != null) {
             session.beginTransaction();
             session.delete(session.load(Bookmark.class, bookmark_id));
 
             session.getTransaction().commit();
+            return true;
         }
+        return false;
     }
 
     private boolean databaseIsEmpty() {

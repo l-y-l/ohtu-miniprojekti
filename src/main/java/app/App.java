@@ -50,7 +50,7 @@ public class App {
                 String search = ui.askForSearch();
                 ui.printBookmarkList(dao.searchField(searchfield, search));
             } else if (command.equals("4") || command.equals("edit")) {
-                Long editID = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
+                Long editID = ui.askForBookmarkToEdit(dao.getBookMarksOnDatabase());
                 String editfield = ui.askForEditField(dao.getSingleBookmarkInfo(editID));
                 List<Tag> tagList = null;
                 io.println("\nOld values: ");
@@ -61,12 +61,16 @@ public class App {
                     newEntry = ui.askForNewField(editfield);
                 }
 
-                dao.editEntry(editID, editfield, newEntry, tagList);
+                if (dao.editEntry(editID, editfield, newEntry, tagList)){
+                    ui.viewBookmarkEditedMessage();
+                }
 
             } else if (command.equals("5") || command.equals("delete")) {
-                Long bookmark_id = ui.askForEntryToEdit(dao.getBookMarksOnDatabase());
+                Long bookmark_id = ui.askForBookmarkToDelete(dao.getBookMarksOnDatabase());
                 if (bookmark_id != null) {
-                    dao.deleteBookmarkFromDatabase(bookmark_id);
+                    if (dao.deleteBookmarkFromDatabase(bookmark_id)){
+                        ui.viewBookmarkDeletedMessage();
+                    }
                 }
             } else if (command.equals("0") || command.equals("exit")) {
                 ui.printGoodbyeMessage();
