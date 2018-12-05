@@ -19,7 +19,6 @@ public class Stepdefs {
     StubIO io;
     List<Bookmark> memory = new ArrayList();
     List<String> inputLines = new ArrayList();
-    List<Integer> inputNumbers = new ArrayList();
     private BookMarkDAO dao;
 
     public Stepdefs() {
@@ -74,13 +73,13 @@ public class Stepdefs {
 
     @When("input number {int} is entered")
     public void input_number_is_entered(int input) throws Throwable {
-        inputNumbers.add(input);
+        inputLines.add(""+input);
     }
 
     @When("app is created")
     public void app_is_created() throws Throwable {
         inputLines.add("0");
-        io = new StubIO(inputLines, inputNumbers);
+        io = new StubIO(inputLines);
         dao = new BookMarkDAO(Utilities.TEST_DATABASE);
         app = new App(io, dao);
         app.run();

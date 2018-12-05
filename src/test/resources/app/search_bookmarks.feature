@@ -21,4 +21,4 @@ Feature: Searching for existing bookmarks is possible
         When input "A" is entered
         And input "nonExistentAuthor" is entered
         And app is created
-        Then system response will contain "There are currently no bookmarks in memory."
+        Then system response will contain "No bookmarks found"

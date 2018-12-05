@@ -86,13 +86,14 @@ public class TextUI {
     }
 
     public void printBookmarkList(List<Bookmark> bookmarks) {
+        io.println("");
         if (bookmarks.isEmpty()) {
-            io.println("There are currently no bookmarks in memory. Add a new bookmark with command 1");
+            io.println("No bookmarks found.");
         }
         for (Bookmark bmark : bookmarks) {
             io.println(bmark.toString());
 
-            System.out.println("==================================================");
+            io.println("==================================================");
         }
     }
     
@@ -146,9 +147,8 @@ public class TextUI {
     }
 
     public List<Tag> askForTags() {
-        io.println("Tags (separated by \",\"): ");
+        System.out.println("askForTags");
         String input = io.nextLine();
-
         String[] tags = input.split(",");
         List<Tag> result = new ArrayList();
         for (int i = 0; i < tags.length; i++) {
@@ -159,18 +159,37 @@ public class TextUI {
         return result;
     }
 
-    public long askForEntryToEdit(List<Bookmark> bookmarks) {
-        System.out.println("Select an entry to edit/remove by typing its ID: ");
+    private void shortListBookmarks(List<Bookmark> bookmarks){
         for (Bookmark bookmark : bookmarks) {
             io.println(bookmark.shortPrint());
         }
-        return (long) io.nextInt();
+    }
+    private Long getInt(){
+        Long value;
+        try {
+            value = Long.parseLong(io.nextLine());
+        } catch (NumberFormatException e) {
+            return 0L;
+        }
+        return value;
+    }
+
+    public Long askForBookmarkToEdit(List<Bookmark> bookmarks) {
+        io.println("Select an entry to edit by typing its ID: ");
+        shortListBookmarks(bookmarks);
+        return getInt();
+    }
+
+    public Long askForBookmarkToDelete(List<Bookmark> bookmarks) {
+        io.println("Give ID of the bookmark you want to delete: ");
+        shortListBookmarks(bookmarks);
+        return getInt();
     }
 
     public String askForEditField(String bookmark) {
         String[] data = bookmark.split(" ");
         String ask = "Select field to edit:";
-        System.out.println(data[3]);
+        io.println(data[3]);
         if (data[3].contains("Book")) {
             ask += "\nA = Author  \nT = title\nD = description \nX = tags";
         }
@@ -180,7 +199,7 @@ public class TextUI {
         if (data[3].contains("Other")) {
             ask += "\nT = title\nU = url \nD = description \nX = tags";
         }
-        System.out.println(ask);
+        io.println(ask);
         String field = io.nextLine();
         while (true) {
             if (field.equals("A")) {
@@ -200,7 +219,7 @@ public class TextUI {
     }
 
     public String askForNewField(String field) {
-        System.out.println("Give new entry for " + field);
+        io.println("Give new entry for " + field);
         return io.nextLine();
     }
 
@@ -209,14 +228,12 @@ public class TextUI {
         return io.nextLine();
     }
 
-    public Long askForBookmarkToDelete() {
-        io.println("Give ID of the bookmark you want to delete: ");
-        Long id;
-        try {
-            id = Long.parseLong(io.nextLine());
-        } catch (NumberFormatException e) {
-            return 0L;
-        }
-        return id;
+    public void viewBookmarkEditedMessage(){
+        io.println("Bookmark successfully edited.");
     }
+
+    public void viewBookmarkDeletedMessage() {
+        io.println("Bookmark successfully deleted.");
+    }
+
 }
