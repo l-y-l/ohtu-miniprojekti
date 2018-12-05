@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import static org.h2.expression.Function.CURRENT_TIMESTAMP;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -27,22 +29,26 @@ public abstract class Bookmark {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    
+
     @Column(name = "title")
     String title;
-    
+
     String description;
+
     
+    // columnDefinintion is the only way (that I found) to set default values
+    // in database. This allows for inserting data outside the Java program, 
+    // and not have the fields be null!
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created")
     Date created;
-    
-    @UpdateTimestamp
+
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated")
+    @Column(name = "updated",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @UpdateTimestamp
     Date updated;
-    
+
     // toistaiseksi eager, sillä jos Session ei auki ja esim kutsutaan bookmarkin
     // toString => virhe
     @ManyToMany(fetch = FetchType.EAGER)
@@ -64,7 +70,6 @@ public abstract class Bookmark {
         this.tags = tags;
         this.description = description;
     }
-    
 
     public String getTitle() {
         return title;
@@ -73,7 +78,6 @@ public abstract class Bookmark {
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public String getDescription() {
         return description;
@@ -102,7 +106,7 @@ public abstract class Bookmark {
     public void setEdited(Date edited) {
         this.updated = edited;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -138,25 +142,26 @@ public abstract class Bookmark {
         return "ID: " + this.id + " Title: " + this.title;
     }
 
-    
     /**
      * Changes the value of a field if such a field exists
-     * 
-     * <p>Bookmark does not have author, so a normal setter for author cannot 
-     * be called on Bookmark instances. However, this method can be called, 
-     * and the value will be changed if there is a method setAuthor.</p>
-     * 
-     * <p>If the actual class of this is not Book, the method does nothing. 
-     * Of course this can be used in similar fashion with urls etc.</p>
-     * 
+     *
+     * <p>
+     * Bookmark does not have author, so a normal setter for author cannot be
+     * called on Bookmark instances. However, this method can be called, and the
+     * value will be changed if there is a method setAuthor.</p>
+     *
+     * <p>
+     * If the actual class of this is not Book, the method does nothing. Of
+     * course this can be used in similar fashion with urls etc.</p>
+     *
      * @param attributeName Name of the class variable to be changed
      * @param newValue New value for the class variable
      */
     public void updateAttribute(String attributeName, String newValue) {
 
         try {
-            String modifiedName = Character.toUpperCase(attributeName.charAt(0)) + 
-                    attributeName.substring(1);
+            String modifiedName = Character.toUpperCase(attributeName.charAt(0))
+                    + attributeName.substring(1);
             Method setter = this.getClass().getDeclaredMethod("set" + modifiedName, "".getClass());
             setter.invoke(this, newValue);
         } catch (Exception e) {
