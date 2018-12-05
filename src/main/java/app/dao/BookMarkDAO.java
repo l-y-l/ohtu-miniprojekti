@@ -2,23 +2,20 @@ package app.dao;
 
 import bookmarks.Bookmark;
 
-import app.utilities.Utilities;
-import bookmarks.BookBookmark;
-
 import app.domain.Tag;
-import app.ui.TextUI;
 import app.utilities.Utilities;
-import bookmarks.BlogBookmark;
-import bookmarks.BookBookmark;
 import bookmarks.OtherBookmark;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 
 /**
  * Class that handles all database operations.
@@ -34,7 +31,6 @@ public class BookMarkDAO {
     public final String creationOrderQueryDESC = "FROM Bookmark b ORDER BY b.created DESC";
     public final String creationOrderQueryASC = "FROM Bookmark b ORDER BY b.created ASC";
 
-
     /**
      * Initializes the class with a SessionFactory.
      */
@@ -44,6 +40,11 @@ public class BookMarkDAO {
 
     public BookMarkDAO(String configurationFileName) {
         sessionFactory = new Configuration().configure(configurationFileName).buildSessionFactory();
+        // test database probably needs no legitimate-looking initialization data
+        if (Utilities.DEPLOYMENT_DATABASE.equals(configurationFileName) && databaseIsEmpty()) {
+            initializeDatabase();
+        }
+
         tagDAO = new TagDAO(configurationFileName);
     }
 
@@ -65,7 +66,7 @@ public class BookMarkDAO {
     public List<Bookmark> getBookMarksOnDatabase() {
         return getBookmarksWithQuery("from Bookmark");
     }
-    
+
     /**
      * Returns bookmarks defined by given hql query.
      *
@@ -75,13 +76,13 @@ public class BookMarkDAO {
     public List<Bookmark> getBookmarksWithQuery(String query) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+        // concern: can an user influence the query? Injection danger?
         List result = session.createQuery(query).list();
         session.getTransaction().commit();
         session.close();
         return (List<Bookmark>) result;
     }
-    
-    
+
     /**
      * Returns bookmarks listed in an order defined by variable method.
      *
@@ -235,6 +236,35 @@ public class BookMarkDAO {
             session.delete(session.load(Bookmark.class, bookmark_id));
 
             session.getTransaction().commit();
+        }
+    }
+
+    private boolean databaseIsEmpty() {
+        return getBookMarksOnDatabase().isEmpty();
+    }
+
+    private void initializeDatabase() {
+        String objects = "";
+        
+        
+        // classloader and resource as stream are a cumbersome solution, 
+        // but the only one I managed to make work in every situation (also running as a .jar)
+        ClassLoader cl = getClass().getClassLoader();     
+        try (Scanner s = new Scanner(cl.getResourceAsStream("initial.sql"))) {
+            while (s.hasNext()) {
+                objects += s.nextLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query q = session.createNativeQuery(objects);
+            q.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
