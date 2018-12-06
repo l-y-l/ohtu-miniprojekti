@@ -30,8 +30,18 @@ public class TextUI {
     }
 
     public String getMenuCommand() {
-        io.println("\nSelect one of the following options \n1. Add a new bookmark by typing \n2. List all existing bookmarks\n3. Search a specific bookmark"
-                + "\n4. Edit a bookmark\n5. Delete a bookmark\n0. Exit the application");
+        io.print("\nSelect one of the following options\n1. ");
+        io.redPrint("Add");
+        io.print(" a new bookmark \n2. ");
+        io.redPrint("List");
+        io.print(" all existing bookmarks\n3. ");
+        io.redPrint("Search");
+        io.print(" a specific bookmark\n4. "); 
+        io.redPrint("Edit");
+        io.print(" a bookmark\n5. ");
+        io.redPrint("Delete"); io.print(" a bookmark\n0. ");
+        io.redPrint("Exit");
+        io.println(" the application");
         return io.nextLine();
     }
 

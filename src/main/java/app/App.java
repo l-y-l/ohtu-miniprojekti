@@ -8,7 +8,6 @@ import app.ui.TextUI;
 import bookmarks.Bookmark;
 
 import java.util.List;
-import org.fusesource.jansi.AnsiConsole;
 
 public class App {
 
@@ -17,9 +16,7 @@ public class App {
     private BookMarkDAO dao;
 
     public App(IO io) {
-        this.io = io;
-        this.ui = new TextUI(io);
-        this.dao = new BookMarkDAO();
+        this(io, new BookMarkDAO());
     }
 
     public App(IO io, BookMarkDAO dao) {
@@ -90,8 +87,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-       App app = new App(new ConsoleIO());
-       app.run();
-       app.close();
+        App app = new App(new ConsoleIO());
+        app.run();
+        app.close();
     }
 }
