@@ -2,14 +2,11 @@ package bookmarks;
 
 import app.domain.Tag;
 import app.utilities.Utilities;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
-import static org.h2.expression.Function.CURRENT_TIMESTAMP;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;

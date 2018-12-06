@@ -101,7 +101,13 @@ public class TextUI {
             io.println("No bookmarks found.");
         }
         for (Bookmark bmark : bookmarks) {
-            io.println(bmark.toString());
+            String bookmarkInfo = bmark.toString(); 
+            int indexOfTitleLabel = bookmarkInfo.indexOf(" Title:"); 
+            indexOfTitleLabel += 7;
+            int indexOfTagsLabel = bookmarkInfo.indexOf("\n Tags");
+            io.print(bookmarkInfo.substring(0, indexOfTitleLabel));
+            io.cyanPrint(bookmarkInfo.substring(indexOfTitleLabel, indexOfTagsLabel));
+            io.println(bookmarkInfo.substring(indexOfTagsLabel));
 
             io.println("==================================================");
         }
