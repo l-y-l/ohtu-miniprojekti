@@ -8,6 +8,7 @@ import app.ui.TextUI;
 import bookmarks.Bookmark;
 
 import java.util.List;
+import org.fusesource.jansi.AnsiConsole;
 
 public class App {
 
@@ -61,14 +62,14 @@ public class App {
                     newEntry = ui.askForNewField(editfield);
                 }
 
-                if (dao.editEntry(editID, editfield, newEntry, tagList)){
+                if (dao.editEntry(editID, editfield, newEntry, tagList)) {
                     ui.viewBookmarkEditedMessage();
                 }
 
             } else if (command.equals("5") || command.equals("delete")) {
                 Long bookmark_id = ui.askForBookmarkToDelete(dao.getBookMarksOnDatabase());
                 if (bookmark_id != null) {
-                    if (dao.deleteBookmarkFromDatabase(bookmark_id)){
+                    if (dao.deleteBookmarkFromDatabase(bookmark_id)) {
                         ui.viewBookmarkDeletedMessage();
                     }
                 }
@@ -89,8 +90,8 @@ public class App {
     }
 
     public static void main(String[] args) {
-        App app = new App(new ConsoleIO());
-        app.run();
-        app.close();
+       App app = new App(new ConsoleIO());
+       app.run();
+       app.close();
     }
 }

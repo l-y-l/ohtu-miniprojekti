@@ -3,6 +3,7 @@ package app.io;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.fusesource.jansi.Ansi;
 
 
 public class StubIO implements IO {
@@ -61,5 +62,26 @@ public class StubIO implements IO {
         // System.out.println("<"+no);
         return no;
     }
+
+
+    @Override
+    public void colorPrint(String toPrint, Ansi.Color color) {
+        // if we don't test colors, there is no need to print them differently 
+        print(toPrint); 
+    }
+
+    @Override
+    public void print(String toPrint) {   
+        int size = lines.size(); 
+        if(size == 0){
+            lines.add(toPrint);
+        } else {
+            String latestLine = lines.get(size - 1);
+            lines.remove(size - 1);
+            lines.add(latestLine + toPrint);
+        }
+    }
+
+
     
 }
