@@ -86,7 +86,7 @@ public class App {
         this.dao.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {    
         App app = new App(new ConsoleIO());
         app.run();
         app.close();

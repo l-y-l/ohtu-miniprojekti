@@ -69,7 +69,7 @@ public class StubIO implements IO {
 
     @Override
     public void print(String toPrint) {
-        String[] inputLines = toPrint.split("\n");
+        String[] inputLines = toPrint.split("\n", -1);
         
         if (!inputLines[0].isEmpty()) {
             int size = lines.size();
@@ -78,12 +78,12 @@ public class StubIO implements IO {
             } else {
                 String latestLine = lines.get(size - 1);
                 lines.remove(size - 1);
-                lines.add(latestLine + toPrint);
+                lines.add(size - 1, latestLine + toPrint);
             }
         }
         
-        for(int i = 1; i < inputLines.length; i++){
-            lines.add(inputLines[i]);
+        for(int idx = 1; idx < inputLines.length; idx++){
+            lines.add(inputLines[idx]);
         }
     }
 
